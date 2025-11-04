@@ -3,9 +3,9 @@
     <link href="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/datatables.min.css" rel="stylesheet"
         integrity="sha384-fyCqW8E+q5GvWtphxqXu3hs1lJzytfEh6S57wLlfvz5quj6jf5OKThV1K9+Iv8Xz" crossorigin="anonymous">
 
-    {{-- <link rel="stylesheet" href="{{ asset('assets/extensions/simple-datatables/style.css') }}" /> --}}
-
-    {{-- <link rel="stylesheet" crossorigin href="{{ asset('assets/compiled/css/table-datatable.css') }}" /> --}}
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/colormask.min.css">
 @endpush
 
 @section('content')
@@ -59,15 +59,36 @@
     <script src="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/datatables.min.js"
         integrity="sha384-J9F84i7Emwbp64qQsBlK5ypWq7kFwSOGFfubmHHLjVviEnDpI5wpj+nNC3napXiF" crossorigin="anonymous">
     </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/jquery.inputmask.min.js"></script>
 
-    {{-- <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/static/js/pages/simple-datatables.js') }}"></script> --}}
     <script>
         const URL_INDEX = "{{ route('spaldts.index') }}"
         const URL_INDEX_API = "{{ route('api.spaldts.index') }}"
         var id = 0;
 
         $(document).ready(function() {
+            $('#tahun').datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years",
+                autoclose: true
+            });
+
+            $('.mask_angka').inputmask({
+                alias: 'numeric',
+                groupSeparator: '.',
+                autoGroup: true,
+                digits: 0,
+                rightAlign: false,
+                removeMaskOnSubmit: true,
+                autoUnmask: true,
+                min: 0,
+            });
+
+
             var table = $('#table').DataTable({
                 rowId: 'id',
                 ajax: URL_INDEX_API,
@@ -142,10 +163,7 @@
                             'title': 'Tambah Data'
                         },
                         action: function(e, dt, node, config) {
-                            $('#form').attr('action', URL_INDEX_API)
-                            $('#form').attr('method', 'POST')
-                            $('#modal_title').text('Add Data')
-                            $('#modal_form').modal('show')
+                            modal_add()
                         }
                     },
                     {
@@ -214,6 +232,12 @@
                 }
             }
 
+            function set_date(elementId = 'date') {
+                let date = "{{ date('d/m/Y') }}"
+                $("#" + elementId).data('daterangepicker').setStartDate(date);
+                $("#" + elementId).data('daterangepicker').setEndDate(date);
+            }
+
             $('#modal_form').on('shown.bs.modal', function() {
                 $('#tahun').focus()
             });
@@ -229,14 +253,6 @@
                         table.ajax.reload()
                         show_message(res.message, 'success')
                         $('#modal_form').modal('hide');
-                        $('#tahun').val('')
-                        $('#nama').val('')
-                        $('#lokasi').val('')
-                        $('#pagu').val('')
-                        $('#jumlah').val('')
-                        $('#sumber').val('').change()
-                        $('#lat').val('')
-                        $('#long').val('')
                     },
                     error: function(xhr, status, error) {
                         show_message(xhr.responseJSON.message || 'Error!')
@@ -263,6 +279,22 @@
 
             });
 
+
+            function modal_add() {
+                $('#form').attr('action', URL_INDEX_API)
+                $('#form').attr('method', 'POST')
+                $('#tahun').val('')
+                $('#nama').val('')
+                $('#lokasi').val('')
+                $('#pagu').val(0)
+                $('#jumlah').val(0)
+                $('#sumber').val('').change()
+                $('#lat').val('')
+                $('#long').val('')
+
+                $('#modal_title').text('Add Data')
+                $('#modal_form').modal('show')
+            }
 
         })
     </script>
