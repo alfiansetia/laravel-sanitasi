@@ -1,0 +1,269 @@
+@extends('layouts.template')
+@push('css')
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/datatables.min.css" rel="stylesheet"
+        integrity="sha384-fyCqW8E+q5GvWtphxqXu3hs1lJzytfEh6S57wLlfvz5quj6jf5OKThV1K9+Iv8Xz" crossorigin="anonymous">
+
+    {{-- <link rel="stylesheet" href="{{ asset('assets/extensions/simple-datatables/style.css') }}" /> --}}
+
+    {{-- <link rel="stylesheet" crossorigin href="{{ asset('assets/compiled/css/table-datatable.css') }}" /> --}}
+@endpush
+
+@section('content')
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>SPALD-T</h3>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            SPALD-T
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover" id="table" style="width: 100%;cursor: pointer;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tahun</th>
+                            <th>Nama Kegiatan</th>
+                            <th>Lokasi</th>
+                            <th>Pagu</th>
+                            <th>Jumlah Unit</th>
+                            <th>Sumber Dana</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    @include('spaldts.modal')
+@endsection
+
+@push('js')
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/datatables.min.js"
+        integrity="sha384-J9F84i7Emwbp64qQsBlK5ypWq7kFwSOGFfubmHHLjVviEnDpI5wpj+nNC3napXiF" crossorigin="anonymous">
+    </script>
+
+    {{-- <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script> --}}
+    {{-- <script src="{{ asset('assets/static/js/pages/simple-datatables.js') }}"></script> --}}
+    <script>
+        const URL_INDEX = "{{ route('spaldts.index') }}"
+        const URL_INDEX_API = "{{ route('api.spaldts.index') }}"
+        var id = 0;
+
+        $(document).ready(function() {
+            var table = $('#table').DataTable({
+                rowId: 'id',
+                ajax: URL_INDEX_API,
+                dom: "<'dt--top-section'<'row mb-2'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0'f>>>" +
+                    "<'table-responsive'tr>" +
+                    "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+                oLanguage: {
+                    "sSearchPlaceholder": "Search...",
+                    "sLengthMenu": "Results :  _MENU_",
+                },
+                lengthMenu: [
+                    [10, 50, 100, 500, 1000],
+                    ['10 rows', '50 rows', '100 rows', '500 rows', '1000 rows']
+                ],
+                pageLength: 10,
+                lengthChange: false,
+                order: [
+                    [1, "asc"]
+                ],
+                columns: [{
+                        data: 'id',
+                        className: "text-center",
+                        searchable: false,
+                        sortable: false,
+                        render: function(data, type, row, meta) {
+                            return `<input type="checkbox" name="id[]" value="${data}" class="new-control-input child-chk select-customers-info">`
+                        }
+                    }, {
+                        data: "tahun",
+                        className: 'text-center',
+                    },
+                    {
+                        data: "nama",
+                        className: 'text-start',
+                    }, {
+                        data: "lokasi",
+                        className: 'text-start',
+                    }, {
+                        data: "pagu",
+                        className: 'text-end',
+                        render: function(data, type, row, meta) {
+                            if (type == 'display') {
+                                return hrg(data)
+                            }
+                            return data
+                        }
+                    }, {
+                        data: "jumlah",
+                        className: 'text-end',
+                        render: function(data, type, row, meta) {
+                            if (type == 'display') {
+                                return hrg(data)
+                            }
+                            return data
+                        }
+                    }, {
+                        data: "sumber",
+                        className: 'text-center',
+                    }, {
+                        data: "lat",
+                        className: 'text-start',
+                    }, {
+                        data: "long",
+                        className: 'text-start',
+                    },
+                ],
+                buttons: [{
+                        text: '<i class="fas fa-plus me-1"></i>Tambah',
+                        className: 'btn btn-sm btn-info',
+                        attr: {
+                            'data-toggle': 'tooltip',
+                            'title': 'Tambah Data'
+                        },
+                        action: function(e, dt, node, config) {
+                            $('#form').attr('action', URL_INDEX_API)
+                            $('#form').attr('method', 'POST')
+                            $('#modal_title').text('Add Data')
+                            $('#modal_form').modal('show')
+                        }
+                    },
+                    {
+                        extend: "pageLength",
+                        attr: {
+                            'data-toggle': 'tooltip',
+                            'title': 'Page Length'
+                        },
+                        className: 'btn btn-sm'
+                    }, {
+                        text: '<i class="fa fa-tools"></i> Action',
+                        className: 'btn btn-sm btn-warning bs-tooltip',
+                        attr: {
+                            'data-toggle': 'tooltip',
+                            'title': 'Action'
+                        },
+                        extend: 'collection',
+                        autoClose: true,
+                        buttons: [{
+                            text: 'Refresh Data',
+                            className: 'dt-button btn-sm',
+                            action: function(e, dt, node, config) {
+                                table.ajax.reload()
+                            }
+                        }, {
+                            text: 'Delete Selected Data',
+                            className: 'dt-button btn-sm',
+                            action: function(e, dt, node, config) {
+                                deleteBatch()
+                            }
+                        }, ]
+                    },
+                ],
+                headerCallback: function(e, a, t, n, s) {
+                    e.getElementsByTagName("th")[0].innerHTML =
+                        '<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">'
+                },
+            });
+
+            multiCheck(table)
+
+            function deleteBatch() {
+                if (selected()) {
+                    confirmation('Delete Selected?', function(confirm) {
+                        if (confirm) {
+                            selectedIds = $('input[name="id[]"]:checked')
+                                .map(function() {
+                                    return $(this).val();
+                                }).get();
+                            $.ajax({
+                                url: URL_INDEX_API,
+                                type: "DELETE",
+                                data: {
+                                    ids: selectedIds,
+                                },
+                                success: function(res) {
+                                    table.ajax.reload();
+                                    show_message(res.message, 'success')
+                                },
+                                error: function(xhr) {
+                                    show_message(xhr.responseJSON.message || 'Error!')
+                                }
+                            });
+                        }
+                    })
+                }
+            }
+
+            $('#modal_form').on('shown.bs.modal', function() {
+                $('#tahun').focus()
+            });
+
+            $('#form').submit(function(e) {
+                e.preventDefault()
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    data: $(this).serializeArray(),
+                    beforeSend: function() {},
+                    success: function(res) {
+                        table.ajax.reload()
+                        show_message(res.message, 'success')
+                        $('#modal_form').modal('hide');
+                        $('#tahun').val('')
+                        $('#nama').val('')
+                        $('#lokasi').val('')
+                        $('#pagu').val('')
+                        $('#jumlah').val('')
+                        $('#sumber').val('').change()
+                        $('#lat').val('')
+                        $('#long').val('')
+                    },
+                    error: function(xhr, status, error) {
+                        show_message(xhr.responseJSON.message || 'Error!')
+                    }
+                });
+            })
+
+            $('#table tbody').on('click', 'tr td:not(:first-child)', function() {
+                data = table.row(this).data()
+                id = data.id
+                $('#tahun').val(data.tahun)
+                $('#nama').val(data.nama)
+                $('#lokasi').val(data.lokasi)
+                $('#pagu').val(data.pagu)
+                $('#jumlah').val(data.jumlah)
+                $('#sumber').val(data.sumber).change()
+                $('#lat').val(data.lat)
+                $('#long').val(data.long)
+
+                $('#form').attr('action', `${URL_INDEX_API}/${id}`)
+                $('#form').attr('method', 'PUT')
+                $('#modal_title').text('Edit Data')
+                $('#modal_form').modal('show')
+
+            });
+
+
+        })
+    </script>
+@endpush
