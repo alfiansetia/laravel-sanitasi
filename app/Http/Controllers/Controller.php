@@ -17,17 +17,9 @@ class Controller extends BaseController
 
     public function sendResponse($data = null, $message = '', $code = 200)
     {
-        if (is_string($data) && empty($message)) {
-            $message = $data;
-            $data = null;
-        }
-        if (is_array($data) && (array_key_exists('data', $data) || array_key_exists('message', $data))) {
-            return response()->json($data, $code);
-        }
-
         return response()->json([
-            'data' => $data,
-            'message' => $message,
+            'data'      => $data,
+            'message'   => $message,
         ], $code);
     }
 

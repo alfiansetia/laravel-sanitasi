@@ -91,6 +91,7 @@
 
             var table = $('#table').DataTable({
                 rowId: 'id',
+                serverSide: true,
                 ajax: URL_INDEX_API,
                 dom: "<'dt--top-section'<'row mb-2'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0'f>>>" +
                     "<'table-responsive'tr>" +
@@ -106,7 +107,7 @@
                 pageLength: 10,
                 lengthChange: false,
                 order: [
-                    [1, "asc"]
+                    [9, "desc"]
                 ],
                 columns: [{
                         data: 'id',
@@ -153,6 +154,10 @@
                     }, {
                         data: "long",
                         className: 'text-start',
+                    }, {
+                        data: "id",
+                        className: 'text-start',
+                        visible: false,
                     },
                 ],
                 buttons: [{
@@ -187,6 +192,12 @@
                             className: 'dt-button btn-sm',
                             action: function(e, dt, node, config) {
                                 table.ajax.reload()
+                            }
+                        }, {
+                            text: 'Import Data',
+                            className: 'dt-button btn-sm',
+                            action: function(e, dt, node, config) {
+                                importData()
                             }
                         }, {
                             text: 'Delete Selected Data',
@@ -263,7 +274,7 @@
             $('#table tbody').on('click', 'tr td:not(:first-child)', function() {
                 data = table.row(this).data()
                 id = data.id
-                $('#tahun').val(data.tahun)
+                $('#tahun').datepicker('setDate', new Date(data.tahun, 0, 1));
                 $('#nama').val(data.nama)
                 $('#lokasi').val(data.lokasi)
                 $('#pagu').val(data.pagu)
@@ -295,6 +306,33 @@
                 $('#modal_title').text('Add Data')
                 $('#modal_form').modal('show')
             }
+
+            function importData() {
+                $('#form_import')[0].reset()
+                $('#modal_import').modal('show')
+            }
+
+            $('#form_import').submit(function(e) {
+                e.preventDefault()
+                let form = $(this)[0];
+                let formData = new FormData(form);
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    beforeSend: function() {},
+                    success: function(res) {
+                        table.ajax.reload()
+                        show_message(res.message, 'success')
+                        $('#modal_import').modal('hide');
+                    },
+                    error: function(xhr, status, error) {
+                        show_message(xhr.responseJSON.message || 'Error!')
+                    }
+                });
+            })
 
         })
     </script>

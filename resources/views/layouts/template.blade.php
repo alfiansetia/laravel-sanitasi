@@ -1,3 +1,7 @@
+@php
+    $user = auth()->user();
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,6 +58,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
         integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/block-ui@2.70.1/jquery.blockUI.min.js"></script>
 
     <script>
         function multiCheck(tb_var) {
@@ -142,7 +150,19 @@
         function hrg(x) {
             return parseInt(x).toLocaleString('id-ID')
         }
+
+        $(document).ready(function() {
+            $(document).ajaxStart(function() {
+                $.blockUI({
+                    message: '<img src="{{ asset('images/loading.gif') }}" width="20px" height="20px" /> Just a moment...',
+                    baseZ: 2000,
+                });
+            }).ajaxStop($.unblockUI);
+
+            bsCustomFileInput.init()
+        })
     </script>
+7
     @stack('js')
 
 </body>
