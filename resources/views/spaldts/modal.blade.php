@@ -49,7 +49,7 @@
                                  <div class="form-group">
                                      <label for="sumber">Sumber Dana</label>
                                      <select class="form-select" id="sumber" name="sumber" required>
-                                         <option value="">Pilih Sumber Dana</option>
+                                         <option value="">Select Sumber Dana</option>
                                          <option value="DAK">DAK</option>
                                          <option value="DAU">DAU</option>
                                      </select>
@@ -92,7 +92,7 @@
          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
              <div class="modal-content">
                  <div class="modal-header">
-                     <h4 class="modal-title">Import Data</h4>
+                     <h4 class="modal-title"><i class="fas fa-file-excel me-1"></i>Import Data</h4>
                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                          <i data-feather="x"></i>
                      </button>

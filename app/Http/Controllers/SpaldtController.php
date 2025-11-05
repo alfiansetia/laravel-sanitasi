@@ -8,6 +8,8 @@ class SpaldtController extends Controller
 {
     public function index()
     {
-        return view('spaldts.index');
+        return view('spaldts.index', [
+            'title' => 'SPALD-T'
+        ]);
     }
 }

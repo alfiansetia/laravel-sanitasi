@@ -1,5 +1,6 @@
 @php
     $user = auth()->user();
+    $t = $title ?? '-';
 @endphp
 
 <!DOCTYPE html>
@@ -8,7 +9,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layout Horizontal - Mazer Admin Dashboard</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ $t }} - Mazer Admin Dashboard</title>
 
     <link rel="shortcut icon"
         href="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2033%2034'%20fill-rule='evenodd'%20stroke-linejoin='round'%20stroke-miterlimit='2'%20xmlns:v='https://vecta.io/nano'%3e%3cpath%20d='M3%2027.472c0%204.409%206.18%205.552%2013.5%205.552%207.281%200%2013.5-1.103%2013.5-5.513s-6.179-5.552-13.5-5.552c-7.281%200-13.5%201.103-13.5%205.513z'%20fill='%23435ebe'%20fill-rule='nonzero'/%3e%3ccircle%20cx='16.5'%20cy='8.8'%20r='8.8'%20fill='%2341bbdd'/%3e%3c/svg%3e"
@@ -34,11 +37,43 @@
     <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
 
     <div id="app">
-        <div id="main" class="layout-horizontal">
+        @include('components.sidebar')
 
-            @include('components.header')
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
 
-            <div class="content-wrapper container">
+            <div class="page-heading mb-2">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>{{ $t }}</h3>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+
+                                    @if ($t == 'Dashboard')
+                                        <li class="breadcrumb-item {{ $t == 'Dashboard' ? 'active' : '' }}">
+                                            Dashboard
+                                        </li>
+                                    @else
+                                        <li class="breadcrumb-item ">
+                                            <a href="{{ route('home') }}">Dashboard</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{ $t }}</li>
+                                    @endif
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content">
 
                 @yield('content')
 
@@ -48,7 +83,6 @@
         </div>
     </div>
     <script src="{{ asset('assets/static/js/components/dark.js') }}"></script>
-    <script src="{{ asset('assets/static/js/pages/horizontal-layout.js') }}"></script>
     <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
@@ -160,9 +194,16 @@
             }).ajaxStop($.unblockUI);
 
             bsCustomFileInput.init()
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
         })
     </script>
-7
+    7
     @stack('js')
 
 </body>

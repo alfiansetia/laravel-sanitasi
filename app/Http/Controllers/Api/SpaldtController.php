@@ -134,13 +134,9 @@ class SpaldtController extends Controller
                 $results->add($spaldt);
             }
             DB::commit();
-            return $this->sendResponse($results . 'Success Import Data!');
+            return $this->sendResponse($results, 'Success Import Data!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return response()->json([
-                'message'   => 'Gagal import: ' . $th->getMessage(),
-                'data'      => $data,
-            ], 500);
             return $this->sendError('Gagal import: ' . $th->getMessage(), 500);
         }
     }
