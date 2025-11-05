@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpaldtController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,13 @@ Auth::routes([
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/logout', [LoginController::class, 'logout']);
+
+    Route::post('/profiles', [ProfileController::class, 'update'])
+        ->name('profiles.update');
+    Route::put('/profiles', [ProfileController::class, 'update_password'])
+        ->name('profiles.update_password');
+    Route::get('/profiles', [ProfileController::class, 'index'])
+        ->name('profiles.index');
 
     Route::get('/', function () {
         return redirect()->route('home');

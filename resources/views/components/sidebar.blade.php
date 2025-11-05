@@ -95,6 +95,11 @@
                                 TPS3ER
                             </a>
                         </li>
+                        <li class="submenu-item  ">
+                            <a href="{{ route('spaldts.index') }}" class="submenu-link">
+                                IPLT (INSTALASI PENGOLAHAN LIMBAH TERPADU)
+                            </a>
+                        </li>
                         <li class="submenu-item {{ Route::is('users.index') ? 'active' : '' }} ">
                             <a href="{{ route('users.index') }}" class="submenu-link">User</a>
                         </li>

@@ -22,7 +22,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="{{ asset('assets/compiled/jpg/1.jpg') }}">
+                                    <img src="{{ $user->avatar }}">
                                 </div>
                             </div>
                         </div>
@@ -33,8 +33,11 @@
                             <h6 class="dropdown-header">Hello, {{ $user->name }}!</h6>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
-                                Profile</a>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profiles.index') }}">
+                                <i class="icon-mid bi bi-person me-2"></i> My Profile</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">

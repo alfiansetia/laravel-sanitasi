@@ -50,13 +50,22 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdmin(): bool
+    public function getIsAdminAttribute(): bool
     {
         return $this->role == Role::ADMIN;
     }
 
-    public function isUser(): bool
+    public function getIsUserAttribute(): bool
     {
         return $this->role == Role::USER;
+    }
+
+    public function getAvatarAttribute(): string
+    {
+        if ($this->is_admin) {
+            return asset('assets/compiled/jpg/2.jpg');
+        } else {
+            return asset('assets/compiled/jpg/1.jpg');
+        }
     }
 }

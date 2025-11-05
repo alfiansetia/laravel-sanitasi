@@ -200,8 +200,18 @@
 
         })
     </script>
-    7
+
     @stack('js')
+
+    @if (session()->has('success'))
+        <script>
+            show_message("{{ session('success') }}", "success");
+        </script>
+    @elseif(session()->has('error'))
+        <script>
+            show_message("{{ session('error') }}");
+        </script>
+    @endif
 
 </body>
 
