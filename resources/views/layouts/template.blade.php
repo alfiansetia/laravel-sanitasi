@@ -39,41 +39,38 @@
     <div id="app">
         @include('components.sidebar')
 
-        <div id="main">
-            <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-            </header>
+        <div id="main" class="layout-navbar navbar-fixed">
+            @include('components.header')
 
-            <div class="page-heading mb-2">
-                <div class="page-title">
-                    <div class="row">
-                        <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>{{ $t }}</h3>
-                        </div>
-                        <div class="col-12 col-md-6 order-md-2 order-first">
-                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                                <ol class="breadcrumb">
+            <div id="main-content" class="pt-1">
 
-                                    @if ($t == 'Dashboard')
-                                        <li class="breadcrumb-item {{ $t == 'Dashboard' ? 'active' : '' }}">
-                                            Dashboard
-                                        </li>
-                                    @else
-                                        <li class="breadcrumb-item ">
-                                            <a href="{{ route('home') }}">Dashboard</a>
-                                        </li>
-                                        <li class="breadcrumb-item active" aria-current="page">{{ $t }}</li>
-                                    @endif
-                                </ol>
-                            </nav>
+                <div class="page-heading mb-2">
+                    <div class="page-title">
+                        <div class="row">
+                            <div class="col-12 col-md-6 order-md-1 order-last">
+                                <h3>{{ $t }}</h3>
+                            </div>
+                            <div class="col-12 col-md-6 order-md-2 order-first">
+                                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                    <ol class="breadcrumb">
+
+                                        @if ($t == 'Dashboard')
+                                            <li class="breadcrumb-item {{ $t == 'Dashboard' ? 'active' : '' }}">
+                                                Dashboard
+                                            </li>
+                                        @else
+                                            <li class="breadcrumb-item ">
+                                                <a href="{{ route('home') }}">Dashboard</a>
+                                            </li>
+                                            <li class="breadcrumb-item active" aria-current="page">{{ $t }}
+                                            </li>
+                                        @endif
+                                    </ol>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="page-content">
 
                 @yield('content')
 
