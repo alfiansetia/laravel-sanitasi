@@ -7,10 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tpa extends Model
 {
     protected $guarded = [];
-    protected $appends = ['is_valid_map'];
-    protected $casts = [
-        'kecamatan_terlayani' => 'array',
-    ];
+    protected $appends = ['is_valid_map', 'kecamatan_terlayani_ids'];
 
     public function scopeFilter($query, array $filters)
     {
@@ -26,6 +23,13 @@ class Tpa extends Model
         if (isset($filters['sumber'])) {
             $query->where('sumber',  $filters['sumber']);
         }
+    }
+
+    public function getKecamatanTerlayaniIdsAttribute()
+    {
+        return $this->kecamatan_terlayani()
+            ->pluck('kecamatan_id')
+            ->toArray();
     }
 
     public function getIsValidMapAttribute(): bool
@@ -45,6 +49,6 @@ class Tpa extends Model
 
     public function kecamatan_terlayani()
     {
-        return $this->hasMany(Kelurahan::class);
+        return $this->hasMany(TpaKecamatan::class);
     }
 }

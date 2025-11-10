@@ -29,10 +29,11 @@ return new class extends Migration
             $table->string('sumber')->nullable();
             $table->string('tahun_konstruksi')->nullable();
             $table->string('tahun_beroperasi')->nullable();
-            $table->integer('rencana_umur_beroperasi')->default(0);
+            $table->integer('rencana')->default(0);
             $table->decimal('luas_sarana', 12, 1)->default(0);
             $table->decimal('luas_sel', 12, 1)->default(0);
             $table->string('pengelola')->nullable();
+            $table->string('pengelola_desc')->nullable();
             $table->string('kondisi')->nullable();
             $table->timestamps();
         });

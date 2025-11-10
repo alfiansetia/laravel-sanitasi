@@ -194,7 +194,7 @@
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
                 $('#form').attr('method', 'PUT')
-                $('#modal_title').html('<i class="fas fa-pencil me-1"></i>Edit Data')
+                $('#modal_title').html('<i class="fas fa-edit me-1"></i>Edit Data')
                 $('#modal_form').modal('show')
 
             });

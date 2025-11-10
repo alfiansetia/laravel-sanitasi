@@ -1,10 +1,10 @@
  <div class="modal fade text-left" id="modal_form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17"
      aria-hidden="true">
      <form action="" id="form">
-         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
              <div class="modal-content">
                  <div class="modal-header">
-                     <h4 class="modal-title" id="modal_title">Tambah</h4>
+                     <h4 class="modal-title" id="modal_title">Add</h4>
                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                          <i data-feather="x"></i>
                      </button>
@@ -14,59 +14,126 @@
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="tahun">Tahun</label>
-                                     <input type="text" id="tahun" class="form-control" name="tahun"
-                                         placeholder="Tahun" required>
+                                     <label for="nama">Nama TPA</label>
+                                     <input type="text" id="nama" class="form-control" name="nama"
+                                         placeholder="Nama TPA" required>
                                  </div>
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="nama">Nama Kegiatan</label>
-                                     <textarea class="form-control" name="nama" id="nama" placeholder="Nama Kegiatan" required></textarea>
+                                     <label for="kecamatan_id">Lokasi (Kecamatan)</label>
+                                     <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
+                                         <option value="">Select Kecamatan</option>
+                                         @foreach ($kecamatans as $item)
+                                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                         @endforeach
+                                     </select>
                                  </div>
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="lokasi">Lokasi</label>
-                                     <textarea class="form-control" name="lokasi" id="lokasi" placeholder="Lokasi" required></textarea>
+                                     <label for="kelurahan_id">Lokasi (Desa)</label>
+                                     <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
+                                         <option value="">Select Kelurahan</option>
+                                     </select>
                                  </div>
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="pagu">Pagu Anggaran</label>
-                                     <input type="text" id="pagu" class="form-control mask_angka" name="pagu"
-                                         placeholder="Pagu Anggaran" value="0" required>
+                                     <label for="latitude">Titik Koordinat</label>
+                                     <div class="input-group">
+                                         <input type="text" id="latitude" class="form-control" name="latitude"
+                                             placeholder="Latitude" required>
+                                         <input type="text" id="longitude" class="form-control" name="longitude"
+                                             placeholder="Longitude" required>
+                                         <button type="button" class="btn btn-secondary">
+                                             <i class="fas fa-map-marked-alt me-2"></i>
+                                         </button>
+                                     </div>
                                  </div>
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="jumlah">Jumlah Anggaran</label>
-                                     <input type="text" id="jumlah" class="form-control mask_angka" name="jumlah"
-                                         placeholder="Jumlah Anggaran" value="0" required>
-                                 </div>
-                             </div>
-                             <div class="col-12">
-                                 <div class="form-group">
-                                     <label for="sumber">Sumber Dana</label>
-                                     <select class="form-select" id="sumber" name="sumber" required>
-                                         <option value="">Select Sumber Dana</option>
+                                     <label for="sumber">Sumber Anggaran</label>
+                                     <select class="form-select" id="sumber" name="sumber">
+                                         <option value="">Select Sumber Anggaran</option>
                                          <option value="DAK">DAK</option>
                                          <option value="DAU">DAU</option>
                                      </select>
                                  </div>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-12">
                                  <div class="form-group">
-                                     <label for="lat">Latitude</label>
-                                     <input type="text" id="lat" class="form-control" name="lat"
-                                         placeholder="Latitude">
+                                     <label for="tahun_konstruksi">Tahun Konstruksi</label>
+                                     <input type="text" id="tahun_konstruksi" class="form-control"
+                                         name="tahun_konstruksi" placeholder="Tahun Konstruksi" required>
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
+                                     <label for="tahun_beroperasi">Tahun Beroperasi</label>
+                                     <input type="text" id="tahun_beroperasi" class="form-control"
+                                         name="tahun_beroperasi" placeholder="Tahun Beroperasi" required>
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
+                                     <label for="rencana">Rencana Umur Beroperasi (Tahun)</label>
+                                     <input type="text" id="rencana" class="form-control mask_angka" name="rencana"
+                                         placeholder="Rencana Umur Beroperasi" required>
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
+                                     <label for="kecamatan_terlayani">Kecamatan Terlayani</label>
+                                     <select id="kecamatan_terlayani" name="kecamatan_terlayani[]"
+                                         class="choices form-select" multiple>
+                                         <option value="">Select Kecamatan</option>
+                                         @foreach ($kecamatans as $item)
+                                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                         @endforeach
+                                     </select>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="long">Longitude</label>
-                                     <input type="text" id="long" class="form-control" name="long"
-                                         placeholder="Longitude">
+                                     <label for="luas_sarana">Luas Sarana</label>
+                                     <input type="text" id="luas_sarana" class="form-control mask_decimal"
+                                         name="luas_sarana" placeholder="Luas Sarana" required>
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
+                                 <div class="form-group">
+                                     <label for="luas_sel">Luas Sel</label>
+                                     <input type="text" id="luas_sel" class="form-control mask_decimal"
+                                         name="luas_sel" placeholder="Luas Sel" required>
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
+                                     <label for="pengelola">Jenis Pengelola (Dinas/UPT)</label>
+                                     <select id="pengelola" name="pengelola" class="choices form-select">
+                                         <option value="">Select Pengelola</option>
+                                         <option value="Dinas">Dinas</option>
+                                         <option value="UPT">UPT</option>
+                                     </select>
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
+                                     <label for="pengelola_desc">Deskripsi Pengelola</label>
+                                     <input type="text" id="pengelola_desc" class="form-control"
+                                         name="pengelola_desc" placeholder="Deskripsi Pengelola">
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
+                                     <label for="kondisi">Kondisi TPA</label>
+                                     <select id="kondisi" name="kondisi" class="choices form-select">
+                                         <option value="">Select Kondisi</option>
+                                         <option value="Baik">Baik</option>
+                                         <option value="Tidak Baik">Tidak Baik</option>
+                                     </select>
                                  </div>
                              </div>
                          </div>

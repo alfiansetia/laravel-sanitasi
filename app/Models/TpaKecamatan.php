@@ -12,4 +12,9 @@ class TpaKecamatan extends Model
     {
         return $this->belongsTo(Tpa::class);
     }
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class);
+    }
 }

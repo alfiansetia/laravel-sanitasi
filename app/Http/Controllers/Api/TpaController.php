@@ -15,6 +15,7 @@ class TpaController extends Controller
     public function index(Request $request)
     {
         $query = Tpa::query()
+            ->with(['kecamatan', 'kelurahan', 'kecamatan_terlayani.kecamatan'])
             ->filter($request->only(['tahun', 'nama', 'lokasi', 'sumber']));
         return DataTables::eloquent($query)->toJson();
     }
@@ -27,50 +28,89 @@ class TpaController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'tahun'     => 'required|date_format:Y',
-            'nama'      => 'required|max:5000',
-            'lokasi'    => 'required|max:200',
-            'pagu'      => 'required|integer|gte:0',
-            'jumlah'    => 'required|integer|gte:0',
-            'sumber'    => 'required|in:DAK,DAU',
-            'lat'       => 'nullable',
-            'long'      => 'nullable',
+            'nama'                  => 'required|max:200',
+            'kecamatan_id'          => 'required|exists:kecamatans,id',
+            'kelurahan_id'          => 'required|exists:kelurahans,id',
+            'latitude'              => 'required|numeric|between:-90,90',
+            'longitude'             => 'required|numeric|between:-180,180',
+            'sumber'                => 'required|in:DAK,DAU',
+            'tahun_konstruksi'      => 'required|date_format:Y',
+            'tahun_beroperasi'      => 'required|date_format:Y',
+            'rencana'               => 'required|integer|gte:0',
+            'kecamatan_terlayani'   => 'nullable|array',
+            'kecamatan_terlayani.*' => 'exists:kecamatans,id',
+            'luas_sarana'           => 'required|numeric|gte:0',
+            'luas_sel'              => 'required|numeric|gte:0',
+            'pengelola'             => 'required|in:Dinas,UPT',
+            'pengelola_desc'        => 'nullable|string|max:200',
+            'kondisi'               => 'required|in:Baik,Tidak Baik',
         ]);
         $tpa = Tpa::create([
-            'tahun'     => $request->tahun,
-            'nama'      => $request->nama,
-            'lokasi'    => $request->lokasi,
-            'pagu'      => $request->pagu,
-            'jumlah'    => $request->jumlah,
-            'sumber'    => $request->sumber,
-            'lat'       => $request->lat,
-            'long'      => $request->long,
+            'nama'              => $request->nama,
+            'kecamatan_id'      => $request->kecamatan_id,
+            'kelurahan_id'      => $request->kelurahan_id,
+            'lat'               => $request->latitude,
+            'long'              => $request->longitude,
+            'sumber'            => $request->sumber,
+            'tahun_konstruksi'  => $request->tahun_konstruksi,
+            'tahun_beroperasi'  => $request->tahun_beroperasi,
+            'rencana'           => $request->rencana,
+            'luas_sarana'       => $request->luas_sarana,
+            'luas_sel'          => $request->luas_sel,
+            'pengelola'         => $request->pengelola,
+            'pengelola_desc'    => $request->pengelola_desc,
+            'kondisi'           => $request->kondisi,
         ]);
+        $tpa->kecamatan_terlayani()->createMany(
+            collect($request->kecamatan_terlayani ?? [])
+                ->map(fn($id) => ['kecamatan_id' => $id])
+                ->toArray()
+        );
         return $this->sendResponse($tpa, 'Created!');
     }
 
     public function update(Request $request, Tpa $tpa)
     {
         $this->validate($request, [
-            'tahun'     => 'required|date_format:Y',
-            'nama'      => 'required|max:5000',
-            'lokasi'    => 'required|max:200',
-            'pagu'      => 'required|integer|gte:0',
-            'jumlah'    => 'required|integer|gte:0',
-            'sumber'    => 'required|in:DAK,DAU',
-            'lat'       => 'nullable',
-            'long'      => 'nullable',
+            'nama'                  => 'required|max:200',
+            'kecamatan_id'          => 'required|exists:kecamatans,id',
+            'kelurahan_id'          => 'required|exists:kelurahans,id',
+            'latitude'              => 'required|numeric|between:-90,90',
+            'longitude'             => 'required|numeric|between:-180,180',
+            'sumber'                => 'required|in:DAK,DAU',
+            'tahun_konstruksi'      => 'required|date_format:Y',
+            'tahun_beroperasi'      => 'required|date_format:Y',
+            'rencana'               => 'required|integer|gte:0',
+            'kecamatan_terlayani'   => 'nullable|array',
+            'kecamatan_terlayani.*' => 'exists:kecamatans,id',
+            'luas_sarana'           => 'required|numeric|gte:0',
+            'luas_sel'              => 'required|numeric|gte:0',
+            'pengelola'             => 'required|in:Dinas,UPT',
+            'pengelola_desc'        => 'nullable|string|max:200',
+            'kondisi'               => 'required|in:Baik,Tidak Baik',
         ]);
         $tpa->update([
-            'tahun'     => $request->tahun,
-            'nama'      => $request->nama,
-            'lokasi'    => $request->lokasi,
-            'pagu'      => $request->pagu,
-            'jumlah'    => $request->jumlah,
-            'sumber'    => $request->sumber,
-            'lat'       => $request->lat,
-            'long'      => $request->long,
+            'nama'              => $request->nama,
+            'kecamatan_id'      => $request->kecamatan_id,
+            'kelurahan_id'      => $request->kelurahan_id,
+            'lat'               => $request->latitude,
+            'long'              => $request->longitude,
+            'sumber'            => $request->sumber,
+            'tahun_konstruksi'  => $request->tahun_konstruksi,
+            'tahun_beroperasi'  => $request->tahun_beroperasi,
+            'rencana'           => $request->rencana,
+            'luas_sarana'       => $request->luas_sarana,
+            'luas_sel'          => $request->luas_sel,
+            'pengelola'         => $request->pengelola,
+            'pengelola_desc'    => $request->pengelola_desc,
+            'kondisi'           => $request->kondisi,
         ]);
+        $tpa->kecamatan_terlayani()->delete();
+        $tpa->kecamatan_terlayani()->createMany(
+            collect($request->kecamatan_terlayani ?? [])
+                ->map(fn($id) => ['kecamatan_id' => $id])
+                ->toArray()
+        );
         return $this->sendResponse($tpa, 'Updated!');
     }
 

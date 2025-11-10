@@ -6,6 +6,13 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/colormask.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
+    <style>
+        .choices__list--dropdown,
+        .choices__list[aria-expanded] {
+            z-index: 1051 !important;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -16,14 +23,19 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Tahun</th>
-                            <th>Nama Kegiatan</th>
-                            <th>Lokasi</th>
-                            <th>Pagu</th>
-                            <th>Jumlah Unit</th>
-                            <th>Sumber Dana</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
+                            <th>Nama</th>
+                            <th>Kecamatan</th>
+                            <th>Kelurahan</th>
+                            <th>Koordinat</th>
+                            <th>Sumber Anggaran</th>
+                            <th>Tahun Konstruksi</th>
+                            <th>Tahun Beroperasi</th>
+                            <th>Rencana Umur Beroperasi (TH)</th>
+                            <th>Kecamatan Terlayani</th>
+                            <th>Luas Sarana (ha)</th>
+                            <th>Luas Sel (ha)</th>
+                            <th>Jenis Pengelola</th>
+                            <th>Kondisi TPA</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,6 +56,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/jquery.inputmask.min.js"></script>
+    <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
 
     <script>
         const URL_INDEX = "{{ route('tpas.index') }}"
@@ -51,7 +64,14 @@
         var id = 0;
 
         $(document).ready(function() {
-            $('#tahun').datepicker({
+            $('#tahun_konstruksi').datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years",
+                autoclose: true
+            });
+
+            $('#tahun_beroperasi').datepicker({
                 format: "yyyy",
                 viewMode: "years",
                 minViewMode: "years",
@@ -69,6 +89,88 @@
                 min: 0,
             });
 
+            $('.mask_decimal').inputmask({
+                alias: 'numeric',
+                groupSeparator: '.',
+                autoGroup: true,
+                digits: 1,
+                rightAlign: false,
+                removeMaskOnSubmit: true,
+                autoUnmask: true,
+                digitsOptional: false,
+                min: 0,
+            });
+
+            const kecamatan = new Choices(document.getElementById('kecamatan_id'), {
+                searchEnabled: true,
+                removeItemButton: true,
+                allowHTML: true,
+            });
+
+            const kelurahan = new Choices(document.getElementById('kelurahan_id'), {
+                searchEnabled: true,
+                removeItemButton: true,
+                allowHTML: true,
+            });
+
+            const sumber = new Choices(document.getElementById('sumber'), {
+                searchEnabled: true,
+                removeItemButton: true,
+                allowHTML: true,
+            });
+
+            const kecamatanTerlayani = new Choices(document.getElementById('kecamatan_terlayani'), {
+                searchEnabled: true,
+                removeItemButton: true,
+                allowHTML: true,
+            });
+
+            const pengelola = new Choices(document.getElementById('pengelola'), {
+                searchEnabled: true,
+                removeItemButton: true,
+                allowHTML: true,
+            });
+
+            const kondisi = new Choices(document.getElementById('kondisi'), {
+                searchEnabled: true,
+                removeItemButton: true,
+                allowHTML: true,
+            });
+
+            $('#kecamatan_id').on('change', function() {
+                let kecamatan_id = $(this).val();
+                kelurahan.clearChoices();
+                kelurahan.setChoices([{
+                    value: '',
+                    label: 'Select Kelurahan',
+                    disabled: true
+                }], 'value', 'label', false);
+                kelurahan.setChoiceByValue('');
+                if (!kecamatan_id) {
+                    kelurahan.clearChoices();
+                    return;
+                }
+                $.ajax({
+                    url: `{{ route('api.kelurahans.index') }}?kecamatan_id=${kecamatan_id}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        kelurahan.clearChoices();
+                        kelurahan.setChoices(
+                            response.data.map(item => ({
+                                value: item.id,
+                                label: item.nama,
+                            })),
+                            'value',
+                            'label',
+                            false
+                        );
+                    },
+                    error: function() {
+                        kelurahan.clearChoices();
+                    }
+                });
+            });
 
             var table = $('#table').DataTable({
                 rowId: 'id',
@@ -88,60 +190,84 @@
                 pageLength: 10,
                 lengthChange: false,
                 order: [
-                    [9, "desc"]
+                    [15, "desc"]
                 ],
                 columns: [{
-                        data: 'id',
-                        className: "text-center",
-                        searchable: false,
-                        width: '30px',
-                        sortable: false,
-                        render: function(data, type, row, meta) {
-                            return `<input type="checkbox" name="id[]" value="${data}" class="form-check-input child-chk">`
+                    data: 'id',
+                    className: "text-center",
+                    searchable: false,
+                    width: '30px',
+                    sortable: false,
+                    render: function(data, type, row, meta) {
+                        return `<input type="checkbox" name="id[]" value="${data}" class="form-check-input child-chk">`
+                    }
+                }, {
+                    data: "nama",
+                    className: 'text-start',
+                }, {
+                    data: "kecamatan.nama",
+                    className: 'text-start',
+                }, {
+                    data: "kelurahan.nama",
+                    className: 'text-start',
+                }, {
+                    data: "lat",
+                    className: 'text-start',
+                    render: function(data, type, row, meta) {
+                        return `${data||''} ${row.long||''}`
+                    }
+                }, {
+                    data: "sumber",
+                    className: 'text-center',
+                }, {
+                    data: "tahun_konstruksi",
+                    className: 'text-center',
+                }, {
+                    data: "tahun_beroperasi",
+                    className: 'text-center',
+                }, {
+                    data: "rencana",
+                    className: 'text-center',
+                }, {
+                    data: "id",
+                    sortable: false,
+                    searchable: false,
+                    className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (!row.kecamatan_terlayani || !row.kecamatan_terlayani.length)
+                        return '-';
+                        return row.kecamatan_terlayani
+                            .map(item => item.kecamatan?.nama ?? '')
+                            .filter(n => n !== '')
+                            .join(', ');
+                    }
+                }, {
+                    data: "luas_sarana",
+                    className: 'text-center',
+                }, {
+                    data: "luas_sel",
+                    className: 'text-center',
+                }, {
+                    data: "pengelola",
+                    className: 'text-start',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return `${data} ${row.pengelola_desc||''}`
                         }
-                    }, {
-                        data: "tahun",
-                        className: 'text-center',
-                    },
-                    {
-                        data: "nama",
-                        className: 'text-start',
-                    }, {
-                        data: "lokasi",
-                        className: 'text-start',
-                    }, {
-                        data: "pagu",
-                        className: 'text-end',
-                        render: function(data, type, row, meta) {
-                            if (type == 'display') {
-                                return hrg(data)
-                            }
-                            return data
-                        }
-                    }, {
-                        data: "jumlah",
-                        className: 'text-end',
-                        render: function(data, type, row, meta) {
-                            if (type == 'display') {
-                                return hrg(data)
-                            }
-                            return data
-                        }
-                    }, {
-                        data: "sumber",
-                        className: 'text-center',
-                    }, {
-                        data: "lat",
-                        className: 'text-start',
-                    }, {
-                        data: "long",
-                        className: 'text-start',
-                    }, {
-                        data: "id",
-                        className: 'text-start',
-                        visible: false,
-                    },
-                ],
+                        return data
+                    }
+                }, {
+                    data: "kondisi",
+                    className: 'text-start',
+                }, {
+                    data: "pengelola_desc",
+                    className: 'text-start',
+                    visible: false,
+                }, {
+                    data: "id",
+                    className: 'text-start',
+                    visible: false,
+                }, ],
                 buttons: [{
                         text: '<i class="fas fa-plus me-1"></i>Add',
                         className: 'btn btn-sm btn-info',
@@ -226,11 +352,41 @@
             }
 
             $('#modal_form').on('shown.bs.modal', function() {
-                $('#tahun').focus()
+                $('#nama').focus()
             });
 
             $('#form').submit(function(e) {
                 e.preventDefault()
+                let kec = kecamatan.getValue(true)
+                if (kec == null || kec == '') {
+                    kecamatan.showDropdown(true)
+                    show_message('Select Lokasi Kecamatan!')
+                    return
+                }
+                let kel = kelurahan.getValue(true)
+                if (kel == null || kel == '') {
+                    kelurahan.showDropdown(true)
+                    show_message('Select Lokasi Desa!')
+                    return
+                }
+                let sum = sumber.getValue(true)
+                if (sum == null || sum == '') {
+                    sumber.showDropdown(true)
+                    show_message('Select Sumber Anggaran!')
+                    return
+                }
+                let peng = pengelola.getValue(true)
+                if (peng == null || peng == '') {
+                    pengelola.showDropdown(true)
+                    show_message('Select Jenis Pengelola!')
+                    return
+                }
+                let kon = kondisi.getValue(true)
+                if (kon == null || kon == '') {
+                    kondisi.showDropdown(true)
+                    show_message('Select Kondisi TPA!')
+                    return
+                }
                 $.ajax({
                     url: $(this).attr('action'),
                     type: $(this).attr('method'),
@@ -250,8 +406,44 @@
             $('#table tbody').on('click', 'tr td:not(:first-child)', function() {
                 data = table.row(this).data()
                 id = data.id
-                $('#tahun').datepicker('setDate', new Date(data.tahun, 0, 1));
                 $('#nama').val(data.nama)
+                kecamatan.removeActiveItems();
+                if (data.kecamatan_id != null) {
+                    kecamatan.setChoiceByValue(data.kecamatan_id.toString());
+                    $('#kecamatan_id').trigger('change')
+                }
+
+                kelurahan.removeActiveItems();
+                if (data.kelurahan_id != null) {
+                    kelurahan.setChoices([{
+                        value: data.kelurahan_id.toString(),
+                        label: data.kelurahan.nama,
+                        selected: false
+                    }], 'value', 'label', true);
+                    kelurahan.setChoiceByValue(data.kelurahan_id.toString());
+                }
+                $('#latitude').val(data.lat)
+                $('#longitude').val(data.long)
+                sumber.removeActiveItems();
+                sumber.setChoiceByValue(data.sumber);
+                $('#tahun_konstruksi').val(data.tahun_konstruksi);
+                $('#tahun_beroperasi').val(data.tahun_beroperasi);
+                $('#rencana').val(data.rencana)
+                kecamatanTerlayani.removeActiveItems();
+                if (Array.isArray(data.kecamatan_terlayani_ids)) {
+                    data.kecamatan_terlayani_ids.forEach(id => {
+                        kecamatanTerlayani.setChoiceByValue(id.toString());
+                    });
+                }
+                $('#luas_sarana').val(data.luas_sarana)
+                $('#luas_sel').val(data.luas_sel)
+                pengelola.removeActiveItems();
+                pengelola.setChoiceByValue(data.pengelola);
+                $('#pengelola_desc').val(data.pengelola_desc)
+                kondisi.removeActiveItems();
+                kondisi.setChoiceByValue(data.kondisi);
+
+                $('#tahun').datepicker('setDate', new Date(data.tahun, 0, 1));
                 $('#lokasi').val(data.lokasi)
                 $('#pagu').val(data.pagu)
                 $('#jumlah').val(data.jumlah)
@@ -261,7 +453,7 @@
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
                 $('#form').attr('method', 'PUT')
-                $('#modal_title').html('<i class="fas fa-pencil me-1"></i>Edit Data')
+                $('#modal_title').html('<i class="fas fa-edit me-1"></i>Edit Data')
                 $('#modal_form').modal('show')
 
             });
@@ -270,14 +462,28 @@
             function modal_add() {
                 $('#form').attr('action', URL_INDEX_API)
                 $('#form').attr('method', 'POST')
-                $('#tahun').val('')
+
                 $('#nama').val('')
-                $('#lokasi').val('')
-                $('#pagu').val(0)
-                $('#jumlah').val(0)
-                $('#sumber').val('').change()
-                $('#lat').val('')
-                $('#long').val('')
+                kecamatan.removeActiveItems();
+                kecamatan.setChoiceByValue('');
+                kelurahan.removeActiveItems();
+                kelurahan.setChoiceByValue('');
+                $('#latitude').val('')
+                $('#longitude').val('')
+                sumber.removeActiveItems();
+                sumber.setChoiceByValue('');
+                $('#tahun_konstruksi').val('');
+                $('#tahun_beroperasi').val('');
+                $('#rencana').val(0)
+                kecamatanTerlayani.removeActiveItems();
+                kecamatanTerlayani.setChoiceByValue([])
+                $('#luas_sarana').val(0.0)
+                $('#luas_sel').val(0.0)
+                pengelola.removeActiveItems();
+                pengelola.setChoiceByValue('');
+                $('#pengelola_desc').val('')
+                kondisi.removeActiveItems();
+                kondisi.setChoiceByValue('');
 
                 $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data')
                 $('#modal_form').modal('show')
