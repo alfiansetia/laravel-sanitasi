@@ -27,6 +27,9 @@ class User extends Authenticatable
     ];
 
     protected $appends = ['is_admin', 'is_user', 'avatar'];
+    public static $filterProp = [
+        'role'
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

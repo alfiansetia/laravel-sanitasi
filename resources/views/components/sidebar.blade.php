@@ -100,7 +100,7 @@
                             </a>
                         </li>
                         <li class="submenu-item  ">
-                            <a href="{{ route('tps3r.index') }}" class="submenu-link">
+                            <a href="{{ route('tps3rs.index') }}" class="submenu-link">
                                 TPS3R
                             </a>
                         </li>

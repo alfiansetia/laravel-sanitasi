@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Kelurahan extends Model
 {
     protected $guarded = [];
+    public static $filterProp = [
+        'kode',
+        'nama',
+        'kecamatan_id',
+    ];
 
     public function scopeFilter($query, array $filters)
     {

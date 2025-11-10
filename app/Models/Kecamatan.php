@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Kecamatan extends Model
 {
     protected $guarded = [];
+    public static $filterProp = [
+        'nama',
+    ];
 
     public function scopeFilter($query, array $filters)
     {

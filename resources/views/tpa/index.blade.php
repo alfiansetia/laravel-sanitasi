@@ -23,7 +23,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nama</th>
+                            <th>Nama TPA</th>
                             <th>Kecamatan</th>
                             <th>Kelurahan</th>
                             <th>Koordinat</th>
@@ -143,11 +143,11 @@
                 kelurahan.setChoices([{
                     value: '',
                     label: 'Select Kelurahan',
-                    disabled: true
-                }], 'value', 'label', false);
+                    disabled: true,
+                    selected: true,
+                }], 'value', 'label', true);
                 kelurahan.setChoiceByValue('');
                 if (!kecamatan_id) {
-                    kelurahan.clearChoices();
                     return;
                 }
                 $.ajax({
@@ -228,6 +228,12 @@
                 }, {
                     data: "rencana",
                     className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return hrg(data)
+                        }
+                        return data
+                    }
                 }, {
                     data: "id",
                     sortable: false,
@@ -235,7 +241,7 @@
                     className: 'text-center',
                     render: function(data, type, row, meta) {
                         if (!row.kecamatan_terlayani || !row.kecamatan_terlayani.length)
-                        return '-';
+                            return '-';
                         return row.kecamatan_terlayani
                             .map(item => item.kecamatan?.nama ?? '')
                             .filter(n => n !== '')
@@ -244,9 +250,21 @@
                 }, {
                     data: "luas_sarana",
                     className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return hrg(data)
+                        }
+                        return data
+                    }
                 }, {
                     data: "luas_sel",
                     className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return hrg(data)
+                        }
+                        return data
+                    }
                 }, {
                     data: "pengelola",
                     className: 'text-start',
@@ -426,8 +444,8 @@
                 $('#longitude').val(data.long)
                 sumber.removeActiveItems();
                 sumber.setChoiceByValue(data.sumber);
-                $('#tahun_konstruksi').val(data.tahun_konstruksi);
-                $('#tahun_beroperasi').val(data.tahun_beroperasi);
+                $('#tahun_konstruksi').datepicker('setDate', new Date(data.tahun_konstruksi, 0, 1));
+                $('#tahun_beroperasi').datepicker('setDate', new Date(data.tahun_beroperasi, 0, 1));
                 $('#rencana').val(data.rencana)
                 kecamatanTerlayani.removeActiveItems();
                 if (Array.isArray(data.kecamatan_terlayani_ids)) {
@@ -466,6 +484,7 @@
                 $('#nama').val('')
                 kecamatan.removeActiveItems();
                 kecamatan.setChoiceByValue('');
+                $('#kecamatan_id').trigger('change')
                 kelurahan.removeActiveItems();
                 kelurahan.setChoiceByValue('');
                 $('#latitude').val('')

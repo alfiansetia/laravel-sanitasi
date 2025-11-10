@@ -15,7 +15,7 @@ class SanitasiController extends Controller
     public function index(Request $request)
     {
         $query = Sanitasi::query()
-            ->filter($request->only(['tahun', 'nama', 'lokasi', 'sumber']));
+            ->filter($request->only(Sanitasi::$filterProp));
         return DataTables::eloquent($query)->toJson();
     }
 

@@ -8,6 +8,12 @@ class Sanitasi extends Model
 {
     protected $guarded = [];
     protected $appends = ['is_valid_map'];
+    public static $filterProp = [
+        'tahun',
+        'nama',
+        'lokasi',
+        'sumber'
+    ];
 
     public function scopeFilter($query, array $filters)
     {

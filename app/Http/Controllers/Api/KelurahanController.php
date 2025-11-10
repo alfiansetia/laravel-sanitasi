@@ -16,7 +16,7 @@ class KelurahanController extends Controller
     {
         $query = Kelurahan::query()
             ->with('kecamatan')
-            ->filter($request->only(['kode', 'nama', 'kecamatan_id']));
+            ->filter($request->only(Kelurahan::$filterProp));
         return DataTables::eloquent($query)->toJson();
     }
 

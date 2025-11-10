@@ -15,7 +15,7 @@ class KecamatanController extends Controller
     public function index(Request $request)
     {
         $query = Kecamatan::query()
-            ->filter($request->only(['nama']));
+            ->filter($request->only(Kecamatan::$filterProp));
         return DataTables::eloquent($query)->toJson();
     }
 

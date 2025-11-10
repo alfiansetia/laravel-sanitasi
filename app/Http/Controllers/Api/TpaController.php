@@ -20,22 +20,17 @@ class TpaController extends Controller
                 'kelurahan',
                 'kecamatan_terlayani.kecamatan'
             ])
-            ->filter($request->only([
-                'nama',
-                'sumber',
-                'kecamatan_id',
-                'kelurahan_id',
-                'tahun_konstruksi',
-                'tahun_beroperasi',
-                'pengelola',
-                'kondisi',
-            ]));
+            ->filter($request->only(Tpa::$filterProp));
         return DataTables::eloquent($query)->toJson();
     }
 
     public function show(Tpa $tpa)
     {
-        return $this->sendResponse($tpa);
+        return $this->sendResponse($tpa->load([
+            'kecamatan',
+            'kelurahan',
+            'kecamatan_terlayani.kecamatan'
+        ]));
     }
 
     public function store(Request $request)

@@ -53,8 +53,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tpsts', [TpstController::class, 'index'])
         ->name('tpsts.index');
 
-    Route::get('/tps3r', [Tps3rController::class, 'index'])
-        ->name('tps3r.index');
+    Route::get('/tps3rs', [Tps3rController::class, 'index'])
+        ->name('tps3rs.index');
 
     Route::get('/iplts', [IpltController::class, 'index'])
         ->name('iplts.index');

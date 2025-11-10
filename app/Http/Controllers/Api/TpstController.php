@@ -15,23 +15,22 @@ class TpstController extends Controller
     public function index(Request $request)
     {
         $query = Tpst::query()
-            ->with(['kecamatan', 'kelurahan', 'kecamatan_terlayani.kecamatan'])
-            ->filter($request->only([
-                'nama',
-                'sumber',
-                'kecamatan_id',
-                'kelurahan_id',
-                'tahun_konstruksi',
-                'tahun_beroperasi',
-                'pengelola',
-                'kondisi',
-            ]));
+            ->with([
+                'kecamatan',
+                'kelurahan',
+                'kecamatan_terlayani.kecamatan'
+            ])
+            ->filter($request->only(Tpst::$filterProp));
         return DataTables::eloquent($query)->toJson();
     }
 
     public function show(Tpst $tpst)
     {
-        return $this->sendResponse($tpst);
+        return $this->sendResponse($tpst->load([
+            'kecamatan',
+            'kelurahan',
+            'kecamatan_terlayani.kecamatan'
+        ]));
     }
 
     public function store(Request $request)
