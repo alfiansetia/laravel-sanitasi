@@ -14,6 +14,13 @@
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
+                                     <label for="nama">Nama IPLT</label>
+                                     <input type="text" id="nama" class="form-control" name="nama"
+                                         placeholder="Nama IPLT" required>
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
                                      <label for="kecamatan_id">Kecamatan</label>
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
                                          <option value="">Select Kecamatan</option>
@@ -25,7 +32,7 @@
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="kelurahan_id">Kelurahan/Desa</label>
+                                     <label for="kelurahan_id">Desa/Kelurahan</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
                                          <option value="">Select Kelurahan</option>
                                      </select>
@@ -33,74 +40,89 @@
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="luas">Luas</label>
+                                     <label for="latitude">Titik Koordinat</label>
                                      <div class="input-group">
-                                         <input type="text" id="luas" class="form-control mask_angka"
-                                             name="luas" placeholder="Luas" required>
-                                         <span class="btn btn-secondary">
-                                             M2
-                                         </span>
+                                         <input type="text" id="latitude" class="form-control" name="latitude"
+                                             placeholder="Latitude" required>
+                                         <input type="text" id="longitude" class="form-control" name="longitude"
+                                             placeholder="Longitude" required>
+                                         <button type="button" class="btn btn-secondary">
+                                             <i class="fas fa-map-marked-alt me-2"></i>
+                                         </button>
                                      </div>
                                  </div>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-12">
                                  <div class="form-group">
                                      <label for="tahun_konstruksi">Tahun Konstruksi</label>
                                      <input type="text" id="tahun_konstruksi" class="form-control"
                                          name="tahun_konstruksi" placeholder="Tahun Konstruksi" required>
                                  </div>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-12">
                                  <div class="form-group">
-                                     <label for="tahun_beroperasi">Tahun Beroperasi</label>
-                                     <input type="text" id="tahun_beroperasi" class="form-control"
-                                         name="tahun_beroperasi" placeholder="Tahun Beroperasi" required>
+                                     <label for="terpasang">Kapasitas Terpasang</label>
+                                     <input type="text" id="terpasang" class="form-control mask_angka"
+                                         name="terpasang" placeholder="Kapasitas Terpasang" required>
                                  </div>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-12">
                                  <div class="form-group">
-                                     <label for="jumlah_timbunan">Jumlah Timbunan Sampah (Ton/Hari)</label>
-                                     <input type="text" id="jumlah_timbunan" class="form-control mask_decimal"
-                                         name="jumlah_timbunan"
-                                         placeholder="Jumlah Timbunan Timbunan Sampah (Ton/Hari)">
+                                     <label for="terpakai">Kapasitas Terpakai</label>
+                                     <input type="text" id="terpakai" class="form-control mask_angka"
+                                         name="terpakai" placeholder="Kapasitas Terpakai" required>
                                  </div>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-12">
                                  <div class="form-group">
-                                     <label for="jumlah_penduduk">Jumlah Penduduk</label>
-                                     <input type="text" id="jumlah_penduduk" class="form-control mask_angka"
-                                         name="jumlah_penduduk" placeholder="Jumlah Penduduk" required>
+                                     <label for="tidak_terpakai">Kapasitas Tidak Terpakai</label>
+                                     <input type="text" id="tidak_terpakai" class="form-control mask_angka"
+                                         name="tidak_terpakai" placeholder="Kapasitas Tidak Terpakai" required>
                                  </div>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-12">
                                  <div class="form-group">
-                                     <label for="jumlah_kk">Jumlah KK Terlayani</label>
-                                     <input type="text" id="jumlah_kk" class="form-control mask_angka"
-                                         name="jumlah_kk" placeholder="Jumlah KK Terlayani" required>
+                                     <label for="truk">Truk Tinja (Unit)</label>
+                                     <input type="text" id="truk" class="form-control mask_angka"
+                                         name="truk" placeholder="Truk Tinja (Unit)" required>
                                  </div>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-12">
                                  <div class="form-group">
-                                     <label for="gerobak">Gerobak</label>
-                                     <input type="text" id="gerobak" class="form-control mask_angka" name="gerobak"
-                                         placeholder="Gerobak" required>
+                                     <label for="kapasitas_truk">Kapasitas Truk (M3)</label>
+                                     <input type="text" id="kapasitas_truk" class="form-control mask_angka"
+                                         name="kapasitas_truk" placeholder="Kapasitas Truk (M3)" required>
                                  </div>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-12">
                                  <div class="form-group">
-                                     <label for="motor">Motor Roda Tiga</label>
-                                     <input type="text" id="motor" class="form-control mask_angka"
-                                         name="motor" placeholder="Motor Roda Tiga" required>
-                                 </div>
-                             </div>
-                             <div class="col-md-6">
-                                 <div class="form-group">
-                                     <label for="status">Keberfungsian</label>
-                                     <select id="status" name="status" class="choices form-select">
-                                         <option value="">Select Keberfungsian</option>
-                                         <option value="Berfungsi">Berfungsi</option>
-                                         <option value="Tidak Berfungsi">Tidak Berfungsi</option>
+                                     <label for="kondisi_truk">Kondisi Truk</label>
+                                     <select id="kondisi_truk" name="kondisi_truk" class="choices form-select">
+                                         <option value="">Select Kondisi Truk</option>
+                                         <option value="Baik">Baik</option>
+                                         <option value="Tidak Baik">Tidak Baik</option>
                                      </select>
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
+                                     <label for="rit">Jumlah Ritasi (Rit/Hari)</label>
+                                     <input type="text" id="rit" class="form-control mask_angka"
+                                         name="rit" placeholder="Jumlah Ritasi (Rit/Hari)" required>
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
+                                     <label for="pemanfaat_kk">Jumlah Pemanfaat KK</label>
+                                     <input type="text" id="pemanfaat_kk" class="form-control mask_angka"
+                                         name="pemanfaat_kk" placeholder="Jumlah Pemanfaat KK" required>
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
+                                     <label for="pemanfaat_jiwa">Jumlah Pemanfaat Jiwa</label>
+                                     <input type="text" id="pemanfaat_jiwa" class="form-control mask_angka"
+                                         name="pemanfaat_jiwa" placeholder="Jumlah Pemanfaat Jiwa" required>
                                  </div>
                              </div>
                          </div>

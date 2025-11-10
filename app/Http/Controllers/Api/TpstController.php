@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TpstRequest;
 use App\Models\Tpst;
 use Exception;
 use Illuminate\Http\Request;
@@ -33,42 +34,9 @@ class TpstController extends Controller
         ]));
     }
 
-    public function store(Request $request)
+    public function store(TpstRequest $request)
     {
-        $this->validate($request, [
-            'nama'                  => 'required|max:200',
-            'kecamatan_id'          => 'required|exists:kecamatans,id',
-            'kelurahan_id'          => 'required|exists:kelurahans,id',
-            'latitude'              => 'required|numeric|between:-90,90',
-            'longitude'             => 'required|numeric|between:-180,180',
-            'sumber'                => 'required|in:DAK,DAU',
-            'tahun_konstruksi'      => 'required|date_format:Y',
-            'tahun_beroperasi'      => 'required|date_format:Y',
-            'rencana'               => 'required|integer|gte:0',
-            'kecamatan_terlayani'   => 'nullable|array',
-            'kecamatan_terlayani.*' => 'exists:kecamatans,id',
-            'luas_sarana'           => 'required|numeric|gte:0',
-            'luas_sel'              => 'required|numeric|gte:0',
-            'pengelola'             => 'required|in:Dinas,UPT',
-            'pengelola_desc'        => 'nullable|string|max:200',
-            'kondisi'               => 'required|in:Baik,Tidak Baik',
-        ]);
-        $tpst = Tpst::create([
-            'nama'              => $request->nama,
-            'kecamatan_id'      => $request->kecamatan_id,
-            'kelurahan_id'      => $request->kelurahan_id,
-            'lat'               => $request->latitude,
-            'long'              => $request->longitude,
-            'sumber'            => $request->sumber,
-            'tahun_konstruksi'  => $request->tahun_konstruksi,
-            'tahun_beroperasi'  => $request->tahun_beroperasi,
-            'rencana'           => $request->rencana,
-            'luas_sarana'       => $request->luas_sarana,
-            'luas_sel'          => $request->luas_sel,
-            'pengelola'         => $request->pengelola,
-            'pengelola_desc'    => $request->pengelola_desc,
-            'kondisi'           => $request->kondisi,
-        ]);
+        $tpst = Tpst::create($request->mappedData());
         $tpst->kecamatan_terlayani()->createMany(
             collect($request->kecamatan_terlayani ?? [])
                 ->map(fn($id) => ['kecamatan_id' => $id])
@@ -77,42 +45,9 @@ class TpstController extends Controller
         return $this->sendResponse($tpst, 'Created!');
     }
 
-    public function update(Request $request, Tpst $tpst)
+    public function update(TpstRequest $request, Tpst $tpst)
     {
-        $this->validate($request, [
-            'nama'                  => 'required|max:200',
-            'kecamatan_id'          => 'required|exists:kecamatans,id',
-            'kelurahan_id'          => 'required|exists:kelurahans,id',
-            'latitude'              => 'required|numeric|between:-90,90',
-            'longitude'             => 'required|numeric|between:-180,180',
-            'sumber'                => 'required|in:DAK,DAU',
-            'tahun_konstruksi'      => 'required|date_format:Y',
-            'tahun_beroperasi'      => 'required|date_format:Y',
-            'rencana'               => 'required|integer|gte:0',
-            'kecamatan_terlayani'   => 'nullable|array',
-            'kecamatan_terlayani.*' => 'exists:kecamatans,id',
-            'luas_sarana'           => 'required|numeric|gte:0',
-            'luas_sel'              => 'required|numeric|gte:0',
-            'pengelola'             => 'required|in:Dinas,UPT',
-            'pengelola_desc'        => 'nullable|string|max:200',
-            'kondisi'               => 'required|in:Baik,Tidak Baik',
-        ]);
-        $tpst->update([
-            'nama'              => $request->nama,
-            'kecamatan_id'      => $request->kecamatan_id,
-            'kelurahan_id'      => $request->kelurahan_id,
-            'lat'               => $request->latitude,
-            'long'              => $request->longitude,
-            'sumber'            => $request->sumber,
-            'tahun_konstruksi'  => $request->tahun_konstruksi,
-            'tahun_beroperasi'  => $request->tahun_beroperasi,
-            'rencana'           => $request->rencana,
-            'luas_sarana'       => $request->luas_sarana,
-            'luas_sel'          => $request->luas_sel,
-            'pengelola'         => $request->pengelola,
-            'pengelola_desc'    => $request->pengelola_desc,
-            'kondisi'           => $request->kondisi,
-        ]);
+        $tpst->update($request->mappedData());
         $tpst->kecamatan_terlayani()->delete();
         $tpst->kecamatan_terlayani()->createMany(
             collect($request->kecamatan_terlayani ?? [])

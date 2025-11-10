@@ -23,19 +23,20 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nama TPA</th>
                             <th>Kecamatan</th>
-                            <th>Kelurahan</th>
+                            <th>Desa/Kelurahan</th>
+                            <th>Nama IPLT</th>
                             <th>Koordinat</th>
-                            <th>Sumber Anggaran</th>
                             <th>Tahun Konstruksi</th>
-                            <th>Tahun Beroperasi</th>
-                            <th>Rencana Umur Beroperasi (TH)</th>
-                            <th>Kecamatan Terlayani</th>
-                            <th>Luas Sarana (ha)</th>
-                            <th>Luas Sel (ha)</th>
-                            <th>Jenis Pengelola</th>
-                            <th>Kondisi TPA</th>
+                            <th>Kapasitas Terpasang</th>
+                            <th>Kapasitas Terpakai</th>
+                            <th>Kapasitas Tidak Terpakai</th>
+                            <th>Truk Tinja (Unit)</th>
+                            <th>Kapasitas Truk (M3)</th>
+                            <th>Kondisi Truk</th>
+                            <th>Jumlah Ritas (Rit/Hari)</th>
+                            <th>Jumlah Pemanfaat KK</th>
+                            <th>Jumlah Pemanfaat Jiwa</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +46,7 @@
         </div>
     </section>
 
-    @include('tpa.modal')
+    @include('iplt.modal')
 @endsection
 
 @push('js')
@@ -59,19 +60,12 @@
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
 
     <script>
-        const URL_INDEX = "{{ route('tpas.index') }}"
-        const URL_INDEX_API = "{{ route('api.tpas.index') }}"
+        const URL_INDEX = "{{ route('iplts.index') }}"
+        const URL_INDEX_API = "{{ route('api.iplts.index') }}"
         var id = 0;
 
         $(document).ready(function() {
             $('#tahun_konstruksi').datepicker({
-                format: "yyyy",
-                viewMode: "years",
-                minViewMode: "years",
-                autoclose: true
-            });
-
-            $('#tahun_beroperasi').datepicker({
                 format: "yyyy",
                 viewMode: "years",
                 minViewMode: "years",
@@ -113,25 +107,7 @@
                 allowHTML: true,
             });
 
-            const sumber = new Choices(document.getElementById('sumber'), {
-                searchEnabled: true,
-                removeItemButton: true,
-                allowHTML: true,
-            });
-
-            const kecamatanTerlayani = new Choices(document.getElementById('kecamatan_terlayani'), {
-                searchEnabled: true,
-                removeItemButton: true,
-                allowHTML: true,
-            });
-
-            const pengelola = new Choices(document.getElementById('pengelola'), {
-                searchEnabled: true,
-                removeItemButton: true,
-                allowHTML: true,
-            });
-
-            const kondisi = new Choices(document.getElementById('kondisi'), {
+            const kondisi = new Choices(document.getElementById('kondisi_truk'), {
                 searchEnabled: true,
                 removeItemButton: true,
                 allowHTML: true,
@@ -217,39 +193,12 @@
                         return `${data||''} ${row.long||''}`
                     }
                 }, {
-                    data: "sumber",
-                    className: 'text-center',
-                }, {
                     data: "tahun_konstruksi",
                     className: 'text-center',
                 }, {
-                    data: "tahun_beroperasi",
+                    data: "terpasang",
                     className: 'text-center',
-                }, {
-                    data: "rencana",
-                    className: 'text-center',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return hrg(data)
-                        }
-                        return data
-                    }
-                }, {
-                    data: "id",
-                    sortable: false,
                     searchable: false,
-                    className: 'text-center',
-                    render: function(data, type, row, meta) {
-                        if (!row.kecamatan_terlayani || !row.kecamatan_terlayani.length)
-                            return '-';
-                        return row.kecamatan_terlayani
-                            .map(item => item.kecamatan?.nama ?? '')
-                            .filter(n => n !== '')
-                            .join(', ');
-                    }
-                }, {
-                    data: "luas_sarana",
-                    className: 'text-center',
                     render: function(data, type, row, meta) {
                         if (type == 'display') {
                             return hrg(data)
@@ -257,8 +206,9 @@
                         return data
                     }
                 }, {
-                    data: "luas_sel",
+                    data: "terpakai",
                     className: 'text-center',
+                    searchable: false,
                     render: function(data, type, row, meta) {
                         if (type == 'display') {
                             return hrg(data)
@@ -266,21 +216,67 @@
                         return data
                     }
                 }, {
-                    data: "pengelola",
-                    className: 'text-start',
+                    data: "tidak_terpakai",
+                    className: 'text-center',
+                    searchable: false,
                     render: function(data, type, row, meta) {
                         if (type == 'display') {
-                            return `${data} ${row.pengelola_desc||''}`
+                            return hrg(data)
                         }
                         return data
                     }
                 }, {
-                    data: "kondisi",
-                    className: 'text-start',
+                    data: "truk",
+                    className: 'text-center',
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return hrg(data)
+                        }
+                        return data
+                    }
                 }, {
-                    data: "pengelola_desc",
-                    className: 'text-start',
-                    visible: false,
+                    data: "kapasitas_truk",
+                    className: 'text-center',
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return hrg(data)
+                        }
+                        return data
+                    }
+                }, {
+                    data: "kondisi_truk",
+                    className: 'text-center',
+                }, {
+                    data: "rit",
+                    className: 'text-center',
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return hrg(data)
+                        }
+                        return data
+                    }
+                }, {
+                    data: "pemanfaat_kk",
+                    className: 'text-center',
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return hrg(data)
+                        }
+                        return data
+                    }
+                }, {
+                    data: "pemanfaat_jiwa",
+                    className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return hrg(data)
+                        }
+                        return data
+                    }
                 }, {
                     data: "id",
                     className: 'text-start',
@@ -387,22 +383,10 @@
                     show_message('Select Lokasi Desa!')
                     return
                 }
-                let sum = sumber.getValue(true)
-                if (sum == null || sum == '') {
-                    sumber.showDropdown(true)
-                    show_message('Select Sumber Anggaran!')
-                    return
-                }
-                let peng = pengelola.getValue(true)
-                if (peng == null || peng == '') {
-                    pengelola.showDropdown(true)
-                    show_message('Select Jenis Pengelola!')
-                    return
-                }
                 let kon = kondisi.getValue(true)
                 if (kon == null || kon == '') {
                     kondisi.showDropdown(true)
-                    show_message('Select Kondisi TPA!')
+                    show_message('Select Kondisi Truk!')
                     return
                 }
                 $.ajax({
@@ -442,24 +426,17 @@
                 }
                 $('#latitude').val(data.lat)
                 $('#longitude').val(data.long)
-                sumber.removeActiveItems();
-                sumber.setChoiceByValue(data.sumber);
                 $('#tahun_konstruksi').datepicker('setDate', new Date(data.tahun_konstruksi, 0, 1));
-                $('#tahun_beroperasi').datepicker('setDate', new Date(data.tahun_beroperasi, 0, 1));
-                $('#rencana').val(data.rencana)
-                kecamatanTerlayani.removeActiveItems();
-                if (Array.isArray(data.kecamatan_terlayani_ids)) {
-                    data.kecamatan_terlayani_ids.forEach(id => {
-                        kecamatanTerlayani.setChoiceByValue(id.toString());
-                    });
-                }
-                $('#luas_sarana').val(data.luas_sarana)
-                $('#luas_sel').val(data.luas_sel)
-                pengelola.removeActiveItems();
-                pengelola.setChoiceByValue(data.pengelola);
-                $('#pengelola_desc').val(data.pengelola_desc)
+                $('#terpasang').val(data.terpasang)
+                $('#terpakai').val(data.terpakai)
+                $('#tidak_terpakai').val(data.tidak_terpakai)
+                $('#truk').val(data.truk)
+                $('#kapasitas_truk').val(data.kapasitas_truk)
                 kondisi.removeActiveItems();
                 kondisi.setChoiceByValue(data.kondisi);
+                $('#rit').val(data.rit)
+                $('#pemanfaat_kk').val(data.pemanfaat_kk)
+                $('#pemanfaat_jiwa').val(data.pemanfaat_jiwa)
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
                 $('#form').attr('method', 'PUT')
@@ -481,20 +458,17 @@
                 kelurahan.setChoiceByValue('');
                 $('#latitude').val('')
                 $('#longitude').val('')
-                sumber.removeActiveItems();
-                sumber.setChoiceByValue('');
                 $('#tahun_konstruksi').val('');
-                $('#tahun_beroperasi').val('');
-                $('#rencana').val(0)
-                kecamatanTerlayani.removeActiveItems();
-                kecamatanTerlayani.setChoiceByValue([])
-                $('#luas_sarana').val(0.0)
-                $('#luas_sel').val(0.0)
-                pengelola.removeActiveItems();
-                pengelola.setChoiceByValue('');
-                $('#pengelola_desc').val('')
+                $('#terpasang').val(0)
+                $('#terpakai').val(0)
+                $('#tidak_terpakai').val(0)
+                $('#truk').val(0)
+                $('#kapasitas_truk').val(0)
                 kondisi.removeActiveItems();
                 kondisi.setChoiceByValue('');
+                $('#rit').val(0)
+                $('#pemanfaat_kk').val(0)
+                $('#pemanfaat_jiwa').val(0)
 
                 $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data')
                 $('#modal_form').modal('show')

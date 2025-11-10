@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SanitasiRequest;
 use App\Models\Sanitasi;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,53 +25,15 @@ class SanitasiController extends Controller
         return $this->sendResponse($sanitasi);
     }
 
-    public function store(Request $request)
+    public function store(SanitasiRequest $request)
     {
-        $this->validate($request, [
-            'tahun'     => 'required|date_format:Y',
-            'nama'      => 'required|max:5000',
-            'lokasi'    => 'required|max:200',
-            'pagu'      => 'required|integer|gte:0',
-            'jumlah'    => 'required|integer|gte:0',
-            'sumber'    => 'required|in:DAK,DAU',
-            'lat'       => 'nullable',
-            'long'      => 'nullable',
-        ]);
-        $sanitasi = Sanitasi::create([
-            'tahun'     => $request->tahun,
-            'nama'      => $request->nama,
-            'lokasi'    => $request->lokasi,
-            'pagu'      => $request->pagu,
-            'jumlah'    => $request->jumlah,
-            'sumber'    => $request->sumber,
-            'lat'       => $request->lat,
-            'long'      => $request->long,
-        ]);
+        $sanitasi = Sanitasi::create($request->mappedData());
         return $this->sendResponse($sanitasi, 'Created!');
     }
 
-    public function update(Request $request, Sanitasi $sanitasi)
+    public function update(SanitasiRequest $request, Sanitasi $sanitasi)
     {
-        $this->validate($request, [
-            'tahun'     => 'required|date_format:Y',
-            'nama'      => 'required|max:5000',
-            'lokasi'    => 'required|max:200',
-            'pagu'      => 'required|integer|gte:0',
-            'jumlah'    => 'required|integer|gte:0',
-            'sumber'    => 'required|in:DAK,DAU',
-            'lat'       => 'nullable',
-            'long'      => 'nullable',
-        ]);
-        $sanitasi->update([
-            'tahun'     => $request->tahun,
-            'nama'      => $request->nama,
-            'lokasi'    => $request->lokasi,
-            'pagu'      => $request->pagu,
-            'jumlah'    => $request->jumlah,
-            'sumber'    => $request->sumber,
-            'lat'       => $request->lat,
-            'long'      => $request->long,
-        ]);
+        $sanitasi->update($request->mappedData());
         return $this->sendResponse($sanitasi, 'Updated!');
     }
 

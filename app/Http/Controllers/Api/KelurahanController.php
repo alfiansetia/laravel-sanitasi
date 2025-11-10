@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\KelurahanRequest;
 use App\Models\Kelurahan;
 use Exception;
 use Illuminate\Http\Request;
@@ -25,33 +26,16 @@ class KelurahanController extends Controller
         return $this->sendResponse($kelurahan->load('kecamatan'));
     }
 
-    public function store(Request $request)
+    public function store(KelurahanRequest $request)
     {
-        $this->validate($request, [
-            'kecamatan_id'  => 'required|exists:kecamatans,id',
-            'kode'          => 'required|string|max:200|unique:kelurahans,kode',
-            'nama'          => 'required|string|max:200',
-        ]);
-        $kelurahan = Kelurahan::create([
-            'kecamatan_id'  => $request->kecamatan_id,
-            'kode'          => $request->kode,
-            'nama'          => $request->nama,
-        ]);
+
+        $kelurahan = Kelurahan::create($request->mappedData());
         return $this->sendResponse($kelurahan, 'Created!');
     }
 
-    public function update(Request $request, Kelurahan $kelurahan)
+    public function update(KelurahanRequest $request, Kelurahan $kelurahan)
     {
-        $this->validate($request, [
-            'kecamatan_id'  => 'required|exists:kecamatans,id',
-            'kode'          => 'required|string|max:200|unique:kelurahans,kode,' . $kelurahan->id,
-            'nama'          => 'required|string|max:200',
-        ]);
-        $kelurahan->update([
-            'kecamatan_id'  => $request->kecamatan_id,
-            'kode'          => $request->kode,
-            'nama'          => $request->nama,
-        ]);
+        $kelurahan->update($request->mappedData());
         return $this->sendResponse($kelurahan, 'Updated!');
     }
 

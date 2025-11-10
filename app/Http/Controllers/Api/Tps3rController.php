@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tps3rRequest;
 use App\Models\Tps3r;
 use Exception;
 use Illuminate\Http\Request;
@@ -31,65 +32,15 @@ class Tps3rController extends Controller
         ]));
     }
 
-    public function store(Request $request)
+    public function store(Tps3rRequest $request)
     {
-        $this->validate($request, [
-            'kecamatan_id'          => 'required|exists:kecamatans,id',
-            'kelurahan_id'          => 'required|exists:kelurahans,id',
-            'tahun_konstruksi'      => 'required|date_format:Y',
-            'tahun_beroperasi'      => 'required|date_format:Y',
-            'luas'                  => 'required|integer|gte:0',
-            'jumlah_timbunan'       => 'required|numeric|gte:0',
-            'jumlah_penduduk'       => 'required|integer|gte:0',
-            'jumlah_kk'             => 'required|integer|gte:0',
-            'gerobak'               => 'required|integer|gte:0',
-            'motor'                 => 'required|integer|gte:0',
-            'status'                => 'required|in:Berfungsi,Tidak Berfungsi',
-        ]);
-        $tps3r = Tps3r::create([
-            'kecamatan_id'      => $request->kecamatan_id,
-            'kelurahan_id'      => $request->kelurahan_id,
-            'tahun_konstruksi'  => $request->tahun_konstruksi,
-            'tahun_beroperasi'  => $request->tahun_beroperasi,
-            'luas'              => $request->luas,
-            'jumlah_timbunan'   => $request->jumlah_timbunan,
-            'jumlah_penduduk'   => $request->jumlah_penduduk,
-            'jumlah_kk'         => $request->jumlah_kk,
-            'gerobak'           => $request->gerobak,
-            'motor'             => $request->motor,
-            'status'            => $request->status,
-        ]);
+        $tps3r = Tps3r::create($request->mappedData());
         return $this->sendResponse($tps3r, 'Created!');
     }
 
-    public function update(Request $request, Tps3r $tps3r)
+    public function update(Tps3rRequest $request, Tps3r $tps3r)
     {
-        $this->validate($request, [
-            'kecamatan_id'          => 'required|exists:kecamatans,id',
-            'kelurahan_id'          => 'required|exists:kelurahans,id',
-            'tahun_konstruksi'      => 'required|date_format:Y',
-            'tahun_beroperasi'      => 'required|date_format:Y',
-            'luas'                  => 'required|integer|gte:0',
-            'jumlah_timbunan'       => 'required|numeric|gte:0',
-            'jumlah_penduduk'       => 'required|integer|gte:0',
-            'jumlah_kk'             => 'required|integer|gte:0',
-            'gerobak'               => 'required|integer|gte:0',
-            'motor'                 => 'required|integer|gte:0',
-            'status'                => 'required|in:Berfungsi,Tidak Berfungsi',
-        ]);
-        $tps3r->update([
-            'kecamatan_id'      => $request->kecamatan_id,
-            'kelurahan_id'      => $request->kelurahan_id,
-            'tahun_konstruksi'  => $request->tahun_konstruksi,
-            'tahun_beroperasi'  => $request->tahun_beroperasi,
-            'luas'              => $request->luas,
-            'jumlah_timbunan'   => $request->jumlah_timbunan,
-            'jumlah_penduduk'   => $request->jumlah_penduduk,
-            'jumlah_kk'         => $request->jumlah_kk,
-            'gerobak'           => $request->gerobak,
-            'motor'             => $request->motor,
-            'status'            => $request->status,
-        ]);
+        $tps3r->update($request->mappedData());
         return $this->sendResponse($tps3r, 'Updated!');
     }
 

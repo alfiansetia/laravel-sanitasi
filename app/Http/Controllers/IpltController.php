@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iplt;
+use App\Models\Kecamatan;
 use Illuminate\Http\Request;
 
 class IpltController extends Controller
 {
     public function index()
     {
-        return view('spaldts.index', [
-            'title' => 'IPLT'
+        $kecamatans = Kecamatan::all();
+        return view('iplt.index', [
+            'kecamatans'    => $kecamatans,
+            'title'         => 'IPLT'
         ]);
     }
 }

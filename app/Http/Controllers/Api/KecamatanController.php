@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\KecamatanRequest;
 use App\Models\Kecamatan;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,25 +25,15 @@ class KecamatanController extends Controller
         return $this->sendResponse($kecamatan->load('kelurahans'));
     }
 
-    public function store(Request $request)
+    public function store(KecamatanRequest $request)
     {
-        $this->validate($request, [
-            'nama'      => 'required|string|max:200|unique:kecamatans,nama',
-        ]);
-        $kecamatan = Kecamatan::create([
-            'nama'      => $request->nama,
-        ]);
+        $kecamatan = Kecamatan::create($request->mappedData());
         return $this->sendResponse($kecamatan, 'Created!');
     }
 
-    public function update(Request $request, Kecamatan $kecamatan)
+    public function update(KecamatanRequest $request, Kecamatan $kecamatan)
     {
-        $this->validate($request, [
-            'nama'      => 'required|string|max:200|unique:kecamatans,nama,' . $kecamatan->id,
-        ]);
-        $kecamatan->update([
-            'nama'      => $request->nama,
-        ]);
+        $kecamatan->update($request->mappedData());
         return $this->sendResponse($kecamatan, 'Updated!');
     }
 
