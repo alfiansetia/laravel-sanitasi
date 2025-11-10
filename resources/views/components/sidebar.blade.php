@@ -56,6 +56,15 @@
 
                 </li>
 
+                <li class="sidebar-item  {{ Route::is('sanitasis.index') ? 'active' : '' }}">
+                    <a href="{{ route('sanitasis.index') }}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Sanitasi</span>
+                    </a>
+
+
+                </li>
+
                 {{-- <li class="sidebar-title">Master Data</li> --}}
 
                 <li class="sidebar-item {{ in_array($t, ['SPALD-T', 'SPALD-S']) ? 'active' : '' }} has-sub">
@@ -81,23 +90,28 @@
 
                     <ul class="submenu {{ in_array($t, ['User', 'F']) ? 'active' : '' }}">
                         <li class="submenu-item  ">
-                            <a href="{{ route('spaldts.index') }}" class="submenu-link">
+                            <a href="{{ route('tpas.index') }}" class="submenu-link">
                                 Tempat Pemrosesan Akhir (TPA)
                             </a>
                         </li>
                         <li class="submenu-item  ">
-                            <a href="{{ route('spaldts.index') }}" class="submenu-link">
+                            <a href="{{ route('tpsts.index') }}" class="submenu-link">
                                 Tempat Pengolahan Sampah Terpadu (TPST)
                             </a>
                         </li>
                         <li class="submenu-item  ">
-                            <a href="{{ route('spaldts.index') }}" class="submenu-link">
+                            <a href="{{ route('tps3r.index') }}" class="submenu-link">
                                 TPS3ER
                             </a>
                         </li>
                         <li class="submenu-item  ">
-                            <a href="{{ route('spaldts.index') }}" class="submenu-link">
+                            <a href="{{ route('iplts.index') }}" class="submenu-link">
                                 IPLT (INSTALASI PENGOLAHAN LIMBAH TERPADU)
+                            </a>
+                        </li>
+                        <li class="submenu-item  ">
+                            <a href="{{ route('spalds.index') }}" class="submenu-link">
+                                SPALD
                             </a>
                         </li>
                         <li class="submenu-item {{ Route::is('users.index') ? 'active' : '' }} ">
