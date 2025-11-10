@@ -82,13 +82,13 @@
                     </ul>
                 </li>
 
-                <li class="sidebar-item {{ in_array($t, ['User', 'TPA']) ? 'active' : '' }} has-sub">
+                <li class="sidebar-item {{ in_array($t, ['User', 'TPA', 'TPST', 'TPS3R']) ? 'active' : '' }} has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-collection-fill"></i>
                         <span>Master Data</span>
                     </a>
 
-                    <ul class="submenu {{ in_array($t, ['User', 'TPA']) ? 'active' : '' }}">
+                    <ul class="submenu {{ in_array($t, ['User', 'TPA', 'TPST', 'TPS3R']) ? 'active' : '' }}">
                         <li class="submenu-item  ">
                             <a href="{{ route('tpas.index') }}" class="submenu-link">
                                 Tempat Pemrosesan Akhir (TPA)
@@ -101,7 +101,7 @@
                         </li>
                         <li class="submenu-item  ">
                             <a href="{{ route('tps3r.index') }}" class="submenu-link">
-                                TPS3ER
+                                TPS3R
                             </a>
                         </li>
                         <li class="submenu-item  ">

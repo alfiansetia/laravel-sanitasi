@@ -15,8 +15,21 @@ class TpaController extends Controller
     public function index(Request $request)
     {
         $query = Tpa::query()
-            ->with(['kecamatan', 'kelurahan', 'kecamatan_terlayani.kecamatan'])
-            ->filter($request->only(['tahun', 'nama', 'lokasi', 'sumber']));
+            ->with([
+                'kecamatan',
+                'kelurahan',
+                'kecamatan_terlayani.kecamatan'
+            ])
+            ->filter($request->only([
+                'nama',
+                'sumber',
+                'kecamatan_id',
+                'kelurahan_id',
+                'tahun_konstruksi',
+                'tahun_beroperasi',
+                'pengelola',
+                'kondisi',
+            ]));
         return DataTables::eloquent($query)->toJson();
     }
 
