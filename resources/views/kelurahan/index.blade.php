@@ -3,9 +3,7 @@
     <link href="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/datatables.min.css" rel="stylesheet"
         integrity="sha384-fyCqW8E+q5GvWtphxqXu3hs1lJzytfEh6S57wLlfvz5quj6jf5OKThV1K9+Iv8Xz" crossorigin="anonymous">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/colormask.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
 @endpush
 
 @section('content')
@@ -16,14 +14,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Tahun</th>
-                            <th>Nama Kegiatan</th>
-                            <th>Lokasi</th>
-                            <th>Pagu</th>
-                            <th>Jumlah Unit</th>
-                            <th>Sumber Dana</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
+                            <th>Kode Kelurahan</th>
+                            <th>Nama Kelurahan</th>
+                            <th>Nama Kecamatan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,42 +26,26 @@
         </div>
     </section>
 
-    @include('sanitasi.modal')
+    @include('kelurahan.modal')
 @endsection
 
 @push('js')
     <script src="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/datatables.min.js"
         integrity="sha384-J9F84i7Emwbp64qQsBlK5ypWq7kFwSOGFfubmHHLjVviEnDpI5wpj+nNC3napXiF" crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/jquery.inputmask.min.js"></script>
-
+    <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
     <script>
-        const URL_INDEX = "{{ route('sanitasis.index') }}"
-        const URL_INDEX_API = "{{ route('api.sanitasis.index') }}"
+        const URL_INDEX = "{{ route('kelurahans.index') }}"
+        const URL_INDEX_API = "{{ route('api.kelurahans.index') }}"
         var id = 0;
 
         $(document).ready(function() {
-            $('#tahun').datepicker({
-                format: "yyyy",
-                viewMode: "years",
-                minViewMode: "years",
-                autoclose: true
+            const el = document.getElementById('kecamatan_id')
+            var kecamatan = new Choices(el, {
+                allowHTML: true,
+                searchEnabled: true,
+                removeItemButton: true,
             });
-
-            $('.mask_angka').inputmask({
-                alias: 'numeric',
-                groupSeparator: '.',
-                autoGroup: true,
-                digits: 0,
-                rightAlign: false,
-                removeMaskOnSubmit: true,
-                autoUnmask: true,
-                min: 0,
-            });
-
 
             var table = $('#table').DataTable({
                 rowId: 'id',
@@ -88,7 +65,7 @@
                 pageLength: 10,
                 lengthChange: false,
                 order: [
-                    [9, "desc"]
+                    [4, "desc"]
                 ],
                 columns: [{
                         data: 'id',
@@ -100,41 +77,14 @@
                             return `<input type="checkbox" name="id[]" value="${data}" class="form-check-input child-chk">`
                         }
                     }, {
-                        data: "tahun",
-                        className: 'text-center',
-                    },
-                    {
+                        data: "kode",
+                        className: 'text-start',
+                    }, {
                         data: "nama",
                         className: 'text-start',
-                    }, {
-                        data: "lokasi",
-                        className: 'text-start',
-                    }, {
-                        data: "pagu",
-                        className: 'text-end',
-                        render: function(data, type, row, meta) {
-                            if (type == 'display') {
-                                return hrg(data)
-                            }
-                            return data
-                        }
-                    }, {
-                        data: "jumlah",
-                        className: 'text-end',
-                        render: function(data, type, row, meta) {
-                            if (type == 'display') {
-                                return hrg(data)
-                            }
-                            return data
-                        }
-                    }, {
-                        data: "sumber",
-                        className: 'text-center',
-                    }, {
-                        data: "lat",
-                        className: 'text-start',
-                    }, {
-                        data: "long",
+                    },
+                    {
+                        data: "kecamatan.nama",
                         className: 'text-start',
                     }, {
                         data: "id",
@@ -174,12 +124,6 @@
                             className: 'dt-button btn-sm',
                             action: function(e, dt, node, config) {
                                 table.ajax.reload()
-                            }
-                        }, {
-                            text: 'Import Data',
-                            className: 'dt-button btn-sm',
-                            action: function(e, dt, node, config) {
-                                importData()
                             }
                         }, {
                             text: 'Delete Selected Data',
@@ -226,11 +170,16 @@
             }
 
             $('#modal_form').on('shown.bs.modal', function() {
-                $('#tahun').focus()
+                $('#kode').focus()
             });
 
             $('#form').submit(function(e) {
                 e.preventDefault()
+                let kec = kecamatan.getValue(true)
+                if (kec == null || kec == '') {
+                    show_message('Select Kecamatan!')
+                    return
+                }
                 $.ajax({
                     url: $(this).attr('action'),
                     type: $(this).attr('method'),
@@ -250,14 +199,12 @@
             $('#table tbody').on('click', 'tr td:not(:first-child)', function() {
                 data = table.row(this).data()
                 id = data.id
-                $('#tahun').datepicker('setDate', new Date(data.tahun, 0, 1));
+                $('#kode').val(data.kode)
                 $('#nama').val(data.nama)
-                $('#lokasi').val(data.lokasi)
-                $('#pagu').val(data.pagu)
-                $('#jumlah').val(data.jumlah)
-                $('#sumber').val(data.sumber).change()
-                $('#lat').val(data.lat)
-                $('#long').val(data.long)
+                kecamatan.removeActiveItems();
+                if (data.kecamatan_id) {
+                    kecamatan.setChoiceByValue(data.kecamatan_id.toString());
+                }
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
                 $('#form').attr('method', 'PUT')
@@ -270,45 +217,15 @@
             function modal_add() {
                 $('#form').attr('action', URL_INDEX_API)
                 $('#form').attr('method', 'POST')
-                $('#tahun').val('')
+                $('#kode').val('')
                 $('#nama').val('')
-                $('#lokasi').val('')
-                $('#pagu').val(0)
-                $('#jumlah').val(0)
-                $('#sumber').val('').change()
-                $('#lat').val('')
-                $('#long').val('')
-
+                kecamatan.removeActiveItems();
+                kecamatan.setChoiceByValue('')
                 $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data')
                 $('#modal_form').modal('show')
             }
 
-            function importData() {
-                $('#form_import')[0].reset()
-                $('#modal_import').modal('show')
-            }
 
-            $('#form_import').submit(function(e) {
-                e.preventDefault()
-                let form = $(this)[0];
-                let formData = new FormData(form);
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: $(this).attr('method'),
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    beforeSend: function() {},
-                    success: function(res) {
-                        table.ajax.reload()
-                        show_message(res.message, 'success')
-                        $('#modal_import').modal('hide');
-                    },
-                    error: function(xhr, status, error) {
-                        show_message(xhr.responseJSON.message || 'Error!')
-                    }
-                });
-            })
 
         })
     </script>

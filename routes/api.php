@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\SpaldtController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\IpltController;
+use App\Http\Controllers\Api\KecamatanController;
+use App\Http\Controllers\Api\KelurahanController;
 use App\Http\Controllers\Api\SanitasiController;
 use App\Http\Controllers\Api\SpaldController;
 use App\Http\Controllers\Api\TpaController;
@@ -22,37 +24,51 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('users', UserController::class)
         ->names('api.users');
 
+    Route::delete('kecamatans', [KecamatanController::class, 'destroy_batch'])
+        ->name('api.kecamatans.destroy_batch');
+    Route::post('kecamatan-imports', [KecamatanController::class, 'import'])
+        ->name('api.kecamatans.import');
+    Route::apiResource('kecamatans', KecamatanController::class)
+        ->names('api.kecamatans');
+
+    Route::delete('kelurahans', [KelurahanController::class, 'destroy_batch'])
+        ->name('api.kelurahans.destroy_batch');
+    Route::post('kelurahan-imports', [KelurahanController::class, 'import'])
+        ->name('api.kelurahans.import');
+    Route::apiResource('kelurahans', KelurahanController::class)
+        ->names('api.kelurahans');
+
     Route::delete('sanitasis', [SanitasiController::class, 'destroy_batch'])
         ->name('api.sanitasis.destroy_batch');
-    Route::post('spaldt-imports', [SanitasiController::class, 'import'])
+    Route::post('sanitasi-imports', [SanitasiController::class, 'import'])
         ->name('api.sanitasis.import');
     Route::apiResource('sanitasis', SanitasiController::class)
         ->names('api.sanitasis');
 
     Route::delete('tpas', [TpaController::class, 'destroy_batch'])
         ->name('api.tpas.destroy_batch');
-    Route::post('spaldt-imports', [TpaController::class, 'import'])
+    Route::post('tpa-imports', [TpaController::class, 'import'])
         ->name('api.tpas.import');
     Route::apiResource('tpas', TpaController::class)
         ->names('api.tpas');
 
     Route::delete('tpsts', [TpstController::class, 'destroy_batch'])
         ->name('api.tpsts.destroy_batch');
-    Route::post('spaldt-imports', [TpstController::class, 'import'])
+    Route::post('tpst-imports', [TpstController::class, 'import'])
         ->name('api.tpsts.import');
     Route::apiResource('tpsts', TpstController::class)
         ->names('api.tpsts');
 
-    Route::delete('tps3r', [Tps3rController::class, 'destroy_batch'])
-        ->name('api.tps3r.destroy_batch');
-    Route::post('spaldt-imports', [Tps3rController::class, 'import'])
-        ->name('api.tps3r.import');
-    Route::apiResource('tps3r', Tps3rController::class)
-        ->names('api.tps3r');
+    Route::delete('tps3rs', [Tps3rController::class, 'destroy_batch'])
+        ->name('api.tps3rs.destroy_batch');
+    Route::post('tps3r-imports', [Tps3rController::class, 'import'])
+        ->name('api.tps3rs.import');
+    Route::apiResource('tps3rs', Tps3rController::class)
+        ->names('api.tps3rs');
 
     Route::delete('iplts', [IpltController::class, 'destroy_batch'])
         ->name('api.iplts.destroy_batch');
-    Route::post('spaldt-imports', [IpltController::class, 'import'])
+    Route::post('iplt-imports', [IpltController::class, 'import'])
         ->name('api.iplts.import');
     Route::apiResource('iplts', IpltController::class)
         ->names('api.iplts');

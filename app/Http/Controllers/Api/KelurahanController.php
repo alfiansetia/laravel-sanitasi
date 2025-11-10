@@ -3,90 +3,71 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tpa;
+use App\Models\Kelurahan;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
-class TpaController extends Controller
+class KelurahanController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Tpa::query()
-            ->filter($request->only(['tahun', 'nama', 'lokasi', 'sumber']));
+        $query = Kelurahan::query()
+            ->with('kecamatan')
+            ->filter($request->only(['kode', 'nama', 'kecamatan_id']));
         return DataTables::eloquent($query)->toJson();
     }
 
-    public function show(Tpa $tpa)
+    public function show(Kelurahan $kelurahan)
     {
-        return $this->sendResponse($tpa);
+        return $this->sendResponse($kelurahan->load('kecamatan'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            'tahun'     => 'required|date_format:Y',
-            'nama'      => 'required|max:5000',
-            'lokasi'    => 'required|max:200',
-            'pagu'      => 'required|integer|gte:0',
-            'jumlah'    => 'required|integer|gte:0',
-            'sumber'    => 'required|in:DAK,DAU',
-            'lat'       => 'nullable',
-            'long'      => 'nullable',
+            'kecamatan_id'  => 'required|exists:kecamatans,id',
+            'kode'          => 'required|string|max:200|unique:kelurahans,kode',
+            'nama'          => 'required|string|max:200',
         ]);
-        $tpa = Tpa::create([
-            'tahun'     => $request->tahun,
-            'nama'      => $request->nama,
-            'lokasi'    => $request->lokasi,
-            'pagu'      => $request->pagu,
-            'jumlah'    => $request->jumlah,
-            'sumber'    => $request->sumber,
-            'lat'       => $request->lat,
-            'long'      => $request->long,
+        $kelurahan = Kelurahan::create([
+            'kecamatan_id'  => $request->kecamatan_id,
+            'kode'          => $request->kode,
+            'nama'          => $request->nama,
         ]);
-        return $this->sendResponse($tpa, 'Created!');
+        return $this->sendResponse($kelurahan, 'Created!');
     }
 
-    public function update(Request $request, Tpa $tpa)
+    public function update(Request $request, Kelurahan $kelurahan)
     {
         $this->validate($request, [
-            'tahun'     => 'required|date_format:Y',
-            'nama'      => 'required|max:5000',
-            'lokasi'    => 'required|max:200',
-            'pagu'      => 'required|integer|gte:0',
-            'jumlah'    => 'required|integer|gte:0',
-            'sumber'    => 'required|in:DAK,DAU',
-            'lat'       => 'nullable',
-            'long'      => 'nullable',
+            'kecamatan_id'  => 'required|exists:kecamatans,id',
+            'kode'          => 'required|string|max:200|unique:kelurahans,kode,' . $kelurahan->id,
+            'nama'          => 'required|string|max:200',
         ]);
-        $tpa->update([
-            'tahun'     => $request->tahun,
-            'nama'      => $request->nama,
-            'lokasi'    => $request->lokasi,
-            'pagu'      => $request->pagu,
-            'jumlah'    => $request->jumlah,
-            'sumber'    => $request->sumber,
-            'lat'       => $request->lat,
-            'long'      => $request->long,
+        $kelurahan->update([
+            'kecamatan_id'  => $request->kecamatan_id,
+            'kode'          => $request->kode,
+            'nama'          => $request->nama,
         ]);
-        return $this->sendResponse($tpa, 'Updated!');
+        return $this->sendResponse($kelurahan, 'Updated!');
     }
 
-    public function destroy(Tpa $tpa)
+    public function destroy(Kelurahan $kelurahan)
     {
-        $tpa->delete();
-        return $this->sendResponse($tpa, 'Deleted!');
+        $kelurahan->delete();
+        return $this->sendResponse($kelurahan, 'Deleted!');
     }
 
     public function destroy_batch(Request $request)
     {
         $this->validate($request, [
             'ids'       => 'required|array',
-            'ids.*'     => 'integer|exists:tpas,id',
+            'ids.*'     => 'integer|exists:kelurahans,id',
         ]);
-        $deleted = Tpa::whereIn('id', $request->ids)->delete();
+        $deleted = Kelurahan::whereIn('id', $request->ids)->delete();
 
         return $this->sendResponse([
             'deleted_count' => $deleted
@@ -122,7 +103,7 @@ class TpaController extends Controller
                 if (! in_array($sum, ['DAK', 'DAU'], true)) {
                     throw new Exception("Data sumber tidak valid di baris " . ($index + 2) . " (nilai: '{$sumber}')");
                 }
-                $tpa = Tpa::create([
+                $kelurahan = Kelurahan::create([
                     'tahun'     => $tahun,
                     'nama'      => $nama,
                     'lokasi'    => $lokasi,
@@ -132,7 +113,7 @@ class TpaController extends Controller
                     'lat'       => $lat,
                     'long'      => $long,
                 ]);
-                $results->add($tpa);
+                $results->add($kelurahan);
             }
             DB::commit();
             return $this->sendResponse($results, 'Success Import Data!');

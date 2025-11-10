@@ -82,13 +82,13 @@
                     </ul>
                 </li>
 
-                <li class="sidebar-item {{ in_array($t, ['User', 'F']) ? 'active' : '' }} has-sub">
+                <li class="sidebar-item {{ in_array($t, ['User', 'TPA']) ? 'active' : '' }} has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-collection-fill"></i>
                         <span>Master Data</span>
                     </a>
 
-                    <ul class="submenu {{ in_array($t, ['User', 'F']) ? 'active' : '' }}">
+                    <ul class="submenu {{ in_array($t, ['User', 'TPA']) ? 'active' : '' }}">
                         <li class="submenu-item  ">
                             <a href="{{ route('tpas.index') }}" class="submenu-link">
                                 Tempat Pemrosesan Akhir (TPA)
@@ -121,6 +121,23 @@
                     </ul>
 
 
+
+
+                </li>
+
+                <li class="sidebar-item {{ in_array($t, ['KECAMATAN', 'KELURAHAN']) ? 'active' : '' }} has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>Wilayah</span>
+                    </a>
+                    <ul class="submenu {{ in_array($t, ['KECAMATAN', 'KELURAHAN']) ? 'active' : '' }}">
+                        <li class="submenu-item {{ Route::is('kecamatans.index') ? 'active' : '' }} ">
+                            <a href="{{ route('kecamatans.index') }}" class="submenu-link">Kecamatan</a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('kelurahans.index') ? 'active' : '' }} ">
+                            <a href="{{ route('kelurahans.index') }}" class="submenu-link">Kelurahan</a>
+                        </li>
+                    </ul>
                 </li>
 
 

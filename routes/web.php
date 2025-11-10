@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IpltController;
+use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\KelurahanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SanitasiController;
 use App\Http\Controllers\SpaldController;
@@ -36,6 +38,11 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/kecamatans', [KecamatanController::class, 'index'])
+        ->name('kecamatans.index');
+    Route::get('/kelurahans', [KelurahanController::class, 'index'])
+        ->name('kelurahans.index');
 
     Route::get('/sanitasis', [SanitasiController::class, 'index'])
         ->name('sanitasis.index');

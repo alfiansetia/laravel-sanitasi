@@ -33,7 +33,7 @@
         </div>
     </section>
 
-    @include('sanitasi.modal')
+    @include('tpa.modal')
 @endsection
 
 @push('js')
@@ -46,8 +46,8 @@
     <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/jquery.inputmask.min.js"></script>
 
     <script>
-        const URL_INDEX = "{{ route('sanitasis.index') }}"
-        const URL_INDEX_API = "{{ route('api.sanitasis.index') }}"
+        const URL_INDEX = "{{ route('tpas.index') }}"
+        const URL_INDEX_API = "{{ route('api.tpas.index') }}"
         var id = 0;
 
         $(document).ready(function() {
