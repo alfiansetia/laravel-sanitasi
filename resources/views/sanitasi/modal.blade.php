@@ -56,18 +56,15 @@
                                      </select>
                                  </div>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-12">
                                  <div class="form-group">
-                                     <label for="lat">Latitude</label>
-                                     <input type="text" id="lat" class="form-control" name="lat"
-                                         placeholder="Latitude" required>
-                                 </div>
-                             </div>
-                             <div class="col-md-6">
-                                 <div class="form-group">
-                                     <label for="long">Longitude</label>
-                                     <input type="text" id="long" class="form-control" name="long"
-                                         placeholder="Longitude" required>
+                                     <label for="lat">Titik Koordinat</label>
+                                     <div class="input-group">
+                                         <input type="text" id="lat" class="form-control" name="lat"
+                                             placeholder="Latitude" required>
+                                         <input type="text" id="long" class="form-control" name="long"
+                                             placeholder="Longitude" required>
+                                     </div>
                                  </div>
                              </div>
                          </div>

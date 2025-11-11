@@ -25,8 +25,8 @@ class SanitasiRequest extends FormRequest
             'pagu'      => 'nullable|integer|gte:0',
             'jumlah'    => 'nullable|integer|gte:0',
             'sumber'    => ['required', Rule::in(SumberDana::cases())],
-            'lat'       => 'nullable',
-            'long'      => 'nullable',
+            'lat'       => 'required|numeric|between:-90,90',
+            'long'      => 'required|numeric|between:-180,180',
         ];
     }
 

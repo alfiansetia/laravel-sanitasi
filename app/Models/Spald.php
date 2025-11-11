@@ -2,29 +2,101 @@
 
 namespace App\Models;
 
+use App\Enums\JenisPengelolaan;
+use App\Enums\OpsiBaik;
+use App\Enums\OpsiBerfungsi;
+use App\Enums\OpsiTeknologi;
+use App\Enums\SkalaPelayanan;
+use App\Enums\StatusLahan;
+use App\Enums\SumberDana;
 use Illuminate\Database\Eloquent\Model;
 
 class Spald extends Model
 {
     protected $guarded = [];
-    protected $appends = ['is_valid_map'];
+    protected $appends = [
+        'is_valid_map',
+        'skala_label',
+        'sumber_label',
+        'status_keberfungsian_label',
+        'kondisi_label',
+        'status_lahan_label',
+        'jenis_label',
+        'teknologi_label',
+    ];
 
     public static $filterProp = [
         'nama',
+        'alamat',
         'kecamatan_id',
         'kelurahan_id',
-        'sumber',
+        'skala',
         'tahun_konstruksi',
-        'tahun_beroperasi',
-        'pengelola',
-        'pengelola_desc',
+        'sumber',
+        'status_keberfungsian',
         'kondisi',
+        'status_lahan',
+        'jenis',
+        'teknologi',
+        'status_penyedotan',
+        'status_lahan',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'skala'                 => SkalaPelayanan::class,
+            'sumber'                => SumberDana::class,
+            'status_keberfungsian'  => OpsiBerfungsi::class,
+            'kondisi'               => OpsiBaik::class,
+            'status_lahan'          => StatusLahan::class,
+            'jenis'                 => JenisPengelolaan::class,
+            'teknologi'             => OpsiTeknologi::class,
+        ];
+    }
+
+    public function getSkalaLabelAttribute()
+    {
+        return $this->skala->label();
+    }
+
+    public function getStatusKeberfungsianLabelAttribute()
+    {
+        return $this->status_keberfungsian->label();
+    }
+
+    public function getKondisiLabelAttribute()
+    {
+        return $this->kondisi->label();
+    }
+
+    public function getStatusLahanLabelAttribute()
+    {
+        return $this->status_lahan->label();
+    }
+
+    public function getJenisLabelAttribute()
+    {
+        return $this->jenis->label();
+    }
+
+    public function getTeknologiLabelAttribute()
+    {
+        return $this->teknologi->label();
+    }
+
+    public function getSumberLabelAttribute()
+    {
+        return $this->sumber->label();
+    }
 
     public function scopeFilter($query, array $filters)
     {
         if (isset($filters['nama'])) {
             $query->where('nama', 'like', '%' . $filters['nama'] . '%');
+        }
+        if (isset($filters['alamat'])) {
+            $query->where('alamat', 'like', '%' . $filters['alamat'] . '%');
         }
         if (isset($filters['kecamatan_id'])) {
             $query->where('kecamatan_id',  $filters['kecamatan_id']);
@@ -32,23 +104,32 @@ class Spald extends Model
         if (isset($filters['kelurahan_id'])) {
             $query->where('kelurahan_id',  $filters['kelurahan_id']);
         }
-        if (isset($filters['sumber'])) {
-            $query->where('sumber',  $filters['sumber']);
+        if (isset($filters['skala'])) {
+            $query->where('skala',  $filters['skala']);
         }
         if (isset($filters['tahun_konstruksi'])) {
             $query->where('tahun_konstruksi',  $filters['tahun_konstruksi']);
         }
-        if (isset($filters['tahun_beroperasi'])) {
-            $query->where('tahun_beroperasi',  $filters['tahun_beroperasi']);
+        if (isset($filters['sumber'])) {
+            $query->where('sumber',  $filters['sumber']);
         }
-        if (isset($filters['pengelola'])) {
-            $query->where('pengelola',  $filters['pengelola']);
-        }
-        if (isset($filters['pengelola_desc'])) {
-            $query->where('pengelola_desc', 'like', '%' . $filters['pengelola_desc'] . '%');
+        if (isset($filters['status_keberfungsian'])) {
+            $query->where('status_keberfungsian',  $filters['status_keberfungsian']);
         }
         if (isset($filters['kondisi'])) {
             $query->where('kondisi',  $filters['kondisi']);
+        }
+        if (isset($filters['status_lahan'])) {
+            $query->where('status_lahan',  $filters['status_lahan']);
+        }
+        if (isset($filters['jenis'])) {
+            $query->where('jenis',  $filters['jenis']);
+        }
+        if (isset($filters['teknologi'])) {
+            $query->where('teknologi',  $filters['teknologi']);
+        }
+        if (isset($filters['status_penyedotan'])) {
+            $query->where('status_penyedotan',  $filters['status_penyedotan']);
         }
     }
 

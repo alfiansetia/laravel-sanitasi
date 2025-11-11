@@ -201,6 +201,12 @@
                 }, {
                     data: "sumber",
                     className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.sumber_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "tahun_konstruksi",
                     className: 'text-center',
@@ -252,13 +258,19 @@
                     className: 'text-start',
                     render: function(data, type, row, meta) {
                         if (type == 'display') {
-                            return `${data} ${row.pengelola_desc||''}`
+                            return `${row.pengelola_label} ${row.pengelola_desc||''}`
                         }
                         return data
                     }
                 }, {
                     data: "kondisi",
                     className: 'text-start',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.kondisi_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "pengelola_desc",
                     className: 'text-start',

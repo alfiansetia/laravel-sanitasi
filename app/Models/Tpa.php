@@ -2,12 +2,21 @@
 
 namespace App\Models;
 
+use App\Enums\OpsiBaik;
+use App\Enums\Pengelola;
+use App\Enums\SumberDana;
 use Illuminate\Database\Eloquent\Model;
 
 class Tpa extends Model
 {
     protected $guarded = [];
-    protected $appends = ['is_valid_map', 'kecamatan_terlayani_ids'];
+    protected $appends = [
+        'is_valid_map',
+        'kecamatan_terlayani_ids',
+        'sumber_label',
+        'pengelola_label',
+        'kondisi_label',
+    ];
 
     public static $filterProp = [
         'nama',
@@ -20,6 +29,30 @@ class Tpa extends Model
         'pengelola_desc',
         'kondisi',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'sumber'    => SumberDana::class,
+            'pengelola' => Pengelola::class,
+            'kondisi'   => OpsiBaik::class,
+        ];
+    }
+
+    public function getSumberLabelAttribute()
+    {
+        return $this->sumber->label();
+    }
+
+    public function getPengelolaLabelAttribute()
+    {
+        return $this->pengelola->label();
+    }
+
+    public function getKondisiLabelAttribute()
+    {
+        return $this->kondisi->label();
+    }
 
     public function scopeFilter($query, array $filters)
     {

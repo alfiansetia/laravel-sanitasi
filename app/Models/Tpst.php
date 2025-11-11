@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\OpsiBaik;
+use App\Enums\Pengelola;
+use App\Enums\SumberDana;
 use Illuminate\Database\Eloquent\Model;
 
 class Tpst extends Model
@@ -19,6 +22,15 @@ class Tpst extends Model
         'pengelola_desc',
         'kondisi',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'sumber'    => SumberDana::class,
+            'pengelola' => Pengelola::class,
+            'kondisi'   => OpsiBaik::class,
+        ];
+    }
 
     public function scopeFilter($query, array $filters)
     {

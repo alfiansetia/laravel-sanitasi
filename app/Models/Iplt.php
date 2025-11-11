@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Enums\OpsiBaik;
 use Illuminate\Database\Eloquent\Model;
 
 class Iplt extends Model
 {
     protected $guarded = [];
-    protected $appends = ['is_valid_map'];
+    protected $appends = [
+        'is_valid_map',
+        'kondisi_truk_label'
+    ];
 
     public static $filterProp = [
         'nama',
@@ -16,6 +20,18 @@ class Iplt extends Model
         'tahun_konstruksi',
         'kondisi_truk',
     ];
+
+    public function getKondisiTrukLabelAttribute()
+    {
+        return $this->sumber->label();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'kondisi_truk'  => OpsiBaik::class,
+        ];
+    }
 
     public function scopeFilter($query, array $filters)
     {

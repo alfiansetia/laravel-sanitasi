@@ -2,18 +2,34 @@
 
 namespace App\Models;
 
+use App\Enums\SumberDana;
 use Illuminate\Database\Eloquent\Model;
 
 class Sanitasi extends Model
 {
     protected $guarded = [];
-    protected $appends = ['is_valid_map'];
+    protected $appends = [
+        'is_valid_map',
+        'sumber_label'
+    ];
     public static $filterProp = [
         'tahun',
         'nama',
         'lokasi',
         'sumber'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'sumber'  => SumberDana::class,
+        ];
+    }
+
+    public function getSumberLabelAttribute()
+    {
+        return $this->sumber->label();
+    }
 
     public function scopeFilter($query, array $filters)
     {
