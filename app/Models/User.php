@@ -26,7 +26,12 @@ class User extends Authenticatable
         'role',
     ];
 
-    protected $appends = ['is_admin', 'is_user', 'avatar'];
+    protected $appends = [
+        'is_admin',
+        'is_user',
+        'avatar',
+        'role_label'
+    ];
     public static $filterProp = [
         'role'
     ];
@@ -53,6 +58,11 @@ class User extends Authenticatable
             'password'  => 'hashed',
             'role'      => Role::class,
         ];
+    }
+
+    public function getRoleLabelAttribute(): string
+    {
+        return $this->role->label();
     }
 
     public function getIsAdminAttribute(): bool

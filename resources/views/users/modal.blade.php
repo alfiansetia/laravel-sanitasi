@@ -44,7 +44,7 @@
                                      <select class="form-select" id="role" name="role" required>
                                          <option value="">Select Role</option>
                                          @foreach ($roles as $item)
-                                             <option value="{{ $item }}">{{ $item }}</option>
+                                             <option value="{{ $item }}">{{ $item->label() }}</option>
                                          @endforeach
                                      </select>
                                  </div>

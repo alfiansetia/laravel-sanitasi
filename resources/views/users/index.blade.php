@@ -77,6 +77,12 @@
                     }, {
                         data: "role",
                         className: 'text-center',
+                        render: function(data, type, row, meta) {
+                            if (type == 'display') {
+                                return row.role_label
+                            }
+                            return data
+                        }
                     }, {
                         data: "id",
                         className: 'text-start',
