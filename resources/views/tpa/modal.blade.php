@@ -74,14 +74,14 @@
                                  <div class="form-group">
                                      <label for="tahun_konstruksi">Tahun Konstruksi</label>
                                      <input type="text" id="tahun_konstruksi" class="form-control"
-                                         name="tahun_konstruksi" placeholder="Tahun Konstruksi" readonly required>
+                                         name="tahun_konstruksi" placeholder="Tahun Konstruksi" required>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="tahun_beroperasi">Tahun Beroperasi</label>
                                      <input type="text" id="tahun_beroperasi" class="form-control"
-                                         name="tahun_beroperasi" placeholder="Tahun Beroperasi" readonly required>
+                                         name="tahun_beroperasi" placeholder="Tahun Beroperasi" required>
                                  </div>
                              </div>
                              <div class="col-12">

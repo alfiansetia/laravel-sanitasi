@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\OpsiBaik;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class IpltRequest extends FormRequest
 {
@@ -28,15 +30,15 @@ class IpltRequest extends FormRequest
             'latitude'          => 'required|numeric|between:-90,90',
             'longitude'         => 'required|numeric|between:-180,180',
             'tahun_konstruksi'  => 'required|date_format:Y',
-            'terpasang'         => 'required|integer|gte:0',
-            'terpakai'          => 'required|integer|gte:0',
-            'tidak_terpakai'    => 'required|integer|gte:0',
-            'truk'              => 'required|integer|gte:0',
-            'kapasitas_truk'    => 'required|integer|gte:0',
-            'kondisi_truk'      => 'required|in:Baik,Tidak Baik',
-            'rit'               => 'required|integer|gte:0',
-            'pemanfaat_kk'      => 'required|integer|gte:0',
-            'pemanfaat_jiwa'    => 'required|integer|gte:0',
+            'terpasang'         => 'nullable|integer|gte:0',
+            'terpakai'          => 'nullable|integer|gte:0',
+            'tidak_terpakai'    => 'nullable|integer|gte:0',
+            'truk'              => 'nullable|integer|gte:0',
+            'kapasitas_truk'    => 'nullable|integer|gte:0',
+            'kondisi_truk'      => ['required', Rule::in(OpsiBaik::cases())],
+            'rit'               => 'nullable|integer|gte:0',
+            'pemanfaat_kk'      => 'nullable|integer|gte:0',
+            'pemanfaat_jiwa'    => 'nullable|integer|gte:0',
         ];
     }
 
@@ -63,7 +65,7 @@ class IpltRequest extends FormRequest
 
     public function mappedData(): array
     {
-        return array_merge(
+        $data = array_merge(
             $this->only([
                 'nama',
                 'kecamatan_id',
@@ -84,5 +86,20 @@ class IpltRequest extends FormRequest
                 'long'  => $this->longitude,
             ]
         );
+        foreach (
+            [
+                'terpasang',
+                'terpakai',
+                'tidak_terpakai',
+                'truk',
+                'kapasitas_truk',
+                'rit',
+                'pemanfaat_kk',
+                'pemanfaat_jiwa',
+            ] as $field
+        ) {
+            $data[$field] = $data[$field] ?? 0;
+        }
+        return $data;
     }
 }

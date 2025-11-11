@@ -63,44 +63,46 @@
                                  <div class="form-group">
                                      <label for="terpasang">Kapasitas Terpasang</label>
                                      <input type="text" id="terpasang" class="form-control mask_angka"
-                                         name="terpasang" placeholder="Kapasitas Terpasang" required>
+                                         name="terpasang" placeholder="Kapasitas Terpasang">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="terpakai">Kapasitas Terpakai</label>
                                      <input type="text" id="terpakai" class="form-control mask_angka"
-                                         name="terpakai" placeholder="Kapasitas Terpakai" required>
+                                         name="terpakai" placeholder="Kapasitas Terpakai">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="tidak_terpakai">Kapasitas Tidak Terpakai</label>
                                      <input type="text" id="tidak_terpakai" class="form-control mask_angka"
-                                         name="tidak_terpakai" placeholder="Kapasitas Tidak Terpakai" required>
+                                         name="tidak_terpakai" placeholder="Kapasitas Tidak Terpakai">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="truk">Truk Tinja (Unit)</label>
                                      <input type="text" id="truk" class="form-control mask_angka"
-                                         name="truk" placeholder="Truk Tinja (Unit)" required>
+                                         name="truk" placeholder="Truk Tinja (Unit)">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kapasitas_truk">Kapasitas Truk (M3)</label>
                                      <input type="text" id="kapasitas_truk" class="form-control mask_angka"
-                                         name="kapasitas_truk" placeholder="Kapasitas Truk (M3)" required>
+                                         name="kapasitas_truk" placeholder="Kapasitas Truk (M3)">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kondisi_truk">Kondisi Truk</label>
-                                     <select id="kondisi_truk" name="kondisi_truk" class="choices form-select">
+                                     <select id="kondisi_truk" name="kondisi_truk" class="choices form-select"
+                                         required>
                                          <option value="">Select Kondisi Truk</option>
-                                         <option value="Baik">Baik</option>
-                                         <option value="Tidak Baik">Tidak Baik</option>
+                                         @foreach (config('enums.opsi_baik') as $item)
+                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                         @endforeach
                                      </select>
                                  </div>
                              </div>

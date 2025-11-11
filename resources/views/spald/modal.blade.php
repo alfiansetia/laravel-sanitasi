@@ -61,7 +61,7 @@
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="skala">Skala Pelayanan</label>
-                                     <select class="form-select" id="skala" name="skala">
+                                     <select class="form-select" id="skala" name="skala" required>
                                          <option value="">--Select Skala Pelayanan--</option>
                                          @foreach (config('enums.skala_pelayanan') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -79,7 +79,7 @@
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="sumber">Sumber Dana</label>
-                                     <select class="form-select" id="sumber" name="sumber">
+                                     <select class="form-select" id="sumber" name="sumber" required>
                                          <option value="">--Select Sumber Dana--</option>
                                          @foreach (config('enums.sumber_dana') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -90,7 +90,8 @@
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="status_keberfungsian">Status Keberfungsian</label>
-                                     <select class="form-select" id="status_keberfungsian" name="status_keberfungsian">
+                                     <select class="form-select" id="status_keberfungsian" name="status_keberfungsian"
+                                         required>
                                          <option value="">--Select Status Keberfungsian--</option>
                                          @foreach (config('enums.opsi_befungsi') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -101,7 +102,7 @@
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kondisi">Keterangan Kondisi</label>
-                                     <select class="form-select" id="kondisi" name="kondisi">
+                                     <select class="form-select" id="kondisi" name="kondisi" required>
                                          <option value="">--Select Keterangan Kondisi--</option>
                                          @foreach (config('enums.opsi_baik') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -112,7 +113,7 @@
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="status_lahan">Status Lahan</label>
-                                     <select class="form-select" id="status_lahan" name="status_lahan">
+                                     <select class="form-select" id="status_lahan" name="status_lahan" required>
                                          <option value="">--Select Status Lahan--</option>
                                          @foreach (config('enums.status_lahan') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -130,7 +131,7 @@
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="jenis">Jenis Pengelolaan</label>
-                                     <select class="form-select" id="jenis" name="jenis">
+                                     <select class="form-select" id="jenis" name="jenis" required>
                                          <option value="">--Select Jenis Pengelolaan--</option>
                                          @foreach (config('enums.jenis_pengelolaan') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -141,7 +142,7 @@
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="teknologi">Opsi Teknologi</label>
-                                     <select class="form-select" id="teknologi" name="teknologi">
+                                     <select class="form-select" id="teknologi" name="teknologi" required>
                                          <option value="">--Select Opsi Teknologi--</option>
                                          @foreach (config('enums.opsi_teknologi') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -180,7 +181,8 @@
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="status_penyedotan">Penyedotan Lumpur Tinja</label>
-                                     <select class="form-select" id="status_penyedotan" name="status_penyedotan">
+                                     <select class="form-select" id="status_penyedotan" name="status_penyedotan"
+                                         required>
                                          <option value="">--Select Penyedotan Lumpur Tinja--</option>
                                          @foreach (config('enums.opsi_ada') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -192,7 +194,7 @@
                                  <div class="form-group">
                                      <label for="tanggal_update">Tanggal Update</label>
                                      <input type="text" id="tanggal_update" class="form-control"
-                                         name="tanggal_update" placeholder="Tanggal Update" readonly required>
+                                         name="tanggal_update" placeholder="Tanggal Update" required>
                                  </div>
                              </div>
 

@@ -31,14 +31,14 @@
                                      <textarea class="form-control" name="lokasi" id="lokasi" placeholder="Lokasi" required></textarea>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="pagu">Pagu Anggaran</label>
                                      <input type="text" id="pagu" class="form-control mask_angka" name="pagu"
                                          placeholder="Pagu Anggaran" value="0">
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="jumlah">Jumlah Anggaran</label>
                                      <input type="text" id="jumlah" class="form-control mask_angka" name="jumlah"

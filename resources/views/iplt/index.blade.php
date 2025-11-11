@@ -107,12 +107,6 @@
                 allowHTML: true,
             });
 
-            const kondisi = new Choices(document.getElementById('kondisi_truk'), {
-                searchEnabled: true,
-                removeItemButton: true,
-                allowHTML: true,
-            });
-
             $('#kecamatan_id').on('change', function() {
                 let kecamatan_id = $(this).val();
                 kelurahan.clearChoices();
@@ -383,12 +377,6 @@
                     show_message('Select Lokasi Desa!')
                     return
                 }
-                let kon = kondisi.getValue(true)
-                if (kon == null || kon == '') {
-                    kondisi.showDropdown(true)
-                    show_message('Select Kondisi Truk!')
-                    return
-                }
                 $.ajax({
                     url: $(this).attr('action'),
                     type: $(this).attr('method'),
@@ -432,8 +420,7 @@
                 $('#tidak_terpakai').val(data.tidak_terpakai)
                 $('#truk').val(data.truk)
                 $('#kapasitas_truk').val(data.kapasitas_truk)
-                kondisi.removeActiveItems();
-                kondisi.setChoiceByValue(data.kondisi);
+                $('#kondisi').val(data.kondisi).change()
                 $('#rit').val(data.rit)
                 $('#pemanfaat_kk').val(data.pemanfaat_kk)
                 $('#pemanfaat_jiwa').val(data.pemanfaat_jiwa)
@@ -464,8 +451,7 @@
                 $('#tidak_terpakai').val(0)
                 $('#truk').val(0)
                 $('#kapasitas_truk').val(0)
-                kondisi.removeActiveItems();
-                kondisi.setChoiceByValue('');
+                $('#kondisi').val('').change()
                 $('#rit').val(0)
                 $('#pemanfaat_kk').val(0)
                 $('#pemanfaat_jiwa').val(0)
