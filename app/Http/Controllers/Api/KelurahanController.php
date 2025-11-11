@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\KelurahanRequest;
+use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use Exception;
 use Illuminate\Http\Request;
@@ -66,36 +67,27 @@ class KelurahanController extends Controller
         DB::beginTransaction();
         try {
             $file = $request->file('file');
-            $data = Excel::toCollection([], $file)[0]->skip(2);
+            $data = Excel::toCollection([], $file)[0]->skip(1);
             $results = collect();
 
             foreach ($data as $index => $item) {
-                $tahun = $item[1] ?? null;
-                $nama = $item[2] ?? null;
-                $lokasi = $item[3] ?? null;
-                $pagu = $item[4] ?? null;
-                $jumlah = $item[5] ?? 0;
-                $sumber = $item[6] ?? null;
-                $lat = $item[7] ?? null;
-                $long = $item[8] ?? null;
-                $sum =  strtoupper(trim($sumber));
-
-                if (empty($tahun) || empty($nama) || empty($lokasi) || empty($sumber)) {
+                if ($item->filter()->isEmpty()) {
+                    continue;
+                }
+                $kode = $item[0] ?? null;
+                $kel  = $item[1] ?? null;
+                $kec  = $item[2] ?? null;
+                if (empty($kode) || empty($kel) || empty($kec)) {
                     throw new Exception("Data tidak lengkap di baris " . ($index + 2));
                 }
-
-                if (! in_array($sum, ['DAK', 'DAU'], true)) {
-                    throw new Exception("Data sumber tidak valid di baris " . ($index + 2) . " (nilai: '{$sumber}')");
-                }
-                $kelurahan = Kelurahan::create([
-                    'tahun'     => $tahun,
-                    'nama'      => $nama,
-                    'lokasi'    => $lokasi,
-                    'pagu'      => $pagu,
-                    'jumlah'    => $jumlah,
-                    'sumber'    => $sumber,
-                    'lat'       => $lat,
-                    'long'      => $long,
+                $kecamatan = Kecamatan::firstOrCreate([
+                    'nama' => $kec,
+                ]);
+                $kelurahan = Kelurahan::firstOrCreate([
+                    'kode' => $kode,
+                ], [
+                    'kecamatan_id'  => $kecamatan->id,
+                    'nama'          => $kel,
                 ]);
                 $results->add($kelurahan);
             }

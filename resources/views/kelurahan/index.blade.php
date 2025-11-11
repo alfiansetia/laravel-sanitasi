@@ -40,12 +40,40 @@
         var id = 0;
 
         $(document).ready(function() {
-            const el = document.getElementById('kecamatan_id')
-            var kecamatan = new Choices(el, {
+            var kecamatan = new Choices(document.getElementById('kecamatan_id'), {
                 allowHTML: true,
                 searchEnabled: true,
                 removeItemButton: true,
             });
+
+            refreshKecamatanOptions();
+
+            function refreshKecamatanOptions() {
+                $.ajax({
+                    url: "{{ route('api.kecamatans.index') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        kecamatan.clearChoices();
+                        const data = [{
+                            value: '',
+                            label: 'Select Kecamatan',
+                            disabled: true,
+                            selected: true,
+                        }].concat(
+                            (response.data ?? response).map(item => ({
+                                value: item.id,
+                                label: item.nama,
+                            }))
+                        );
+
+                        kecamatan.setChoices(data, 'value', 'label', true);
+                    },
+                    error: function(xhr) {
+                        console.error('Gagal memuat data kecamatan:', xhr.responseText);
+                    }
+                });
+            }
 
             var table = $('#table').DataTable({
                 rowId: 'id',
@@ -126,6 +154,12 @@
                                 table.ajax.reload()
                             }
                         }, {
+                            text: 'Import Data',
+                            className: 'dt-button btn-sm',
+                            action: function(e, dt, node, config) {
+                                importData()
+                            }
+                        }, {
                             text: 'Delete Selected Data',
                             className: 'dt-button btn-sm',
                             action: function(e, dt, node, config) {
@@ -204,7 +238,7 @@
                 $('#nama').val(data.nama)
                 kecamatan.removeActiveItems();
                 if (data.kecamatan_id) {
-                    kecamatan.setChoiceByValue(data.kecamatan_id.toString());
+                    kecamatan.setChoiceByValue(data.kecamatan_id);
                 }
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
@@ -226,6 +260,33 @@
                 $('#modal_form').modal('show')
             }
 
+            function importData() {
+                $('#form_import')[0].reset()
+                $('#modal_import').modal('show')
+            }
+
+            $('#form_import').submit(function(e) {
+                e.preventDefault()
+                let form = $(this)[0];
+                let formData = new FormData(form);
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    beforeSend: function() {},
+                    success: function(res) {
+                        refreshKecamatanOptions()
+                        table.ajax.reload()
+                        show_message(res.message, 'success')
+                        $('#modal_import').modal('hide');
+                    },
+                    error: function(xhr, status, error) {
+                        show_message(xhr.responseJSON.message || 'Error!')
+                    }
+                });
+            })
 
 
         })
