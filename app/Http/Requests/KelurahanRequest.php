@@ -23,8 +23,8 @@ class KelurahanRequest extends FormRequest
     {
         $rules = [
             'kecamatan_id' => 'required|exists:kecamatans,id',
-            'kode'         => 'required|string|max:200',
-            'nama'         => 'required|string|max:200',
+            'kode'         => 'required|string|max:100',
+            'nama'         => 'required|string|max:100',
         ];
 
         // Cek apakah ini request update atau store

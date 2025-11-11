@@ -27,14 +27,14 @@
                                  <div class="form-group">
                                      <label for="kode">Kode kelurahan</label>
                                      <input type="text" id="kode" class="form-control" name="kode"
-                                         placeholder="Kode kelurahan" required>
+                                         placeholder="Kode kelurahan" maxlength="100" required>
                                  </div>
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
                                      <label for="nama">Nama kelurahan</label>
                                      <input type="text" id="nama" class="form-control" name="nama"
-                                         placeholder="Nama kelurahan" required>
+                                         placeholder="Nama kelurahan" maxlength="100" required>
                                  </div>
                              </div>
                          </div>

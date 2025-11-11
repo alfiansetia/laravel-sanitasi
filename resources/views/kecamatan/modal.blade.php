@@ -16,7 +16,7 @@
                                  <div class="form-group">
                                      <label for="nama">Nama Kecamatan</label>
                                      <input type="text" id="nama" class="form-control" name="nama"
-                                         placeholder="Nama Kecamatan" required>
+                                         placeholder="Nama Kecamatan" maxlength="100" required>
                                  </div>
                              </div>
                          </div>

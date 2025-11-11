@@ -23,11 +23,11 @@ class KecamatanRequest extends FormRequest
     {
         $rules = [];
         if ($this->isMethod('post')) {
-            $rules['nama'] = 'required|string|max:200|unique:kecamatans,nama';
+            $rules['nama'] = 'required|string|max:100|unique:kecamatans,nama';
         } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
             // UPDATE
             $id = $this->route('kecamatan')->id ?? null;
-            $rules['nama'] = 'required|string|max:200|unique:kecamatans,nama,' . $id;;
+            $rules['nama'] = 'required|string|max:100|unique:kecamatans,nama,' . $id;;
         }
         return $rules;
     }
