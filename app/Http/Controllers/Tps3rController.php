@@ -13,7 +13,8 @@ class Tps3rController extends Controller
         $kecamatans = Kecamatan::all();
         return view('tps3r.index', [
             'kecamatans'    => $kecamatans,
-            'title'         => 'TPS3R'
+            'title'         => 'TPS3R',
+            'title_desc'    => 'Tempat Pengolahan Sampah 3R',
         ]);
     }
 }

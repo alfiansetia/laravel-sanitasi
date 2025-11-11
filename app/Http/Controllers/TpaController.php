@@ -13,7 +13,8 @@ class TpaController extends Controller
         $kecamatans = Kecamatan::all();
         return view('tpa.index', [
             'kecamatans'    => $kecamatans,
-            'title'         => 'TPA'
+            'title'         => 'TPA',
+            'title_desc'    => 'Tempat Pemrosesan Akhir',
         ]);
     }
 }

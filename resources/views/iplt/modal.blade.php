@@ -23,7 +23,7 @@
                                  <div class="form-group">
                                      <label for="kecamatan_id">Kecamatan</label>
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
-                                         <option value="">Select Kecamatan</option>
+                                         <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
                                              <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                          @endforeach

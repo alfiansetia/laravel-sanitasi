@@ -49,9 +49,10 @@
                                  <div class="form-group">
                                      <label for="sumber">Sumber Dana</label>
                                      <select class="form-select" id="sumber" name="sumber" required>
-                                         <option value="">Select Sumber Dana</option>
-                                         <option value="DAK">DAK</option>
-                                         <option value="DAU">DAU</option>
+                                         <option value="">--Select Sumber Dana--</option>
+                                         @foreach (config('enums.sumber_dana') as $item)
+                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                         @endforeach
                                      </select>
                                  </div>
                              </div>

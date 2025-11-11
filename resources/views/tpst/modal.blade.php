@@ -23,7 +23,7 @@
                                  <div class="form-group">
                                      <label for="kecamatan_id">Lokasi (Kecamatan)</label>
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
-                                         <option value="">Select Kecamatan</option>
+                                         <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
                                              <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                          @endforeach
@@ -34,7 +34,7 @@
                                  <div class="form-group">
                                      <label for="kelurahan_id">Lokasi (Desa)</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
-                                         <option value="">Select Kelurahan</option>
+                                         <option value="">--Select Kelurahan--</option>
                                      </select>
                                  </div>
                              </div>
@@ -88,7 +88,7 @@
                                      <label for="kecamatan_terlayani">Kecamatan Terlayani</label>
                                      <select id="kecamatan_terlayani" name="kecamatan_terlayani[]"
                                          class="choices form-select" multiple>
-                                         <option value="">Select Kecamatan</option>
+                                         <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
                                              <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                          @endforeach

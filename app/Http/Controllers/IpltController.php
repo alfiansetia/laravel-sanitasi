@@ -13,7 +13,9 @@ class IpltController extends Controller
         $kecamatans = Kecamatan::all();
         return view('iplt.index', [
             'kecamatans'    => $kecamatans,
-            'title'         => 'IPLT'
+            'title'         => 'IPLT',
+            'title_desc'    => 'Instalasi Pengolahan Limbah Terpadu',
+
         ]);
     }
 }

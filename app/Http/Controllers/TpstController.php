@@ -13,7 +13,9 @@ class TpstController extends Controller
         $kecamatans = Kecamatan::all();
         return view('tpst.index', [
             'kecamatans'    => $kecamatans,
-            'title'         => 'TPST'
+            'title'         => 'TPST',
+            'title_desc'    => 'Tempat Pengolahan Sampah Terpadu',
+
         ]);
     }
 }
