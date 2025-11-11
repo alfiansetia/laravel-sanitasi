@@ -111,7 +111,15 @@ class SpaldRequest extends FormRequest
                 'long'  => $this->longitude,
             ]
         );
-        foreach (['kapasitas', 'pemanfaat_jiwa', 'rumah_terlayani', 'unit_tangki', 'unit_bilik'] as $field) {
+        foreach (
+            [
+                'kapasitas',
+                'pemanfaat_jiwa',
+                'rumah_terlayani',
+                'unit_tangki',
+                'unit_bilik'
+            ] as $field
+        ) {
             $data[$field] = $data[$field] ?? 0;
         }
         return $data;

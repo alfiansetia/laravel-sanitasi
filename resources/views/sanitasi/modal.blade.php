@@ -22,27 +22,27 @@
                              <div class="col-12">
                                  <div class="form-group">
                                      <label for="nama">Nama Kegiatan</label>
-                                     <textarea class="form-control" name="nama" id="nama" placeholder="Nama Kegiatan" required></textarea>
+                                     <textarea class="form-control" name="nama" id="nama" placeholder="Nama Kegiatan" maxlength="200" required></textarea>
                                  </div>
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
                                      <label for="lokasi">Lokasi</label>
-                                     <textarea class="form-control" name="lokasi" id="lokasi" placeholder="Lokasi" required></textarea>
+                                     <textarea class="form-control" name="lokasi" id="lokasi" placeholder="Lokasi" maxlength="200" required></textarea>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="pagu">Pagu Anggaran</label>
                                      <input type="text" id="pagu" class="form-control mask_angka" name="pagu"
-                                         placeholder="Pagu Anggaran" value="0">
+                                         placeholder="Pagu Anggaran">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="jumlah">Jumlah Anggaran</label>
                                      <input type="text" id="jumlah" class="form-control mask_angka" name="jumlah"
-                                         placeholder="Jumlah Anggaran" value="0">
+                                         placeholder="Jumlah Anggaran">
                                  </div>
                              </div>
                              <div class="col-12">
@@ -60,14 +60,14 @@
                                  <div class="form-group">
                                      <label for="lat">Latitude</label>
                                      <input type="text" id="lat" class="form-control" name="lat"
-                                         placeholder="Latitude">
+                                         placeholder="Latitude" required>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="long">Longitude</label>
                                      <input type="text" id="long" class="form-control" name="long"
-                                         placeholder="Longitude">
+                                         placeholder="Longitude" required>
                                  </div>
                              </div>
                          </div>

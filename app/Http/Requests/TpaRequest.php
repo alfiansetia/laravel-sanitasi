@@ -90,7 +90,13 @@ class TpaRequest extends FormRequest
             ]
         );
 
-        foreach (['rencana', 'luas_sarana', 'luas_sel'] as $field) {
+        foreach (
+            [
+                'rencana',
+                'luas_sarana',
+                'luas_sel'
+            ] as $field
+        ) {
             $data[$field] = $data[$field] ?? 0;
         }
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\OpsiBerfungsi;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class Tps3rRequest extends FormRequest
 {
@@ -24,15 +26,15 @@ class Tps3rRequest extends FormRequest
         return [
             'kecamatan_id'          => 'required|exists:kecamatans,id',
             'kelurahan_id'          => 'required|exists:kelurahans,id',
-            'luas'                  => 'required|integer|gte:0',
+            'luas'                  => 'nullable|integer|gte:0',
             'tahun_konstruksi'      => 'required|date_format:Y',
             'tahun_beroperasi'      => 'required|date_format:Y',
-            'jumlah_timbunan'       => 'required|numeric|gte:0',
-            'jumlah_penduduk'       => 'required|integer|gte:0',
-            'jumlah_kk'             => 'required|integer|gte:0',
-            'gerobak'               => 'required|integer|gte:0',
-            'motor'                 => 'required|integer|gte:0',
-            'status'                => 'required|in:Berfungsi,Tidak Berfungsi',
+            'jumlah_timbunan'       => 'nullable|numeric|gte:0',
+            'jumlah_penduduk'       => 'nullable|integer|gte:0',
+            'jumlah_kk'             => 'nullable|integer|gte:0',
+            'gerobak'               => 'nullable|integer|gte:0',
+            'motor'                 => 'nullable|integer|gte:0',
+            'status'                => ['required', Rule::in(OpsiBerfungsi::cases())],
         ];
     }
 
@@ -55,7 +57,7 @@ class Tps3rRequest extends FormRequest
 
     public function mappedData(): array
     {
-        return $this->only([
+        $data =  $this->only([
             'kecamatan_id',
             'kelurahan_id',
             'luas',
@@ -68,5 +70,20 @@ class Tps3rRequest extends FormRequest
             'motor',
             'status',
         ]);
+
+        foreach (
+            [
+                'luas',
+                'jumlah_timbunan',
+                'jumlah_penduduk',
+                'jumlah_kk',
+                'gerobak',
+                'motor',
+            ] as $field
+        ) {
+            $data[$field] = $data[$field] ?? 0;
+        }
+
+        return $data;
     }
 }

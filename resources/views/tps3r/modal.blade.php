@@ -69,37 +69,38 @@
                                  <div class="form-group">
                                      <label for="jumlah_penduduk">Jumlah Penduduk</label>
                                      <input type="text" id="jumlah_penduduk" class="form-control mask_angka"
-                                         name="jumlah_penduduk" placeholder="Jumlah Penduduk" required>
+                                         name="jumlah_penduduk" placeholder="Jumlah Penduduk">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="jumlah_kk">Jumlah KK Terlayani</label>
                                      <input type="text" id="jumlah_kk" class="form-control mask_angka"
-                                         name="jumlah_kk" placeholder="Jumlah KK Terlayani" required>
+                                         name="jumlah_kk" placeholder="Jumlah KK Terlayani">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="gerobak">Gerobak</label>
                                      <input type="text" id="gerobak" class="form-control mask_angka" name="gerobak"
-                                         placeholder="Gerobak" required>
+                                         placeholder="Gerobak">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="motor">Motor Roda Tiga</label>
                                      <input type="text" id="motor" class="form-control mask_angka"
-                                         name="motor" placeholder="Motor Roda Tiga" required>
+                                         name="motor" placeholder="Motor Roda Tiga">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="status">Keberfungsian</label>
-                                     <select id="status" name="status" class="choices form-select">
+                                     <select id="status" name="status" class="choices form-select" required>
                                          <option value="">Select Keberfungsian</option>
-                                         <option value="Berfungsi">Berfungsi</option>
-                                         <option value="Tidak Berfungsi">Tidak Berfungsi</option>
+                                         @foreach (config('enums.opsi_befungsi') as $item)
+                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                         @endforeach
                                      </select>
                                  </div>
                              </div>

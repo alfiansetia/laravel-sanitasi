@@ -58,7 +58,7 @@
 
                 <li class="sidebar-item  {{ Route::is('sanitasis.index') ? 'active' : '' }}">
                     <a href="{{ route('sanitasis.index') }}" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                        <i class="bi bi-card-checklist"></i>
                         <span>Sanitasi</span>
                     </a>
 
@@ -67,30 +67,14 @@
 
                 {{-- <li class="sidebar-title">Master Data</li> --}}
 
-                <li class="sidebar-item {{ in_array($t, ['SPALD-T', 'SPALD-S']) ? 'active' : '' }} has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
-                        <span>SPALD</span>
-                    </a>
-                    <ul class="submenu {{ in_array($t, ['SPALD-T', 'SPALD-S']) ? 'active' : '' }}">
-                        <li class="submenu-item {{ Route::is('spaldts.index') ? 'active' : '' }} ">
-                            <a href="{{ route('spaldts.index') }}" class="submenu-link">SPALD-T</a>
-                        </li>
-                        <li class="submenu-item  ">
-                            <a href="{{ route('spaldts.index') }}" class="submenu-link">SPALD-S</a>
-                        </li>
-                    </ul>
-                </li>
-
                 <li
-                    class="sidebar-item {{ in_array($t, ['User', 'TPA', 'TPST', 'TPS3R', 'IPLT', 'SPALD']) ? 'active' : '' }} has-sub">
+                    class="sidebar-item {{ in_array($t, ['TPA', 'TPST', 'TPS3R', 'IPLT', 'SPALD']) ? 'active' : '' }} has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-collection-fill"></i>
+                        <i class="bi bi-database"></i>
                         <span>Master Data</span>
                     </a>
 
-                    <ul
-                        class="submenu {{ in_array($t, ['User', 'TPA', 'TPST', 'TPS3R', 'IPLT', 'SPALD']) ? 'active' : '' }}">
+                    <ul class="submenu {{ in_array($t, ['TPA', 'TPST', 'TPS3R', 'IPLT', 'SPALD']) ? 'active' : '' }}">
                         <li class="submenu-item  {{ Route::is('tpas.index') ? 'active' : '' }}">
                             <a href="{{ route('tpas.index') }}" class="submenu-link">
                                 TPA
@@ -116,20 +100,13 @@
                                 SPALD
                             </a>
                         </li>
-                        <li class="submenu-item {{ Route::is('users.index') ? 'active' : '' }} ">
-                            <a href="{{ route('users.index') }}" class="submenu-link">User</a>
-                        </li>
-
                     </ul>
-
-
-
 
                 </li>
 
                 <li class="sidebar-item {{ in_array($t, ['KECAMATAN', 'KELURAHAN']) ? 'active' : '' }} has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
+                        <i class="bi bi-crosshair"></i>
                         <span>Wilayah</span>
                     </a>
                     <ul class="submenu {{ in_array($t, ['KECAMATAN', 'KELURAHAN']) ? 'active' : '' }}">
@@ -141,6 +118,16 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="sidebar-item  {{ Route::is('users.index') ? 'active' : '' }}">
+                    <a href="{{ route('users.index') }}" class='sidebar-link'>
+                        <i class="bi bi-people"></i>
+                        <span>User</span>
+                    </a>
+
+
+                </li>
+
 
 
 

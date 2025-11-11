@@ -16,7 +16,7 @@
                                  <div class="form-group">
                                      <label for="nama">Nama Instalasi</label>
                                      <input type="text" id="nama" class="form-control" name="nama"
-                                         placeholder="Nama Instalasi" required>
+                                         placeholder="Nama Instalasi" maxlength="200" required>
                                  </div>
                              </div>
                              <div class="col-md-6">
@@ -41,7 +41,7 @@
                              <div class="col-12">
                                  <div class="form-group">
                                      <label for="alamat">Alamat</label>
-                                     <textarea class="form-control" name="alamat" id="alamat" required></textarea>
+                                     <textarea class="form-control" name="alamat" id="alamat" maxlength="200" required></textarea>
                                  </div>
                              </div>
                              <div class="col-12">

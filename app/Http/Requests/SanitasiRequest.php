@@ -46,7 +46,7 @@ class SanitasiRequest extends FormRequest
 
     public function mappedData(): array
     {
-        return $this->only([
+        $data =  $this->only([
             'tahun',
             'nama',
             'lokasi',
@@ -56,5 +56,16 @@ class SanitasiRequest extends FormRequest
             'lat',
             'long',
         ]);
+
+        foreach (
+            [
+                'pagu',
+                'jumlah',
+            ] as $field
+        ) {
+            $data[$field] = $data[$field] ?? 0;
+        }
+
+        return $data;
     }
 }

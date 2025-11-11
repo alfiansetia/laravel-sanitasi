@@ -16,7 +16,7 @@
                                  <div class="form-group">
                                      <label for="nama">Nama TPST</label>
                                      <input type="text" id="nama" class="form-control" name="nama"
-                                         placeholder="Nama TPST" required>
+                                         placeholder="Nama TPST" maxlength="200" required>
                                  </div>
                              </div>
                              <div class="col-md-6">

@@ -111,12 +111,6 @@
                 allowHTML: true,
             });
 
-            const status = new Choices(document.getElementById('status'), {
-                searchEnabled: true,
-                removeItemButton: true,
-                allowHTML: true,
-            });
-
             $('#kecamatan_id').on('change', function() {
                 let kecamatan_id = $(this).val();
                 kelurahan.clearChoices();
@@ -406,9 +400,7 @@
                 $('#jumlah_kk').val(data.jumlah_kk)
                 $('#gerobak').val(data.gerobak)
                 $('#motor').val(data.motor)
-
-                status.removeActiveItems();
-                status.setChoiceByValue(data.status);
+                $('#status').val(data.status).change()
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
                 $('#form').attr('method', 'PUT')
@@ -434,8 +426,7 @@
                 $('#jumlah_kk').val(0)
                 $('#gerobak').val(0)
                 $('#motor').val(0)
-                status.removeActiveItems();
-                status.setChoiceByValue('');
+                $('#status').val('').change()
 
                 $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data')
                 $('#modal_form').modal('show')
