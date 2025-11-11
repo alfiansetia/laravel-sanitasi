@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\OpsiBaik;
+use App\Enums\Pengelola;
+use App\Enums\SumberDana;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TpstRequest extends FormRequest
 {
@@ -27,17 +31,17 @@ class TpstRequest extends FormRequest
             'kelurahan_id'          => 'required|exists:kelurahans,id',
             'latitude'              => 'required|numeric|between:-90,90',
             'longitude'             => 'required|numeric|between:-180,180',
-            'sumber'                => 'required|in:DAK,DAU',
+            'sumber'                => ['required', Rule::in(SumberDana::cases())],
             'tahun_konstruksi'      => 'required|date_format:Y',
             'tahun_beroperasi'      => 'required|date_format:Y',
-            'rencana'               => 'required|integer|gte:0',
+            'rencana'               => 'nullable|integer|gte:0',
             'kecamatan_terlayani'   => 'nullable|array',
             'kecamatan_terlayani.*' => 'exists:kecamatans,id',
-            'luas_sarana'           => 'required|numeric|gte:0',
-            'luas_sel'              => 'required|numeric|gte:0',
-            'pengelola'             => 'required|in:Dinas,UPT',
+            'luas_sarana'           => 'nullable|numeric|gte:0',
+            'luas_sel'              => 'nullable|numeric|gte:0',
+            'pengelola'             => ['required', Rule::in(Pengelola::cases())],
             'pengelola_desc'        => 'nullable|string|max:200',
-            'kondisi'               => 'required|in:Baik,Tidak Baik',
+            'kondisi'               => ['required', Rule::in(OpsiBaik::cases())],
         ];
     }
 
@@ -65,7 +69,7 @@ class TpstRequest extends FormRequest
 
     public function mappedData(): array
     {
-        return array_merge(
+        $data = array_merge(
             $this->only([
                 'nama',
                 'kecamatan_id',
@@ -85,5 +89,11 @@ class TpstRequest extends FormRequest
                 'long'  => $this->longitude,
             ]
         );
+
+        foreach (['rencana', 'luas_sarana', 'luas_sel'] as $field) {
+            $data[$field] = $data[$field] ?? 0;
+        }
+
+        return $data;
     }
 }

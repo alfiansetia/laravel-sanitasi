@@ -113,25 +113,7 @@
                 allowHTML: true,
             });
 
-            const sumber = new Choices(document.getElementById('sumber'), {
-                searchEnabled: true,
-                removeItemButton: true,
-                allowHTML: true,
-            });
-
             const kecamatanTerlayani = new Choices(document.getElementById('kecamatan_terlayani'), {
-                searchEnabled: true,
-                removeItemButton: true,
-                allowHTML: true,
-            });
-
-            const pengelola = new Choices(document.getElementById('pengelola'), {
-                searchEnabled: true,
-                removeItemButton: true,
-                allowHTML: true,
-            });
-
-            const kondisi = new Choices(document.getElementById('kondisi'), {
                 searchEnabled: true,
                 removeItemButton: true,
                 allowHTML: true,
@@ -387,24 +369,6 @@
                     show_message('Select Lokasi Desa!')
                     return
                 }
-                let sum = sumber.getValue(true)
-                if (sum == null || sum == '') {
-                    sumber.showDropdown(true)
-                    show_message('Select Sumber Anggaran!')
-                    return
-                }
-                let peng = pengelola.getValue(true)
-                if (peng == null || peng == '') {
-                    pengelola.showDropdown(true)
-                    show_message('Select Jenis Pengelola!')
-                    return
-                }
-                let kon = kondisi.getValue(true)
-                if (kon == null || kon == '') {
-                    kondisi.showDropdown(true)
-                    show_message('Select Kondisi TPA!')
-                    return
-                }
                 $.ajax({
                     url: $(this).attr('action'),
                     type: $(this).attr('method'),
@@ -442,11 +406,10 @@
                 }
                 $('#latitude').val(data.lat)
                 $('#longitude').val(data.long)
-                sumber.removeActiveItems();
-                sumber.setChoiceByValue(data.sumber);
+                $('#sumber').val(data.sumber).change()
+                $('#rencana').val(data.rencana)
                 $('#tahun_konstruksi').datepicker('setDate', new Date(data.tahun_konstruksi, 0, 1));
                 $('#tahun_beroperasi').datepicker('setDate', new Date(data.tahun_beroperasi, 0, 1));
-                $('#rencana').val(data.rencana)
                 kecamatanTerlayani.removeActiveItems();
                 if (Array.isArray(data.kecamatan_terlayani_ids)) {
                     data.kecamatan_terlayani_ids.forEach(id => {
@@ -455,11 +418,9 @@
                 }
                 $('#luas_sarana').val(data.luas_sarana)
                 $('#luas_sel').val(data.luas_sel)
-                pengelola.removeActiveItems();
-                pengelola.setChoiceByValue(data.pengelola);
+                $('#pengelola').val(data.pengelola).change()
                 $('#pengelola_desc').val(data.pengelola_desc)
-                kondisi.removeActiveItems();
-                kondisi.setChoiceByValue(data.kondisi);
+                $('#kondisi').val(data.kondisi).change()
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
                 $('#form').attr('method', 'PUT')
@@ -481,8 +442,7 @@
                 kelurahan.setChoiceByValue('');
                 $('#latitude').val('')
                 $('#longitude').val('')
-                sumber.removeActiveItems();
-                sumber.setChoiceByValue('');
+                $('#sumber').val('').change()
                 $('#tahun_konstruksi').val('');
                 $('#tahun_beroperasi').val('');
                 $('#rencana').val(0)
@@ -490,11 +450,9 @@
                 kecamatanTerlayani.setChoiceByValue([])
                 $('#luas_sarana').val(0.0)
                 $('#luas_sel').val(0.0)
-                pengelola.removeActiveItems();
-                pengelola.setChoiceByValue('');
+                $('#pengelola').val('').change()
                 $('#pengelola_desc').val('')
-                kondisi.removeActiveItems();
-                kondisi.setChoiceByValue('');
+                $('#kondisi').val('').change()
 
                 $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data')
                 $('#modal_form').modal('show')

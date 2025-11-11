@@ -57,8 +57,9 @@
                                      <label for="sumber">Sumber Anggaran</label>
                                      <select class="form-select" id="sumber" name="sumber">
                                          <option value="">Select Sumber Anggaran</option>
-                                         <option value="DAK">DAK</option>
-                                         <option value="DAU">DAU</option>
+                                         @foreach (config('enums.sumber_dana') as $item)
+                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                         @endforeach
                                      </select>
                                  </div>
                              </div>
@@ -66,21 +67,21 @@
                                  <div class="form-group">
                                      <label for="rencana">Rencana Umur Beroperasi (Tahun)</label>
                                      <input type="text" id="rencana" class="form-control mask_angka" name="rencana"
-                                         placeholder="Rencana Umur Beroperasi" required>
+                                         placeholder="Rencana Umur Beroperasi">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="tahun_konstruksi">Tahun Konstruksi</label>
                                      <input type="text" id="tahun_konstruksi" class="form-control"
-                                         name="tahun_konstruksi" placeholder="Tahun Konstruksi" required>
+                                         name="tahun_konstruksi" placeholder="Tahun Konstruksi" readonly required>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="tahun_beroperasi">Tahun Beroperasi</label>
                                      <input type="text" id="tahun_beroperasi" class="form-control"
-                                         name="tahun_beroperasi" placeholder="Tahun Beroperasi" required>
+                                         name="tahun_beroperasi" placeholder="Tahun Beroperasi" readonly required>
                                  </div>
                              </div>
                              <div class="col-12">
@@ -99,14 +100,14 @@
                                  <div class="form-group">
                                      <label for="luas_sarana">Luas Sarana</label>
                                      <input type="text" id="luas_sarana" class="form-control mask_decimal"
-                                         name="luas_sarana" placeholder="Luas Sarana" required>
+                                         name="luas_sarana" placeholder="Luas Sarana">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="luas_sel">Luas Sel</label>
                                      <input type="text" id="luas_sel" class="form-control mask_decimal"
-                                         name="luas_sel" placeholder="Luas Sel" required>
+                                         name="luas_sel" placeholder="Luas Sel">
                                  </div>
                              </div>
                              <div class="col-md-6">
@@ -114,8 +115,9 @@
                                      <label for="pengelola">Jenis Pengelola (Dinas/UPT)</label>
                                      <select id="pengelola" name="pengelola" class="choices form-select">
                                          <option value="">Select Pengelola</option>
-                                         <option value="Dinas">Dinas</option>
-                                         <option value="UPT">UPT</option>
+                                         @foreach (config('enums.pengelola') as $item)
+                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                         @endforeach
                                      </select>
                                  </div>
                              </div>
@@ -124,8 +126,9 @@
                                      <label for="kondisi">Kondisi TPST</label>
                                      <select id="kondisi" name="kondisi" class="choices form-select">
                                          <option value="">Select Kondisi</option>
-                                         <option value="Baik">Baik</option>
-                                         <option value="Tidak Baik">Tidak Baik</option>
+                                         @foreach (config('enums.opsi_baik') as $item)
+                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                         @endforeach
                                      </select>
                                  </div>
                              </div>

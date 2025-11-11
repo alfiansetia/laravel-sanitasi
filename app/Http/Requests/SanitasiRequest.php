@@ -2,10 +2,17 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\SumberDana;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SanitasiRequest extends FormRequest
 {
+    public function authorize(): bool
+    {
+        return true;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -15,9 +22,9 @@ class SanitasiRequest extends FormRequest
             'tahun'     => 'required|date_format:Y',
             'nama'      => 'required|max:5000',
             'lokasi'    => 'required|max:200',
-            'pagu'      => 'required|integer|gte:0',
-            'jumlah'    => 'required|integer|gte:0',
-            'sumber'    => 'required|in:DAK,DAU',
+            'pagu'      => 'nullable|integer|gte:0',
+            'jumlah'    => 'nullable|integer|gte:0',
+            'sumber'    => ['required', Rule::in(SumberDana::cases())],
             'lat'       => 'nullable',
             'long'      => 'nullable',
         ];

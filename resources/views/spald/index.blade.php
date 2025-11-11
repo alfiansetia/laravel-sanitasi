@@ -85,6 +85,11 @@
                 autoclose: true
             });
 
+            $('#tanggal_update').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });
+
             $('.mask_angka').inputmask({
                 alias: 'numeric',
                 groupSeparator: '.',
@@ -119,30 +124,6 @@
                 removeItemButton: true,
                 allowHTML: true,
             });
-
-            // const sumber = new Choices(document.getElementById('sumber'), {
-            //     searchEnabled: true,
-            //     removeItemButton: true,
-            //     allowHTML: true,
-            // });
-
-            // const kecamatanTerlayani = new Choices(document.getElementById('kecamatan_terlayani'), {
-            //     searchEnabled: true,
-            //     removeItemButton: true,
-            //     allowHTML: true,
-            // });
-
-            // const pengelola = new Choices(document.getElementById('pengelola'), {
-            //     searchEnabled: true,
-            //     removeItemButton: true,
-            //     allowHTML: true,
-            // });
-
-            // const kondisi = new Choices(document.getElementById('kondisi'), {
-            //     searchEnabled: true,
-            //     removeItemButton: true,
-            //     allowHTML: true,
-            // });
 
             $('#kecamatan_id').on('change', function() {
                 let kecamatan_id = $(this).val();
@@ -377,24 +358,6 @@
                     show_message('Select Lokasi Desa!')
                     return
                 }
-                let sum = sumber.getValue(true)
-                if (sum == null || sum == '') {
-                    sumber.showDropdown(true)
-                    show_message('Select Sumber Anggaran!')
-                    return
-                }
-                let peng = pengelola.getValue(true)
-                if (peng == null || peng == '') {
-                    pengelola.showDropdown(true)
-                    show_message('Select Jenis Pengelola!')
-                    return
-                }
-                let kon = kondisi.getValue(true)
-                if (kon == null || kon == '') {
-                    kondisi.showDropdown(true)
-                    show_message('Select Kondisi TPA!')
-                    return
-                }
                 $.ajax({
                     url: $(this).attr('action'),
                     type: $(this).attr('method'),
@@ -483,7 +446,7 @@
                 $('#unit_tangki').val(0)
                 $('#unit_bilik').val(0)
                 $('#status_penyedotan').val('').change()
-                $('#tanggal_update').val(0)
+                $('#tanggal_update').val('')
 
 
                 $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data')

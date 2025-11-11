@@ -32,7 +32,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kelurahan_id">Desa</label>
+                                     <label for="kelurahan_id">Desa/Kelurahan</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
                                          <option value="">--Select Kelurahan--</option>
                                      </select>
@@ -124,7 +124,7 @@
                                  <div class="form-group">
                                      <label for="kapasitas">Kapasitas Desain (m3/hari)</label>
                                      <input type="text" id="kapasitas" class="form-control mask_decimal"
-                                         name="kapasitas" placeholder="Kapasitas Desain" required>
+                                         name="kapasitas" placeholder="Kapasitas Desain">
                                  </div>
                              </div>
                              <div class="col-md-6">
@@ -153,28 +153,28 @@
                                  <div class="form-group">
                                      <label for="pemanfaat_jiwa">Jumlah Pemanfaat Jiwa</label>
                                      <input type="text" id="pemanfaat_jiwa" class="form-control mask_angka"
-                                         name="pemanfaat_jiwa" placeholder="Jumlah Pemanfaat Jiwa" required>
+                                         name="pemanfaat_jiwa" placeholder="Jumlah Pemanfaat Jiwa">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="rumah_terlayani">Jumlah Rumah Terlayani</label>
                                      <input type="text" id="rumah_terlayani" class="form-control mask_angka"
-                                         name="rumah_terlayani" placeholder="Jumlah Rumah Terlayani" required>
+                                         name="rumah_terlayani" placeholder="Jumlah Rumah Terlayani">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="unit_tangki">Jumlah Unit Tangki Septik</label>
                                      <input type="text" id="unit_tangki" class="form-control mask_angka"
-                                         name="unit_tangki" placeholder="Jumlah Unit Tangki Septik" required>
+                                         name="unit_tangki" placeholder="Jumlah Unit Tangki Septik">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="unit_bilik">Jumlah Unit Bilik</label>
                                      <input type="text" id="unit_bilik" class="form-control mask_angka"
-                                         name="unit_bilik" placeholder="Jumlah Unit Bilik" required>
+                                         name="unit_bilik" placeholder="Jumlah Unit Bilik">
                                  </div>
                              </div>
                              <div class="col-md-6">
@@ -192,7 +192,7 @@
                                  <div class="form-group">
                                      <label for="tanggal_update">Tanggal Update</label>
                                      <input type="text" id="tanggal_update" class="form-control"
-                                         name="tanggal_update" placeholder="Tanggal Update" required>
+                                         name="tanggal_update" placeholder="Tanggal Update" readonly required>
                                  </div>
                              </div>
 

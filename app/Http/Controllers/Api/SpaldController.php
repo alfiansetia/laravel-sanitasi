@@ -19,7 +19,6 @@ class SpaldController extends Controller
             ->with([
                 'kecamatan',
                 'kelurahan',
-                'kecamatan_terlayani.kecamatan'
             ])
             ->filter($request->only(Spald::$filterProp));
         return DataTables::eloquent($query)->toJson();
@@ -30,30 +29,18 @@ class SpaldController extends Controller
         return $this->sendResponse($spald->load([
             'kecamatan',
             'kelurahan',
-            'kecamatan_terlayani.kecamatan'
         ]));
     }
 
     public function store(SpaldRequest $request)
     {
         $spald = Spald::create($request->mappedData());
-        $spald->kecamatan_terlayani()->createMany(
-            collect($request->kecamatan_terlayani ?? [])
-                ->map(fn($id) => ['kecamatan_id' => $id])
-                ->toArray()
-        );
         return $this->sendResponse($spald, 'Created!');
     }
 
     public function update(SpaldRequest $request, Spald $spald)
     {
         $spald->update($request->mappedData());
-        $spald->kecamatan_terlayani()->delete();
-        $spald->kecamatan_terlayani()->createMany(
-            collect($request->kecamatan_terlayani ?? [])
-                ->map(fn($id) => ['kecamatan_id' => $id])
-                ->toArray()
-        );
         return $this->sendResponse($spald, 'Updated!');
     }
 

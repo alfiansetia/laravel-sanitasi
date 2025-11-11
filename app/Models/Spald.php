@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Spald extends Model
 {
     protected $guarded = [];
-    protected $appends = ['is_valid_map', 'kecamatan_terlayani_ids'];
+    protected $appends = ['is_valid_map'];
 
     public static $filterProp = [
         'nama',
