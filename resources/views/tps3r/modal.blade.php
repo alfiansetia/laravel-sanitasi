@@ -12,7 +12,7 @@
                  <div class="modal-body">
                      <div class="form-body">
                          <div class="row">
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kecamatan_id">Kecamatan</label>
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
@@ -23,7 +23,7 @@
                                      </select>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kelurahan_id">Kelurahan/Desa</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">

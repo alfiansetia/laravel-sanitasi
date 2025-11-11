@@ -19,7 +19,7 @@
                                          placeholder="Nama TPA" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kecamatan_id">Lokasi (Kecamatan)</label>
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
@@ -30,7 +30,7 @@
                                      </select>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kelurahan_id">Lokasi (Desa)</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
@@ -52,7 +52,7 @@
                                      </div>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="sumber">Sumber Anggaran</label>
                                      <select class="form-select" id="sumber" name="sumber">
@@ -62,25 +62,25 @@
                                      </select>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
+                                 <div class="form-group">
+                                     <label for="rencana">Rencana Umur Beroperasi (Tahun)</label>
+                                     <input type="text" id="rencana" class="form-control mask_angka" name="rencana"
+                                         placeholder="Rencana Umur Beroperasi" required>
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="tahun_konstruksi">Tahun Konstruksi</label>
                                      <input type="text" id="tahun_konstruksi" class="form-control"
                                          name="tahun_konstruksi" placeholder="Tahun Konstruksi" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="tahun_beroperasi">Tahun Beroperasi</label>
                                      <input type="text" id="tahun_beroperasi" class="form-control"
                                          name="tahun_beroperasi" placeholder="Tahun Beroperasi" required>
-                                 </div>
-                             </div>
-                             <div class="col-12">
-                                 <div class="form-group">
-                                     <label for="rencana">Rencana Umur Beroperasi (Tahun)</label>
-                                     <input type="text" id="rencana" class="form-control mask_angka" name="rencana"
-                                         placeholder="Rencana Umur Beroperasi" required>
                                  </div>
                              </div>
                              <div class="col-12">
@@ -109,7 +109,7 @@
                                          name="luas_sel" placeholder="Luas Sel" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="pengelola">Jenis Pengelola (Dinas/UPT)</label>
                                      <select id="pengelola" name="pengelola" class="choices form-select">
@@ -119,14 +119,7 @@
                                      </select>
                                  </div>
                              </div>
-                             <div class="col-12">
-                                 <div class="form-group">
-                                     <label for="pengelola_desc">Deskripsi Pengelola</label>
-                                     <input type="text" id="pengelola_desc" class="form-control"
-                                         name="pengelola_desc" placeholder="Deskripsi Pengelola">
-                                 </div>
-                             </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kondisi">Kondisi TPA</label>
                                      <select id="kondisi" name="kondisi" class="choices form-select">
@@ -134,6 +127,13 @@
                                          <option value="Baik">Baik</option>
                                          <option value="Tidak Baik">Tidak Baik</option>
                                      </select>
+                                 </div>
+                             </div>
+                             <div class="col-md-12">
+                                 <div class="form-group">
+                                     <label for="pengelola_desc">Deskripsi Pengelola</label>
+                                     <input type="text" id="pengelola_desc" class="form-control"
+                                         name="pengelola_desc" placeholder="Deskripsi Pengelola" maxlength="200">
                                  </div>
                              </div>
                          </div>

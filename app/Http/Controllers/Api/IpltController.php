@@ -35,23 +35,12 @@ class IpltController extends Controller
     public function store(IpltRequest $request)
     {
         $iplt = Iplt::create($request->mappedData());
-        $iplt->kecamatan_terlayani()->createMany(
-            collect($request->kecamatan_terlayani ?? [])
-                ->map(fn($id) => ['kecamatan_id' => $id])
-                ->toArray()
-        );
         return $this->sendResponse($iplt, 'Created!');
     }
 
     public function update(IpltRequest $request, Iplt $iplt)
     {
         $iplt->update($request->mappedData());
-        $iplt->kecamatan_terlayani()->delete();
-        $iplt->kecamatan_terlayani()->createMany(
-            collect($request->kecamatan_terlayani ?? [])
-                ->map(fn($id) => ['kecamatan_id' => $id])
-                ->toArray()
-        );
         return $this->sendResponse($iplt, 'Updated!');
     }
 

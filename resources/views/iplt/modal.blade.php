@@ -19,7 +19,7 @@
                                          placeholder="Nama IPLT" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kecamatan_id">Kecamatan</label>
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
@@ -30,7 +30,7 @@
                                      </select>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kelurahan_id">Desa/Kelurahan</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
@@ -52,49 +52,49 @@
                                      </div>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="tahun_konstruksi">Tahun Konstruksi</label>
                                      <input type="text" id="tahun_konstruksi" class="form-control"
                                          name="tahun_konstruksi" placeholder="Tahun Konstruksi" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="terpasang">Kapasitas Terpasang</label>
                                      <input type="text" id="terpasang" class="form-control mask_angka"
                                          name="terpasang" placeholder="Kapasitas Terpasang" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="terpakai">Kapasitas Terpakai</label>
                                      <input type="text" id="terpakai" class="form-control mask_angka"
                                          name="terpakai" placeholder="Kapasitas Terpakai" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="tidak_terpakai">Kapasitas Tidak Terpakai</label>
                                      <input type="text" id="tidak_terpakai" class="form-control mask_angka"
                                          name="tidak_terpakai" placeholder="Kapasitas Tidak Terpakai" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="truk">Truk Tinja (Unit)</label>
                                      <input type="text" id="truk" class="form-control mask_angka"
                                          name="truk" placeholder="Truk Tinja (Unit)" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kapasitas_truk">Kapasitas Truk (M3)</label>
                                      <input type="text" id="kapasitas_truk" class="form-control mask_angka"
                                          name="kapasitas_truk" placeholder="Kapasitas Truk (M3)" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="kondisi_truk">Kondisi Truk</label>
                                      <select id="kondisi_truk" name="kondisi_truk" class="choices form-select">
@@ -104,21 +104,21 @@
                                      </select>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="rit">Jumlah Ritasi (Rit/Hari)</label>
                                      <input type="text" id="rit" class="form-control mask_angka"
                                          name="rit" placeholder="Jumlah Ritasi (Rit/Hari)" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="pemanfaat_kk">Jumlah Pemanfaat KK</label>
                                      <input type="text" id="pemanfaat_kk" class="form-control mask_angka"
                                          name="pemanfaat_kk" placeholder="Jumlah Pemanfaat KK" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="pemanfaat_jiwa">Jumlah Pemanfaat Jiwa</label>
                                      <input type="text" id="pemanfaat_jiwa" class="form-control mask_angka"
