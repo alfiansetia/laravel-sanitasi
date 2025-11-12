@@ -146,15 +146,18 @@ class TpaController extends Controller
                     throw new Exception("Data Kondisi TPA tidak valid di baris " . ($index - 4) . " (nilai: '{$kondisi}')");
                 }
                 $kecamatan = Kecamatan::query()
-                    ->where('nama', $kec)
+                    ->whereRaw('LOWER(nama) = ?', [strtolower($kec)])
                     ->first();
+
                 if (!$kecamatan) {
                     throw new Exception("Data Kecamatan tidak valid di baris " . ($index - 4) . " (nilai: '{$kec}')");
                 }
+
                 $kelurahan = Kelurahan::query()
-                    ->where('nama', $desa)
                     ->where('kecamatan_id', $kecamatan->id)
+                    ->whereRaw('LOWER(nama) = ?', [strtolower($desa)])
                     ->first();
+
                 if (!$kelurahan) {
                     throw new Exception("Data Desa tidak valid di baris " . ($index - 4) . " (nilai: '{$desa}')");
                 }

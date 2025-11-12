@@ -79,11 +79,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         ->name('api.spalds.import');
     Route::apiResource('spalds', SpaldController::class)
         ->names('api.spalds');
-
-    Route::delete('spaldts', [SpaldtController::class, 'destroy_batch'])
-        ->name('api.spaldts.destroy_batch');
-    Route::post('spaldt-imports', [SpaldtController::class, 'import'])
-        ->name('api.spaldts.import');
-    Route::apiResource('spaldts', SpaldtController::class)
-        ->names('api.spaldts');
 });

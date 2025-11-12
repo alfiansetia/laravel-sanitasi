@@ -39,6 +39,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+
+    Route::get('/users', [UserController::class, 'index'])
+        ->name('users.index');
+
     Route::get('/kecamatans', [KecamatanController::class, 'index'])
         ->name('kecamatans.index');
     Route::get('/kelurahans', [KelurahanController::class, 'index'])
@@ -61,12 +65,4 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/spalds', [SpaldController::class, 'index'])
         ->name('spalds.index');
-
-
-
-    Route::get('/spaldts', [SpaldtController::class, 'index'])
-        ->name('spaldts.index');
-
-    Route::get('/users', [UserController::class, 'index'])
-        ->name('users.index');
 });
