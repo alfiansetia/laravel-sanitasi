@@ -11,6 +11,13 @@ class Kecamatan extends Model
         'nama',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'id'            => 'integer',
+        ];
+    }
+
     public function scopeFilter($query, array $filters)
     {
         if (isset($filters['nama'])) {

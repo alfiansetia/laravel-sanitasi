@@ -13,6 +13,14 @@ class Kelurahan extends Model
         'kecamatan_id',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'id'            => 'integer',
+            'kecamatan_id'  => 'integer',
+        ];
+    }
+
     public function scopeFilter($query, array $filters)
     {
         if (isset($filters['kode'])) {
