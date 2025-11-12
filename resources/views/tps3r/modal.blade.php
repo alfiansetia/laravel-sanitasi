@@ -1,8 +1,8 @@
  <div class="modal fade text-left" id="modal_form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17"
      aria-hidden="true">
-     <form action="" id="form">
-         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-             <div class="modal-content">
+     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+         <div class="modal-content">
+             <form action="" id="form">
                  <div class="modal-header">
                      <h4 class="modal-title" id="modal_title">Add</h4>
                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -115,9 +115,9 @@
                          <i class="fas fa-save me-1"></i>Save
                      </button>
                  </div>
-             </div>
+             </form>
          </div>
-     </form>
+     </div>
  </div>
 
 
