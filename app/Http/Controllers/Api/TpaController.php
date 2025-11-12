@@ -89,11 +89,11 @@ class TpaController extends Controller
         ]);
         DB::beginTransaction();
         try {
+            $skip = 6;
+            $r = $skip - 1;
             $file = $request->file('file');
-            $data = Excel::toCollection([], $file)[0]->skip(5);
+            $data = Excel::toCollection([], $file)[0]->skip($skip);
             $results = collect();
-            // return $this->sendResponse($data, '', 500);
-
             foreach ($data as $index => $item) {
                 if ($item->filter()->isEmpty()) {
                     continue;
@@ -125,32 +125,32 @@ class TpaController extends Controller
                     empty($jenis) ||
                     empty($kondisi)
                 ) {
-                    throw new Exception("Data tidak lengkap di baris " . ($index - 4));
+                    throw new Exception("Data tidak lengkap di baris " . ($index - $r));
                 }
                 if (!empty($lat) && !empty($long)) {
                     if (!valid_latlong($lat, $long)) {
-                        throw new Exception("Latitude Longitude tidak Valid di baris " . ($index - 4));
+                        throw new Exception("Latitude Longitude tidak Valid di baris " . ($index - $r));
                     };
                 }
-                $sumber = strtolower($sumber);
-                $jenis = strtolower($jenis);
-                $kondisi = strtolower($kondisi);
+                $sumber_low = strtolower($sumber);
+                $jenis_low = strtolower($jenis);
+                $kondisi_low = strtolower($kondisi);
 
-                if (! in_array($sumber, array_column(SumberDana::cases(), 'value'), true)) {
-                    throw new Exception("Data sumber tidak valid di baris " . ($index - 4) . " (nilai: '{$sumber}')");
+                if (! in_array($sumber_low, array_column(SumberDana::cases(), 'value'), true)) {
+                    throw new Exception("Data sumber tidak valid di baris " . ($index - $r) . " (nilai: '{$sumber}')");
                 }
-                if (! in_array($jenis, array_column(Pengelola::cases(), 'value'), true)) {
-                    throw new Exception("Data Jenis Pengelolaan tidak valid di baris " . ($index - 4) . " (nilai: '{$jenis}')");
+                if (! in_array($jenis_low, array_column(Pengelola::cases(), 'value'), true)) {
+                    throw new Exception("Data Jenis Pengelolaan tidak valid di baris " . ($index - $r) . " (nilai: '{$jenis}')");
                 }
-                if (! in_array($kondisi, array_column(OpsiBaik::cases(), 'value'), true)) {
-                    throw new Exception("Data Kondisi TPA tidak valid di baris " . ($index - 4) . " (nilai: '{$kondisi}')");
+                if (! in_array($kondisi_low, array_column(OpsiBaik::cases(), 'value'), true)) {
+                    throw new Exception("Data Kondisi TPA tidak valid di baris " . ($index - $r) . " (nilai: '{$kondisi}')");
                 }
                 $kecamatan = Kecamatan::query()
                     ->whereRaw('LOWER(nama) = ?', [strtolower($kec)])
                     ->first();
 
                 if (!$kecamatan) {
-                    throw new Exception("Data Kecamatan tidak valid di baris " . ($index - 4) . " (nilai: '{$kec}')");
+                    throw new Exception("Data Kecamatan tidak valid di baris " . ($index - $r) . " (nilai: '{$kec}')");
                 }
 
                 $kelurahan = Kelurahan::query()
@@ -159,7 +159,7 @@ class TpaController extends Controller
                     ->first();
 
                 if (!$kelurahan) {
-                    throw new Exception("Data Desa tidak valid di baris " . ($index - 4) . " (nilai: '{$desa}')");
+                    throw new Exception("Data Desa tidak valid di baris " . ($index - $r) . " (nilai: '{$desa}')");
                 }
                 $tpa = Tpa::create([
                     'nama'                  => $nama,
@@ -167,15 +167,15 @@ class TpaController extends Controller
                     'kelurahan_id'          => $kelurahan->id,
                     'lat'                   => $lat,
                     'long'                  => $long,
-                    'sumber'                => $sumber,
+                    'sumber'                => $sumber_low,
                     'tahun_konstruksi'      => $th_kons,
                     'tahun_beroperasi'      => $th_opr,
                     'rencana'               => $rencana_um,
                     'luas_sarana'           => $luas_sar,
                     'luas_sel'              => $luas_sel,
-                    'pengelola'             => $jenis,
+                    'pengelola'             => $jenis_low,
                     'pengelola_desc'        => $jenis_desc,
-                    'kondisi'               => $kondisi,
+                    'kondisi'               => $kondisi_low,
                 ]);
                 $kecamatanNames = collect(explode(',', $kec_ter ?? ''))
                     ->map(fn($n) => trim($n))
