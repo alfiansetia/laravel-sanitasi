@@ -189,9 +189,11 @@
                 }, {
                     data: "kecamatan.nama",
                     className: 'text-start',
+                    sortable: false,
                 }, {
                     data: "kelurahan.nama",
                     className: 'text-start',
+                    sortable: false,
                 }, {
                     data: "lat",
                     className: 'text-start',

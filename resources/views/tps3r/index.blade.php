@@ -178,9 +178,11 @@
                 }, {
                     data: "kecamatan.nama",
                     className: 'text-start',
+                    sortable: false,
                 }, {
                     data: "kelurahan.nama",
                     className: 'text-start',
+                    sortable: false,
                 }, {
                     data: "luas",
                     className: 'text-center',

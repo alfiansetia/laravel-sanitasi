@@ -188,10 +188,12 @@
                     className: 'text-start',
                 }, {
                     data: "kecamatan.nama",
+                    sortable: false,
                     className: 'text-start',
                 }, {
                     data: "kelurahan.nama",
                     className: 'text-start',
+                    sortable: false,
                 }, {
                     data: "lat",
                     className: 'text-start',
