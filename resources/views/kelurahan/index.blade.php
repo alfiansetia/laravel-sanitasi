@@ -114,6 +114,7 @@
                     {
                         data: "kecamatan.nama",
                         className: 'text-start',
+                        sortable: false,
                     }, {
                         data: "id",
                         className: 'text-start',
