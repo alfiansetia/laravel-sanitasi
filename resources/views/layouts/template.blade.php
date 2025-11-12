@@ -31,7 +31,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
         integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        label.required::after {
+            content: " *";
+            color: red;
+            cursor: help;
+        }
 
+        label.required:hover::after {
+            content: " * (Required)";
+        }
+    </style>
     @stack('css')
 </head>
 
@@ -182,6 +192,22 @@
 
         function hrg(x) {
             return parseInt(x).toLocaleString('id-ID')
+        }
+
+        function hrd1(x) {
+            if (x === null || x === undefined || x === '') return '0';
+            return parseFloat(x).toLocaleString('id-ID', {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1
+            });
+        }
+
+        function hrd2(x) {
+            if (x === null || x === undefined || x === '') return '0';
+            return parseFloat(x).toLocaleString('id-ID', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
         }
 
         $(document).ready(function() {

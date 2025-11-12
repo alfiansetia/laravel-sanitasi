@@ -28,7 +28,7 @@ class Sanitasi extends Model
 
     public function getSumberLabelAttribute()
     {
-        return $this->sumber->label();
+        return $this->sumber?->label();
     }
 
     public function scopeFilter($query, array $filters)

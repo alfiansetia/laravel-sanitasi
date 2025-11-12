@@ -14,14 +14,14 @@
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="nama">Nama IPLT</label>
+                                     <label for="nama" class="required">Nama IPLT</label>
                                      <input type="text" id="nama" class="form-control" name="nama"
                                          placeholder="Nama IPLT" required>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kecamatan_id">Kecamatan</label>
+                                     <label for="kecamatan_id" class="required">Kecamatan</label>
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
                                          <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
@@ -32,7 +32,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kelurahan_id">Desa/Kelurahan</label>
+                                     <label for="kelurahan_id" class="required">Desa/Kelurahan</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
                                          <option value="">Select Kelurahan</option>
                                      </select>
@@ -40,7 +40,7 @@
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="latitude">Titik Koordinat</label>
+                                     <label for="latitude" class="required">Titik Koordinat</label>
                                      <div class="input-group">
                                          <input type="text" id="latitude" class="form-control" name="latitude"
                                              placeholder="Latitude" required>
@@ -54,7 +54,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="tahun_konstruksi">Tahun Konstruksi</label>
+                                     <label for="tahun_konstruksi" class="required">Tahun Konstruksi</label>
                                      <input type="text" id="tahun_konstruksi" class="form-control"
                                          name="tahun_konstruksi" placeholder="Tahun Konstruksi" required>
                                  </div>
@@ -96,7 +96,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kondisi_truk">Kondisi Truk</label>
+                                     <label for="kondisi_truk" class="required">Kondisi Truk</label>
                                      <select id="kondisi_truk" name="kondisi_truk" class="choices form-select"
                                          required>
                                          <option value="">Select Kondisi Truk</option>
@@ -110,21 +110,21 @@
                                  <div class="form-group">
                                      <label for="rit">Jumlah Ritasi (Rit/Hari)</label>
                                      <input type="text" id="rit" class="form-control mask_angka"
-                                         name="rit" placeholder="Jumlah Ritasi (Rit/Hari)" required>
+                                         name="rit" placeholder="Jumlah Ritasi (Rit/Hari)">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="pemanfaat_kk">Jumlah Pemanfaat KK</label>
                                      <input type="text" id="pemanfaat_kk" class="form-control mask_angka"
-                                         name="pemanfaat_kk" placeholder="Jumlah Pemanfaat KK" required>
+                                         name="pemanfaat_kk" placeholder="Jumlah Pemanfaat KK">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="pemanfaat_jiwa">Jumlah Pemanfaat Jiwa</label>
                                      <input type="text" id="pemanfaat_jiwa" class="form-control mask_angka"
-                                         name="pemanfaat_jiwa" placeholder="Jumlah Pemanfaat Jiwa" required>
+                                         name="pemanfaat_jiwa" placeholder="Jumlah Pemanfaat Jiwa">
                                  </div>
                              </div>
                          </div>
@@ -144,8 +144,8 @@
  </div>
 
 
- <div class="modal fade text-left" id="modal_import" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18"
-     aria-hidden="true">
+ <div class="modal fade text-left" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
      <form action="{{ route('api.tpas.import') }}" id="form_import" method="POST">
          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
              <div class="modal-content">

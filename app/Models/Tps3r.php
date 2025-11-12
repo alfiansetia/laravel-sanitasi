@@ -24,7 +24,7 @@ class Tps3r extends Model
 
     public function getStatusLabelAttribute()
     {
-        return $this->status->label();
+        return $this->status?->label();
     }
 
     public function scopeFilter($query, array $filters)

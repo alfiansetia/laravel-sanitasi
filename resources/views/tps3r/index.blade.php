@@ -164,7 +164,7 @@
                 pageLength: 10,
                 lengthChange: false,
                 order: [
-                    [15, "desc"]
+                    [12, "desc"]
                 ],
                 columns: [{
                     data: 'id',
@@ -201,7 +201,7 @@
                     className: 'text-center',
                     render: function(data, type, row, meta) {
                         if (type == 'display') {
-                            return hrg(data)
+                            return hrd2(data)
                         }
                         return data
                     }
@@ -349,12 +349,6 @@
                 if (kel == null || kel == '') {
                     kelurahan.showDropdown(true)
                     show_message('Select Lokasi Desa!')
-                    return
-                }
-                let sta = status.getValue(true)
-                if (sta == null || sta == '') {
-                    status.showDropdown(true)
-                    show_message('Select Keberfungsian!')
                     return
                 }
                 $.ajax({

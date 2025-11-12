@@ -40,7 +40,7 @@ class TpstRequest extends FormRequest
             'luas_sarana'           => 'nullable|numeric|gte:0',
             'luas_sel'              => 'nullable|numeric|gte:0',
             'pengelola'             => ['required', Rule::in(Pengelola::cases())],
-            'pengelola_desc'        => 'nullable|string|max:200',
+            'pengelola_desc'        => 'nullable|string|max:100',
             'kondisi'               => ['required', Rule::in(OpsiBaik::cases())],
         ];
     }

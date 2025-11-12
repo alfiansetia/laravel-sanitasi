@@ -178,7 +178,7 @@
                 pageLength: 10,
                 lengthChange: false,
                 order: [
-                    [15, "desc"]
+                    [21, "desc"]
                 ],
                 columns: [{
                     data: 'id',
@@ -210,30 +210,72 @@
                 }, {
                     data: "skala",
                     className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.skala_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "tahun_konstruksi",
                     className: 'text-center',
                 }, {
                     data: "sumber",
                     className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.sumber_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "status_keberfungsian",
                     className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.status_keberfungsian_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "kondisi",
                     className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.kondisi_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "status_lahan",
                     className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.status_lahan_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "kapasitas",
                     className: 'text-center',
                 }, {
                     data: "jenis",
                     className: 'text-start',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.jenis_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "teknologi",
                     className: 'text-start',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.teknologi_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "pemanfaat_jiwa",
                     className: 'text-start',
@@ -249,6 +291,12 @@
                 }, {
                     data: "status_penyedotan",
                     className: 'text-start',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.status_penyedotan_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "tanggal_update",
                     className: 'text-start',
@@ -402,6 +450,7 @@
                 $('#sumber').val(data.sumber).change()
                 $('#status_keberfungsian').val(data.status_keberfungsian).change()
                 $('#kondisi').val(data.kondisi).change()
+                $('#status_lahan').val(data.status_lahan).change()
                 $('#kapasitas').val(data.kapasitas)
                 $('#jenis').val(data.jenis).change()
                 $('#teknologi').val(data.teknologi).change()
@@ -410,7 +459,11 @@
                 $('#unit_tangki').val(data.unit_tangki)
                 $('#unit_bilik').val(data.unit_bilik)
                 $('#status_penyedotan').val(data.status_penyedotan).change()
-                $('#tanggal_update').val(data.tanggal_update)
+                if (data.tanggal_update) {
+                    $('#tanggal_update').datepicker('setDate', data.tanggal_update);
+                } else {
+                    $('#tanggal_update').datepicker('clearDates');
+                }
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
                 $('#form').attr('method', 'PUT')
@@ -438,6 +491,7 @@
                 $('#sumber').val('').change()
                 $('#status_keberfungsian').val('').change()
                 $('#kondisi').val('').change()
+                $('#status_lahan').val('').change()
                 $('#kapasitas').val(0)
                 $('#jenis').val('').change()
                 $('#teknologi').val('').change()

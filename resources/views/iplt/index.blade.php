@@ -242,6 +242,12 @@
                 }, {
                     data: "kondisi_truk",
                     className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        if (type == 'display') {
+                            return row.kondisi_truk_label
+                        }
+                        return data
+                    }
                 }, {
                     data: "rit",
                     className: 'text-center',
@@ -420,7 +426,7 @@
                 $('#tidak_terpakai').val(data.tidak_terpakai)
                 $('#truk').val(data.truk)
                 $('#kapasitas_truk').val(data.kapasitas_truk)
-                $('#kondisi').val(data.kondisi).change()
+                $('#kondisi_truk').val(data.kondisi_truk).change()
                 $('#rit').val(data.rit)
                 $('#pemanfaat_kk').val(data.pemanfaat_kk)
                 $('#pemanfaat_jiwa').val(data.pemanfaat_jiwa)
@@ -451,7 +457,7 @@
                 $('#tidak_terpakai').val(0)
                 $('#truk').val(0)
                 $('#kapasitas_truk').val(0)
-                $('#kondisi').val('').change()
+                $('#kondisi_truk').val('').change()
                 $('#rit').val(0)
                 $('#pemanfaat_kk').val(0)
                 $('#pemanfaat_jiwa').val(0)

@@ -23,7 +23,7 @@ class Iplt extends Model
 
     public function getKondisiTrukLabelAttribute()
     {
-        return $this->sumber->label();
+        return $this->kondisi_truk->label();
     }
 
     protected function casts(): array

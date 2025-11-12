@@ -240,7 +240,7 @@
                     className: 'text-center',
                     render: function(data, type, row, meta) {
                         if (type == 'display') {
-                            return hrg(data)
+                            return hrd1(data)
                         }
                         return data
                     }
@@ -249,7 +249,7 @@
                     className: 'text-center',
                     render: function(data, type, row, meta) {
                         if (type == 'display') {
-                            return hrg(data)
+                            return hrd1(data)
                         }
                         return data
                     }
@@ -258,7 +258,7 @@
                     className: 'text-start',
                     render: function(data, type, row, meta) {
                         if (type == 'display') {
-                            return `${data.pengelola_label} ${row.pengelola_desc||''}`
+                            return `${row.pengelola_label} ${row.pengelola_desc||''}`
                         }
                         return data
                     }

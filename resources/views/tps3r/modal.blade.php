@@ -14,7 +14,7 @@
                          <div class="row">
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kecamatan_id">Kecamatan</label>
+                                     <label for="kecamatan_id" class="required">Kecamatan</label>
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
                                          <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
@@ -25,7 +25,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kelurahan_id">Kelurahan/Desa</label>
+                                     <label for="kelurahan_id" class="required">Kelurahan/Desa</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
                                          <option value="">--Select Kelurahan--</option>
                                      </select>
@@ -36,7 +36,7 @@
                                      <label for="luas">Luas</label>
                                      <div class="input-group">
                                          <input type="text" id="luas" class="form-control mask_angka"
-                                             name="luas" placeholder="Luas" required>
+                                             name="luas" placeholder="Luas">
                                          <span class="btn btn-secondary">
                                              M2
                                          </span>
@@ -45,14 +45,14 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="tahun_konstruksi">Tahun Konstruksi</label>
+                                     <label for="tahun_konstruksi" class="required">Tahun Konstruksi</label>
                                      <input type="text" id="tahun_konstruksi" class="form-control"
                                          name="tahun_konstruksi" placeholder="Tahun Konstruksi" required>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="tahun_beroperasi">Tahun Beroperasi</label>
+                                     <label for="tahun_beroperasi" class="required">Tahun Beroperasi</label>
                                      <input type="text" id="tahun_beroperasi" class="form-control"
                                          name="tahun_beroperasi" placeholder="Tahun Beroperasi" required>
                                  </div>
@@ -95,7 +95,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="status">Keberfungsian</label>
+                                     <label for="status" class="required">Keberfungsian</label>
                                      <select id="status" name="status" class="choices form-select" required>
                                          <option value="">Select Keberfungsian</option>
                                          @foreach (config('enums.opsi_befungsi') as $item)
@@ -121,8 +121,8 @@
  </div>
 
 
- <div class="modal fade text-left" id="modal_import" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18"
-     aria-hidden="true">
+ <div class="modal fade text-left" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
      <form action="{{ route('api.tpas.import') }}" id="form_import" method="POST">
          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
              <div class="modal-content">

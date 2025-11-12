@@ -98,7 +98,7 @@ class SpaldRequest extends FormRequest
                 'status_lahan',
                 'kapasitas',
                 'jenis',
-                'opsi_teknologi',
+                'teknologi',
                 'pemanfaat_jiwa',
                 'rumah_terlayani',
                 'unit_tangki',
@@ -107,8 +107,8 @@ class SpaldRequest extends FormRequest
                 'tanggal_update',
             ]),
             [
-                'lat'   => $this->latitude,
-                'long'  => $this->longitude,
+                'lat'               => $this->latitude,
+                'long'              => $this->longitude,
             ]
         );
         foreach (

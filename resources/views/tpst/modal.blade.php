@@ -14,14 +14,14 @@
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="nama">Nama TPST</label>
+                                     <label for="nama" class="required">Nama TPST</label>
                                      <input type="text" id="nama" class="form-control" name="nama"
                                          placeholder="Nama TPST" maxlength="200" required>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kecamatan_id">Lokasi (Kecamatan)</label>
+                                     <label for="kecamatan_id" class="required">Lokasi (Kecamatan)</label>
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
                                          <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
@@ -32,7 +32,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kelurahan_id">Lokasi (Desa)</label>
+                                     <label for="kelurahan_id" class="required">Lokasi (Desa)</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
                                          <option value="">--Select Kelurahan--</option>
                                      </select>
@@ -40,7 +40,7 @@
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="latitude">Titik Koordinat</label>
+                                     <label for="latitude" class="required">Titik Koordinat</label>
                                      <div class="input-group">
                                          <input type="text" id="latitude" class="form-control" name="latitude"
                                              placeholder="Latitude" required>
@@ -54,8 +54,8 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="sumber">Sumber Anggaran</label>
-                                     <select class="form-select" id="sumber" name="sumber">
+                                     <label for="sumber" class="required">Sumber Anggaran</label>
+                                     <select class="form-select" id="sumber" name="sumber" required>
                                          <option value="">Select Sumber Anggaran</option>
                                          @foreach (config('enums.sumber_dana') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -72,14 +72,14 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="tahun_konstruksi">Tahun Konstruksi</label>
+                                     <label for="tahun_konstruksi" class="required">Tahun Konstruksi</label>
                                      <input type="text" id="tahun_konstruksi" class="form-control"
                                          name="tahun_konstruksi" placeholder="Tahun Konstruksi" required>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="tahun_beroperasi">Tahun Beroperasi</label>
+                                     <label for="tahun_beroperasi" class="required">Tahun Beroperasi</label>
                                      <input type="text" id="tahun_beroperasi" class="form-control"
                                          name="tahun_beroperasi" placeholder="Tahun Beroperasi" required>
                                  </div>
@@ -112,8 +112,8 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="pengelola">Jenis Pengelola (Dinas/UPT)</label>
-                                     <select id="pengelola" name="pengelola" class="choices form-select">
+                                     <label for="pengelola" class="required">Jenis Pengelola (Dinas/UPT)</label>
+                                     <select id="pengelola" name="pengelola" class="choices form-select" required>
                                          <option value="">Select Pengelola</option>
                                          @foreach (config('enums.pengelola') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -123,8 +123,8 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kondisi">Kondisi TPST</label>
-                                     <select id="kondisi" name="kondisi" class="choices form-select">
+                                     <label for="kondisi" class="required">Kondisi TPST</label>
+                                     <select id="kondisi" name="kondisi" class="choices form-select" required>
                                          <option value="">Select Kondisi</option>
                                          @foreach (config('enums.opsi_baik') as $item)
                                              <option value="{{ $item->value }}">{{ $item->label() }}</option>
@@ -136,7 +136,7 @@
                                  <div class="form-group">
                                      <label for="pengelola_desc">Deskripsi Pengelola</label>
                                      <input type="text" id="pengelola_desc" class="form-control"
-                                         name="pengelola_desc" placeholder="Deskripsi Pengelola">
+                                         name="pengelola_desc" placeholder="Deskripsi Pengelola" maxlength="100">
                                  </div>
                              </div>
                          </div>
@@ -156,8 +156,8 @@
  </div>
 
 
- <div class="modal fade text-left" id="modal_import" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18"
-     aria-hidden="true">
+ <div class="modal fade text-left" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
      <form action="{{ route('api.tpsts.import') }}" id="form_import" method="POST">
          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
              <div class="modal-content">

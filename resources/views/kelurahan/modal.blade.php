@@ -50,8 +50,8 @@
  </div>
 
 
- <div class="modal fade text-left" id="modal_import" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18"
-     aria-hidden="true">
+ <div class="modal fade text-left" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
      <form action="{{ route('api.kelurahans.import') }}" id="form_import" method="POST">
          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
              <div class="modal-content">

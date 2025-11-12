@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\JenisPengelolaan;
+use App\Enums\OpsiAda;
 use App\Enums\OpsiBaik;
 use App\Enums\OpsiBerfungsi;
 use App\Enums\OpsiTeknologi;
@@ -23,6 +24,7 @@ class Spald extends Model
         'status_lahan_label',
         'jenis_label',
         'teknologi_label',
+        'status_penyedotan_label'
     ];
 
     public static $filterProp = [
@@ -52,42 +54,48 @@ class Spald extends Model
             'status_lahan'          => StatusLahan::class,
             'jenis'                 => JenisPengelolaan::class,
             'teknologi'             => OpsiTeknologi::class,
+            'status_penyedotan'     => OpsiAda::class,
         ];
     }
 
     public function getSkalaLabelAttribute()
     {
-        return $this->skala->label();
+        return $this->skala?->label();
     }
 
     public function getStatusKeberfungsianLabelAttribute()
     {
-        return $this->status_keberfungsian->label();
+        return $this->status_keberfungsian?->label();
     }
 
     public function getKondisiLabelAttribute()
     {
-        return $this->kondisi->label();
+        return $this->kondisi?->label();
     }
 
     public function getStatusLahanLabelAttribute()
     {
-        return $this->status_lahan->label();
+        return $this->status_lahan?->label();
     }
 
     public function getJenisLabelAttribute()
     {
-        return $this->jenis->label();
+        return $this->jenis?->label();
     }
 
     public function getTeknologiLabelAttribute()
     {
-        return $this->teknologi->label();
+        return $this->teknologi?->label();
     }
 
     public function getSumberLabelAttribute()
     {
-        return $this->sumber->label();
+        return $this->sumber?->label();
+    }
+
+    public function getStatusPenyedotanLabelAttribute()
+    {
+        return $this->status_penyedotan?->label();
     }
 
     public function scopeFilter($query, array $filters)

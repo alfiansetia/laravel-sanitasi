@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     public function getRoleLabelAttribute(): string
     {
-        return $this->role->label();
+        return $this->role?->label();
     }
 
     public function getIsAdminAttribute(): bool

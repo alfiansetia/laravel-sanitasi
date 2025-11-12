@@ -41,17 +41,17 @@ class Tpa extends Model
 
     public function getSumberLabelAttribute()
     {
-        return $this->sumber->label();
+        return $this->sumber?->label();
     }
 
     public function getPengelolaLabelAttribute()
     {
-        return $this->pengelola->label();
+        return $this->pengelola?->label();
     }
 
     public function getKondisiLabelAttribute()
     {
-        return $this->kondisi->label();
+        return $this->kondisi?->label();
     }
 
     public function scopeFilter($query, array $filters)

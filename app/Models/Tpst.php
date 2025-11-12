@@ -10,7 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 class Tpst extends Model
 {
     protected $guarded = [];
-    protected $appends = ['is_valid_map', 'kecamatan_terlayani_ids'];
+    protected $appends = [
+        'is_valid_map',
+        'kecamatan_terlayani_ids',
+        'sumber_label',
+        'pengelola_label',
+        'kondisi_label',
+    ];
     public static $filterProp = [
         'nama',
         'kecamatan_id',
@@ -30,6 +36,21 @@ class Tpst extends Model
             'pengelola' => Pengelola::class,
             'kondisi'   => OpsiBaik::class,
         ];
+    }
+
+    public function getSumberLabelAttribute()
+    {
+        return $this->sumber?->label();
+    }
+
+    public function getPengelolaLabelAttribute()
+    {
+        return $this->pengelola?->label();
+    }
+
+    public function getKondisiLabelAttribute()
+    {
+        return $this->kondisi?->label();
     }
 
     public function scopeFilter($query, array $filters)
