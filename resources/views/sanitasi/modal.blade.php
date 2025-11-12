@@ -1,5 +1,5 @@
- <div class="modal fade text-left" id="modal_form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17"
-     aria-hidden="true">
+ <div class="modal fade text-left" id="modal_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
      <form action="" id="form">
          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
              <div class="modal-content">
