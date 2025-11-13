@@ -2,126 +2,94 @@
 
 namespace App\Imports;
 
-use App\Enums\OpsiBaik;
-use App\Enums\Pengelola;
-use App\Enums\SumberDana;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use App\Models\Tpa;
 use Exception;
-use Illuminate\Container\Attributes\DB;
-use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
-use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class TpaImport implements ToCollection, WithValidation
+class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
 {
 
-    public function collection(Collection $rows)
+    protected $kecamatans;
+    protected $kelurahans;
+
+    public function __construct()
     {
-        DB::transaction(function () use ($rows) {
-            foreach ($rows as $index => $row) {
-                // Lewati baris kosong
-                if (collect($row)->filter()->isEmpty()) continue;
+        $this->kecamatans = Kecamatan::query()->select('id', 'nama')->get();
+        $this->kelurahans = Kelurahan::query()->select('id', 'nama', 'kecamatan_id')->get();
+    }
 
-                // Ambil data pakai index
-                $nama       = trim((string) $row[0]);
-                $kecamatan  = strtolower(trim((string) $row[1]));
-                $kelurahan  = strtolower(trim((string) $row[2]));
-                $sumber     = trim((string) $row[3]);
-                $tahun_kons = (int) $row[4];
-                $tahun_opr  = (int) $row[5];
-                $rencana    = $row[6] ?? null;
-                $luas_sar   = $row[7] ?? null;
-                $luas_sel   = $row[8] ?? null;
-                $lat        = $row[9] ?? null;
-                $long       = $row[10] ?? null;
-                $pengelola  = trim((string) $row[11]);
-                $pengelola_desc = $row[12] ?? null;
-                $kondisi    = trim((string) $row[13]);
+    public function startRow(): int
+    {
+        return 3;
+    }
 
-                // Validasi referensi manual
-                $kec = Kecamatan::whereRaw('LOWER(nama) = ?', [$kecamatan])->first();
-                if (! $kec) {
-                    throw new \Exception("Kecamatan tidak valid di baris " . ($index + 2));
-                }
-
-                $kel = Kelurahan::where('kecamatan_id', $kec->id)
-                    ->whereRaw('LOWER(nama) = ?', [$kelurahan])
-                    ->first();
-
-                if (! $kel) {
-                    throw new \Exception("Kelurahan tidak valid di baris " . ($index + 2));
-                }
-
-                // Validasi enum (parse akan return null kalau tidak cocok)
-                $sumberEnum  = SumberDana::parse($sumber);
-                $pengelolaEnum = Pengelola::parse($pengelola);
-                $kondisiEnum = OpsiBaik::parse($kondisi);
-
-                if (! $sumberEnum) {
-                    throw new \Exception("Sumber tidak valid di baris " . ($index + 2));
-                }
-                if (! $pengelolaEnum) {
-                    throw new \Exception("Pengelola tidak valid di baris " . ($index + 2));
-                }
-                if (! $kondisiEnum) {
-                    throw new \Exception("Kondisi tidak valid di baris " . ($index + 2));
-                }
-
-                // Simpan data
-                Tpa::create([
-                    'nama'             => $nama,
-                    'kecamatan_id'     => $kec->id,
-                    'kelurahan_id'     => $kel->id,
-                    'lat'              => $lat ?: null,
-                    'long'             => $long ?: null,
-                    'sumber'           => $sumberEnum,
-                    'tahun_konstruksi' => $tahun_kons,
-                    'tahun_beroperasi' => $tahun_opr,
-                    'rencana'          => $rencana,
-                    'luas_sarana'      => $luas_sar,
-                    'luas_sel'         => $luas_sel,
-                    'pengelola'        => $pengelolaEnum,
-                    'pengelola_desc'   => $pengelola_desc,
-                    'kondisi'          => $kondisiEnum,
-                ]);
-            }
-        });
+    public function model(array $row)
+    {
+        return new Tpa([
+            'nama'              => $row[1],
+            'kecamatan_id'      => $row[2],
+            'kelurahan_id'      => $row[3],
+            'lat'               => $row[5],
+            'long'              => $row[6],
+            'sumber'            => $row[4],
+            'tahun_konstruksi'  => $row[7],
+            'tahun_beroperasi'  => $row[8],
+            'rencana'           => $row[9],
+            'luas_sarana'       => $row[11],
+            'luas_sel'          => $row[12],
+            'pengelola'         => $row[13],
+            'pengelola_desc'    => $row[14],
+            'kondisi'           => $row[15],
+        ]);
     }
 
     public function rules(): array
     {
         return [
-            '*.0'  => ['required', 'string', 'max:200'], // nama
-            '*.1'  => ['required', 'string'], // kecamatan
-            '*.2'  => ['required', 'string'], // kelurahan
-            '*.3'  => ['required', Rule::in(array_column(SumberDana::cases(), 'value'))], // sumber
-            '*.4'  => ['date_format:Y-m-d'], // tahun konstruksi
-            '*.5'  => ['required', 'integer', 'digits:4'], // tahun beroperasi
-            '*.6'  => ['nullable', 'string'], // rencana
-            '*.7'  => ['nullable', 'numeric', 'gte:0'], // luas sarana
-            '*.8'  => ['nullable', 'numeric', 'gte:0'], // luas sel
-            '*.9'  => ['nullable', 'numeric', 'between:-90,90'], // lat
-            '*.10' => ['nullable', 'numeric', 'between:-180,180'], // long
-            '*.11' => ['required', Rule::in(array_column(Pengelola::cases(), 'value'))], // pengelola
-            '*.12' => ['nullable', 'string'], // pengelola desc
-            '*.13' => ['required', Rule::in(array_column(OpsiBaik::cases(), 'value'))], // kondisi
+            '1'     => 'required|max:200',
+            '2'     => 'required|exists:kecamatans,id',
+            '3'     => 'required|exists:kelurahans,id',
+            '4'     => 'required|numeric|between:-90,90',
+            '5'     => 'required|numeric|between:-180,180',
+            '6'     => ['required', Rule::in(config('enums.sumber_dana'))],
+            '7'     => 'required|date_format:Y',
+            '8'     => 'required|date_format:Y',
+            '9'     => 'nullable|integer|gte:0',
+            '10'    => 'nullable',
+            '11'    => 'nullable|numeric|gte:0',
+            '12'    => 'nullable|numeric|gte:0',
+            '13'    => ['required', Rule::in(config('enums.pengelola'))],
+            '14'    => 'nullable|string|max:200',
+            '15'    => ['required', Rule::in(config('enums.opsi_baik'))],
         ];
     }
 
-    public function customValidationMessages()
+    public function customValidationAttributes()
     {
         return [
-            '*.0.required' => 'Kolom Nama wajib diisi.',
-            '*.1.required' => 'Kolom Kecamatan wajib diisi.',
-            '*.2.required' => 'Kolom Kelurahan wajib diisi.',
-            '*.3.in'       => 'Nilai Sumber tidak valid.',
-            '*.11.in'      => 'Nilai Pengelola tidak valid.',
-            '*.13.in'      => 'Nilai Kondisi tidak valid.',
+            '1'     => 'Nama TPA',
+            '2'     => 'Lokasi (Kecamatan)',
+            '3'     => 'Lokasi (Kelurahan/Desa)',
+            '4'     => 'Titik Koordinat Latitude',
+            '5'     => 'Titik Koordinat Longitude',
+            '6'     => 'Sumber Anggaran',
+            '7'     => 'Tahun Konstruksi',
+            '8'     => 'Tahun Beroperasi',
+            '9'     => 'Rencana Umur Beroperasi (Tahun)',
+            '10'    => 'Kecamatan Terlayani',
+            '11'    => 'Luas Sarana',
+            '12'    => 'Luas Sel',
+            '13'    => 'Jenis Pengelola (Dinas/UPT)',
+            '14'    => 'Deskripsi Pengelola',
+            '15'    => 'Kondisi TPA',
         ];
     }
 }
