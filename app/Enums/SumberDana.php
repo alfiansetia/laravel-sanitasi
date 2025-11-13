@@ -2,10 +2,14 @@
 
 namespace App\Enums;
 
+use App\Traits\EnumTrait;
+
 enum SumberDana: string
 {
-    case DAK = "dak";
-    case DAU = "dau";
+    use EnumTrait;
+
+    case DAK = "DAK";
+    case DAU = "DAU";
 
     public function label(): string
     {

@@ -2,10 +2,14 @@
 
 namespace App\Enums;
 
+use App\Traits\EnumTrait;
+
 enum Pengelola: string
 {
-    case DINAS = "dinas";
-    case UPT = "upt";
+    use EnumTrait;
+
+    case DINAS = "DINAS";
+    case UPT = "UPT";
 
     public function label(): string
     {

@@ -25,7 +25,7 @@
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
                                          <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
-                                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -101,7 +101,7 @@
                                          required>
                                          <option value="">Select Kondisi Truk</option>
                                          @foreach (config('enums.opsi_baik') as $item)
-                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -184,3 +184,5 @@
          </div>
      </form>
  </div>
+
+ @include('components.modal_map')

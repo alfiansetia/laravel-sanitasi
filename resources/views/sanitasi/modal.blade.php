@@ -51,7 +51,7 @@
                                      <select class="form-select" id="sumber" name="sumber" required>
                                          <option value="">--Select Sumber Dana--</option>
                                          @foreach (config('enums.sumber_dana') as $item)
-                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -124,3 +124,5 @@
          </div>
      </form>
  </div>
+
+ @include('components.modal_map')

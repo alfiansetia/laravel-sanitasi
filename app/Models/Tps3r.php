@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Tps3r extends Model
 {
     protected $guarded = [];
-    protected $appends = ['status_label'];
+    protected $appends = [
+        // 'status_label'
+    ];
     public static $filterProp = [
         'tahun_konstruksi',
         'tahun_beroperasi',
@@ -18,14 +20,14 @@ class Tps3r extends Model
     protected function casts(): array
     {
         return [
-            'status'  => OpsiBerfungsi::class,
+            // 'status'  => OpsiBerfungsi::class,
         ];
     }
 
-    public function getStatusLabelAttribute()
-    {
-        return $this->status?->label();
-    }
+    // public function getStatusLabelAttribute()
+    // {
+    //     return $this->status?->label();
+    // }
 
     public function scopeFilter($query, array $filters)
     {

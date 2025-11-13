@@ -2,11 +2,15 @@
 
 namespace App\Enums;
 
+use App\Traits\EnumTrait;
+
 enum SkalaPelayanan: string
 {
-    case PERKOTAAN = "perkotaan";
-    case KAWASAN_TERTENTU = "kawasan_tertentu";
-    case PERMUKIMAN = "permukiman";
+    use EnumTrait;
+
+    case PERKOTAAN = "PERKOTAAN";
+    case KAWASAN_TERTENTU = "KAWASAN_TERTENTU";
+    case PERMUKIMAN = "PERMUKIMAN";
 
     public function label(): string
     {

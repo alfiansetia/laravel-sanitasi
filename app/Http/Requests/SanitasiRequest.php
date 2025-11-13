@@ -24,7 +24,7 @@ class SanitasiRequest extends FormRequest
             'lokasi'    => 'required|max:200',
             'pagu'      => 'nullable|integer|gte:0',
             'jumlah'    => 'nullable|integer|gte:0',
-            'sumber'    => ['required', Rule::in(SumberDana::cases())],
+            'sumber'    => ['required', Rule::in(config('enums.sumber_dana'))],
             'lat'       => 'required|numeric|between:-90,90',
             'long'      => 'required|numeric|between:-180,180',
         ];

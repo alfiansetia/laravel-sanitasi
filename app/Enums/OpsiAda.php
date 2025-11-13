@@ -2,10 +2,14 @@
 
 namespace App\Enums;
 
+use App\Traits\EnumTrait;
+
 enum OpsiAda: string
 {
-    case ADA = "ada";
-    case TIDAK_ADA = "tidak_ada";
+    use EnumTrait;
+
+    case ADA = "ADA";
+    case TIDAK_ADA = "TIDAK_ADA";
 
     public function label(): string
     {

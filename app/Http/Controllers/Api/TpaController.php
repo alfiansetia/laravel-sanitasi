@@ -7,6 +7,7 @@ use App\Enums\Pengelola;
 use App\Enums\SumberDana;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TpaRequest;
+use App\Imports\TpaImport;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use App\Models\Tpa;
@@ -14,6 +15,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 use ValueError;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -132,18 +134,17 @@ class TpaController extends Controller
                         throw new Exception("Latitude Longitude tidak Valid di baris " . ($index - $r));
                     };
                 }
-                $sumber_low = strtolower($sumber);
-                $jenis_low = strtolower($jenis);
-                $kondisi_low = strtolower($kondisi);
-
-                if (! in_array($sumber_low, array_column(SumberDana::cases(), 'value'), true)) {
+                $sumberEnum  = SumberDana::parse($sumber);
+                $jenisEnum   = Pengelola::parse($jenis);
+                $kondisiEnum = OpsiBaik::parse($kondisi);
+                if (! $sumberEnum) {
                     throw new Exception("Data sumber tidak valid di baris " . ($index - $r) . " (nilai: '{$sumber}')");
                 }
-                if (! in_array($jenis_low, array_column(Pengelola::cases(), 'value'), true)) {
+                if (! $jenisEnum) {
                     throw new Exception("Data Jenis Pengelolaan tidak valid di baris " . ($index - $r) . " (nilai: '{$jenis}')");
                 }
-                if (! in_array($kondisi_low, array_column(OpsiBaik::cases(), 'value'), true)) {
-                    throw new Exception("Data Kondisi TPA tidak valid di baris " . ($index - $r) . " (nilai: '{$kondisi}')");
+                if (! $kondisiEnum) {
+                    throw new Exception("Data Kondisi tidak valid di baris " . ($index - $r) . " (nilai: '{$kondisi}')");
                 }
                 $kecamatan = Kecamatan::query()
                     ->whereRaw('LOWER(nama) = ?', [strtolower($kec)])
@@ -167,15 +168,15 @@ class TpaController extends Controller
                     'kelurahan_id'          => $kelurahan->id,
                     'lat'                   => $lat,
                     'long'                  => $long,
-                    'sumber'                => $sumber_low,
+                    'sumber'                => $sumberEnum,
                     'tahun_konstruksi'      => $th_kons,
                     'tahun_beroperasi'      => $th_opr,
                     'rencana'               => $rencana_um,
                     'luas_sarana'           => $luas_sar,
                     'luas_sel'              => $luas_sel,
-                    'pengelola'             => $jenis_low,
+                    'pengelola'             => $jenisEnum,
                     'pengelola_desc'        => $jenis_desc,
-                    'kondisi'               => $kondisi_low,
+                    'kondisi'               => $kondisiEnum,
                 ]);
                 $kecamatanNames = collect(explode(',', $kec_ter ?? ''))
                     ->map(fn($n) => trim($n))
@@ -191,7 +192,7 @@ class TpaController extends Controller
                         // Ada nama yang tidak cocok
                         $invalid = $kecamatanNames->diff($kecamatans->pluck('nama'));
                         throw new Exception(
-                            "Kecamatan terlayani tidak valid di baris " . ($index + 2) .
+                            "Kecamatan terlayani tidak valid di baris " . ($index - $r) .
                                 ". Nama tidak ditemukan: " . $invalid->join(', ')
                         );
                     }

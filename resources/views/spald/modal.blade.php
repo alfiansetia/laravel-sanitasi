@@ -25,7 +25,7 @@
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
                                          <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
-                                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -64,7 +64,7 @@
                                      <select class="form-select" id="skala" name="skala" required>
                                          <option value="">--Select Skala Pelayanan--</option>
                                          @foreach (config('enums.skala_pelayanan') as $item)
-                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -82,7 +82,7 @@
                                      <select class="form-select" id="sumber" name="sumber" required>
                                          <option value="">--Select Sumber Dana--</option>
                                          @foreach (config('enums.sumber_dana') as $item)
-                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -94,7 +94,7 @@
                                          required>
                                          <option value="">--Select Status Keberfungsian--</option>
                                          @foreach (config('enums.opsi_befungsi') as $item)
-                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -105,7 +105,7 @@
                                      <select class="form-select" id="kondisi" name="kondisi" required>
                                          <option value="">--Select Keterangan Kondisi--</option>
                                          @foreach (config('enums.opsi_baik') as $item)
-                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -116,7 +116,7 @@
                                      <select class="form-select" id="status_lahan" name="status_lahan" required>
                                          <option value="">--Select Status Lahan--</option>
                                          @foreach (config('enums.status_lahan') as $item)
-                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -134,7 +134,7 @@
                                      <select class="form-select" id="jenis" name="jenis" required>
                                          <option value="">--Select Jenis Pengelolaan--</option>
                                          @foreach (config('enums.jenis_pengelolaan') as $item)
-                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -145,7 +145,7 @@
                                      <select class="form-select" id="teknologi" name="teknologi" required>
                                          <option value="">--Select Opsi Teknologi--</option>
                                          @foreach (config('enums.opsi_teknologi') as $item)
-                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -185,7 +185,7 @@
                                          required>
                                          <option value="">--Select Penyedotan Lumpur Tinja--</option>
                                          @foreach (config('enums.opsi_ada') as $item)
-                                             <option value="{{ $item->value }}">{{ $item->label() }}</option>
+                                             <option value="{{ $item }}">{{ $item }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -255,3 +255,5 @@
          </div>
      </form>
  </div>
+
+ @include('components.modal_map')

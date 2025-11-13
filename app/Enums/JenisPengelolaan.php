@@ -2,10 +2,14 @@
 
 namespace App\Enums;
 
+use App\Traits\EnumTrait;
+
 enum JenisPengelolaan: string
 {
-    case INSTITUSI = "institusi";
-    case MASYARAKAT = "masyarakat";
+    use EnumTrait;
+
+    case INSTITUSI = "INSTITUSI";
+    case MASYARAKAT = "MASYARAKAT";
 
     public function label(): string
     {

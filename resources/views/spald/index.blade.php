@@ -1,7 +1,7 @@
 @extends('layouts.template')
 @push('css')
-    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/datatables.min.css" rel="stylesheet"
-        integrity="sha384-fyCqW8E+q5GvWtphxqXu3hs1lJzytfEh6S57wLlfvz5quj6jf5OKThV1K9+Iv8Xz" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/b-colvis-3.2.5/datatables.min.css" rel="stylesheet"
+        integrity="sha384-b7CCWUkHYYyObRWK8dDxH6PCbeH3SHTbH+TzwIoEUU/Ol75XipyzcYbfdNWmNWFF" crossorigin="anonymous">
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
@@ -56,8 +56,8 @@
 @endsection
 
 @push('js')
-    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/datatables.min.js"
-        integrity="sha384-J9F84i7Emwbp64qQsBlK5ypWq7kFwSOGFfubmHHLjVviEnDpI5wpj+nNC3napXiF" crossorigin="anonymous">
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/b-colvis-3.2.5/datatables.min.js"
+        integrity="sha384-xG3wtUztKuiMDc6KvJmHObtCdZH2nNroJUmqIcJtoBSfXI79Cx0WXXkqU27HFe9Q" crossorigin="anonymous">
     </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
@@ -175,6 +175,16 @@
                     [10, 50, 100, 500, 1000],
                     ['10 rows', '50 rows', '100 rows', '500 rows', '1000 rows']
                 ],
+                language: {
+                    buttons: {
+                        pageLength: {
+                            _: '%d rows',
+                        },
+                        colvis: {
+                            _: 'Colvis',
+                        }
+                    }
+                },
                 pageLength: 10,
                 lengthChange: false,
                 order: [
@@ -212,72 +222,29 @@
                 }, {
                     data: "skala",
                     className: 'text-center',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return row.skala_label
-                        }
-                        return data
-                    }
                 }, {
                     data: "tahun_konstruksi",
                     className: 'text-center',
                 }, {
                     data: "sumber",
                     className: 'text-center',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return row.sumber_label
-                        }
-                        return data
-                    }
                 }, {
                     data: "status_keberfungsian",
                     className: 'text-center',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return row.status_keberfungsian_label
-                        }
-                        return data
-                    }
                 }, {
                     data: "kondisi",
                     className: 'text-center',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return row.kondisi_label
-                        }
-                        return data
-                    }
                 }, {
                     data: "status_lahan",
-                    className: 'text-center',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return row.status_lahan_label
-                        }
-                        return data
-                    }
                 }, {
                     data: "kapasitas",
                     className: 'text-center',
                 }, {
                     data: "jenis",
                     className: 'text-start',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return row.jenis_label
-                        }
-                        return data
-                    }
                 }, {
                     data: "teknologi",
                     className: 'text-start',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return row.teknologi_label
-                        }
-                        return data
-                    }
                 }, {
                     data: "pemanfaat_jiwa",
                     className: 'text-start',
@@ -293,12 +260,6 @@
                 }, {
                     data: "status_penyedotan",
                     className: 'text-start',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return row.status_penyedotan_label
-                        }
-                        return data
-                    }
                 }, {
                     data: "tanggal_update",
                     className: 'text-start',
@@ -311,7 +272,7 @@
                         text: '<i class="fas fa-plus me-1"></i>Add',
                         className: 'btn btn-sm btn-info',
                         attr: {
-                            'data-toggle': 'tooltip',
+                            'data-bs-toggle': 'tooltip',
                             'title': 'Add Data'
                         },
                         action: function(e, dt, node, config) {
@@ -321,15 +282,22 @@
                     {
                         extend: "pageLength",
                         attr: {
-                            'data-toggle': 'tooltip',
+                            'data-bs-toggle': 'tooltip',
                             'title': 'Page Length'
                         },
                         className: 'btn btn-sm'
                     }, {
+                        extend: "colvis",
+                        attr: {
+                            'data-toggle': 'tooltip',
+                            'title': 'Column Visible'
+                        },
+                        className: 'btn btn-sm btn-primary'
+                    }, {
                         text: '<i class="fa fa-tools"></i> Action',
                         className: 'btn btn-sm btn-warning bs-tooltip',
                         attr: {
-                            'data-toggle': 'tooltip',
+                            'data-bs-toggle': 'tooltip',
                             'title': 'Action'
                         },
                         extend: 'collection',

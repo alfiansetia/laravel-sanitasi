@@ -1,7 +1,7 @@
 @extends('layouts.template')
 @push('css')
-    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/datatables.min.css" rel="stylesheet"
-        integrity="sha384-fyCqW8E+q5GvWtphxqXu3hs1lJzytfEh6S57wLlfvz5quj6jf5OKThV1K9+Iv8Xz" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/b-colvis-3.2.5/datatables.min.css" rel="stylesheet"
+        integrity="sha384-b7CCWUkHYYyObRWK8dDxH6PCbeH3SHTbH+TzwIoEUU/Ol75XipyzcYbfdNWmNWFF" crossorigin="anonymous">
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
@@ -29,8 +29,7 @@
                             <th>#</th>
                             <th>Nama TPA</th>
                             <th>Kecamatan</th>
-                            <th>Kelurahan</th>
-                            <th>Koordinat</th>
+                            <th>Kelurahan/Desa</th>
                             <th>Sumber Anggaran</th>
                             <th>Tahun Konstruksi</th>
                             <th>Tahun Beroperasi</th>
@@ -40,6 +39,7 @@
                             <th>Luas Sel (ha)</th>
                             <th>Jenis Pengelola</th>
                             <th>Kondisi TPA</th>
+                            <th>Koordinat</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,8 +53,8 @@
 @endsection
 
 @push('js')
-    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/datatables.min.js"
-        integrity="sha384-J9F84i7Emwbp64qQsBlK5ypWq7kFwSOGFfubmHHLjVviEnDpI5wpj+nNC3napXiF" crossorigin="anonymous">
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.4/b-3.2.5/b-colvis-3.2.5/datatables.min.js"
+        integrity="sha384-xG3wtUztKuiMDc6KvJmHObtCdZH2nNroJUmqIcJtoBSfXI79Cx0WXXkqU27HFe9Q" crossorigin="anonymous">
     </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
@@ -131,6 +131,13 @@
             });
 
             $('#modal_map').on('shown.bs.modal', function() {
+                let lat = $('#latitude').val()
+                let long = $('#longitude').val()
+                if (lat == '' || long == '') {
+                    set_map(default_lat, default_long)
+                } else {
+                    set_map(lat, long)
+                }
                 map.invalidateSize(); // Refresh the map to fill the modal
             });
 
@@ -257,6 +264,16 @@
                     [10, 50, 100, 500, 1000],
                     ['10 rows', '50 rows', '100 rows', '500 rows', '1000 rows']
                 ],
+                language: {
+                    buttons: {
+                        pageLength: {
+                            _: '%d rows',
+                        },
+                        colvis: {
+                            _: 'Colvis',
+                        }
+                    }
+                },
                 pageLength: 10,
                 lengthChange: false,
                 order: [
@@ -283,20 +300,8 @@
                     className: 'text-start',
                     sortable: false,
                 }, {
-                    data: "lat",
-                    className: 'text-start',
-                    render: function(data, type, row, meta) {
-                        return `${data||''} ${row.long||''}`
-                    }
-                }, {
                     data: "sumber",
                     className: 'text-center',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return row.sumber_label
-                        }
-                        return data
-                    }
                 }, {
                     data: "tahun_konstruksi",
                     className: 'text-center',
@@ -317,6 +322,7 @@
                     sortable: false,
                     searchable: false,
                     className: 'text-center',
+                    visible: false,
                     render: function(data, type, row, meta) {
                         if (!row.kecamatan_terlayani || !row.kecamatan_terlayani.length)
                             return '-';
@@ -346,20 +352,14 @@
                 }, {
                     data: "pengelola",
                     className: 'text-start',
-                    render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return `${row.pengelola_label} ${row.pengelola_desc||''}`
-                        }
-                        return data
-                    }
                 }, {
                     data: "kondisi",
                     className: 'text-start',
+                }, {
+                    data: "lat",
+                    className: 'text-start',
                     render: function(data, type, row, meta) {
-                        if (type == 'display') {
-                            return row.kondisi_label
-                        }
-                        return data
+                        return `${data||''} ${row.long||''}`
                     }
                 }, {
                     data: "pengelola_desc",
@@ -374,7 +374,7 @@
                         text: '<i class="fas fa-plus me-1"></i>Add',
                         className: 'btn btn-sm btn-info',
                         attr: {
-                            'data-toggle': 'tooltip',
+                            'data-bs-toggle': 'tooltip',
                             'title': 'Add Data'
                         },
                         action: function(e, dt, node, config) {
@@ -384,15 +384,22 @@
                     {
                         extend: "pageLength",
                         attr: {
-                            'data-toggle': 'tooltip',
+                            'data-bs-toggle': 'tooltip',
                             'title': 'Page Length'
                         },
                         className: 'btn btn-sm'
                     }, {
+                        extend: "colvis",
+                        attr: {
+                            'data-toggle': 'tooltip',
+                            'title': 'Column Visible'
+                        },
+                        className: 'btn btn-sm btn-primary'
+                    }, {
                         text: '<i class="fa fa-tools"></i> Action',
                         className: 'btn btn-sm btn-warning bs-tooltip',
                         attr: {
-                            'data-toggle': 'tooltip',
+                            'data-bs-toggle': 'tooltip',
                             'title': 'Action'
                         },
                         extend: 'collection',
@@ -523,11 +530,6 @@
                 $('#pengelola').val(data.pengelola).change()
                 $('#pengelola_desc').val(data.pengelola_desc)
                 $('#kondisi').val(data.kondisi).change()
-                if (data.is_valid_map) {
-                    set_map(data.lat, data.long)
-                } else {
-                    set_map(default_lat, default_long)
-                }
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
                 $('#form').attr('method', 'PUT')
@@ -560,7 +562,7 @@
                 $('#pengelola').val('').change()
                 $('#pengelola_desc').val('')
                 $('#kondisi').val('').change()
-                set_map(default_lat, default_long)
+                // set_map(default_lat, default_long)
 
                 $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data')
                 $('#modal_form').modal('show')

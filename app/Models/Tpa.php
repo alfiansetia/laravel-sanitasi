@@ -13,9 +13,9 @@ class Tpa extends Model
     protected $appends = [
         'is_valid_map',
         'kecamatan_terlayani_ids',
-        'sumber_label',
-        'pengelola_label',
-        'kondisi_label',
+        // 'sumber_label',
+        // 'pengelola_label',
+        // 'kondisi_label',
     ];
 
     public static $filterProp = [
@@ -33,26 +33,26 @@ class Tpa extends Model
     protected function casts(): array
     {
         return [
-            'sumber'    => SumberDana::class,
-            'pengelola' => Pengelola::class,
-            'kondisi'   => OpsiBaik::class,
+            // 'sumber'    => SumberDana::class,
+            // 'pengelola' => Pengelola::class,
+            // 'kondisi'   => OpsiBaik::class,
         ];
     }
 
-    public function getSumberLabelAttribute()
-    {
-        return $this->sumber?->label();
-    }
+    // public function getSumberLabelAttribute()
+    // {
+    //     return $this->sumber?->label();
+    // }
 
-    public function getPengelolaLabelAttribute()
-    {
-        return $this->pengelola?->label();
-    }
+    // public function getPengelolaLabelAttribute()
+    // {
+    //     return $this->pengelola?->label();
+    // }
 
-    public function getKondisiLabelAttribute()
-    {
-        return $this->kondisi?->label();
-    }
+    // public function getKondisiLabelAttribute()
+    // {
+    //     return $this->kondisi?->label();
+    // }
 
     public function scopeFilter($query, array $filters)
     {

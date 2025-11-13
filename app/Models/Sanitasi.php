@@ -10,7 +10,7 @@ class Sanitasi extends Model
     protected $guarded = [];
     protected $appends = [
         'is_valid_map',
-        'sumber_label'
+        // 'sumber_label'
     ];
     public static $filterProp = [
         'tahun',
@@ -22,14 +22,14 @@ class Sanitasi extends Model
     protected function casts(): array
     {
         return [
-            'sumber'  => SumberDana::class,
+            // 'sumber'  => SumberDana::class,
         ];
     }
 
-    public function getSumberLabelAttribute()
-    {
-        return $this->sumber?->label();
-    }
+    // public function getSumberLabelAttribute()
+    // {
+    //     return $this->sumber?->label();
+    // }
 
     public function scopeFilter($query, array $filters)
     {

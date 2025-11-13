@@ -35,7 +35,7 @@ class IpltRequest extends FormRequest
             'tidak_terpakai'    => 'nullable|integer|gte:0',
             'truk'              => 'nullable|integer|gte:0',
             'kapasitas_truk'    => 'nullable|integer|gte:0',
-            'kondisi_truk'      => ['required', Rule::in(OpsiBaik::cases())],
+            'kondisi_truk'      => ['required', Rule::in(config('enums.opsi_baik'))],
             'rit'               => 'nullable|integer|gte:0',
             'pemanfaat_kk'      => 'nullable|integer|gte:0',
             'pemanfaat_jiwa'    => 'nullable|integer|gte:0',

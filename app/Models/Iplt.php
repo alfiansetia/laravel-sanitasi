@@ -10,7 +10,7 @@ class Iplt extends Model
     protected $guarded = [];
     protected $appends = [
         'is_valid_map',
-        'kondisi_truk_label'
+        // 'kondisi_truk_label'
     ];
 
     public static $filterProp = [
@@ -21,15 +21,15 @@ class Iplt extends Model
         'kondisi_truk',
     ];
 
-    public function getKondisiTrukLabelAttribute()
-    {
-        return $this->kondisi_truk->label();
-    }
+    // public function getKondisiTrukLabelAttribute()
+    // {
+    //     return $this->kondisi_truk->label();
+    // }
 
     protected function casts(): array
     {
         return [
-            'kondisi_truk'  => OpsiBaik::class,
+            // 'kondisi_truk'  => OpsiBaik::class,
         ];
     }
 

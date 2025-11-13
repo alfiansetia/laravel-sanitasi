@@ -31,7 +31,7 @@ class TpstRequest extends FormRequest
             'kelurahan_id'          => 'required|exists:kelurahans,id',
             'latitude'              => 'required|numeric|between:-90,90',
             'longitude'             => 'required|numeric|between:-180,180',
-            'sumber'                => ['required', Rule::in(SumberDana::cases())],
+            'sumber'                => ['required', Rule::in(config('enums.sumber_dana'))],
             'tahun_konstruksi'      => 'required|date_format:Y',
             'tahun_beroperasi'      => 'required|date_format:Y',
             'rencana'               => 'nullable|integer|gte:0',
@@ -39,9 +39,9 @@ class TpstRequest extends FormRequest
             'kecamatan_terlayani.*' => 'exists:kecamatans,id',
             'luas_sarana'           => 'nullable|numeric|gte:0',
             'luas_sel'              => 'nullable|numeric|gte:0',
-            'pengelola'             => ['required', Rule::in(Pengelola::cases())],
+            'pengelola'             => ['required', Rule::in(config('enums.pengelola'))],
             'pengelola_desc'        => 'nullable|string|max:100',
-            'kondisi'               => ['required', Rule::in(OpsiBaik::cases())],
+            'kondisi'               => ['required', Rule::in(config('enums.opsi_baik'))],
         ];
     }
 

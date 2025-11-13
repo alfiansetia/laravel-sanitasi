@@ -34,7 +34,7 @@ class Tps3rRequest extends FormRequest
             'jumlah_kk'             => 'nullable|integer|gte:0',
             'gerobak'               => 'nullable|integer|gte:0',
             'motor'                 => 'nullable|integer|gte:0',
-            'status'                => ['required', Rule::in(OpsiBerfungsi::cases())],
+            'status'                => ['required', Rule::in(config('enums.opsi_befungsi'))],
         ];
     }
 

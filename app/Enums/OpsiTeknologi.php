@@ -2,10 +2,14 @@
 
 namespace App\Enums;
 
+use App\Traits\EnumTrait;
+
 enum OpsiTeknologi: string
 {
-    case INDIVIDUAL = "individual";
-    case KOMUNAL = "komunal";
+    use EnumTrait;
+
+    case INDIVIDUAL = "INDIVIDUAL";
+    case KOMUNAL = "KOMUNAL";
 
     public function label(): string
     {

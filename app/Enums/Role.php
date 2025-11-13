@@ -2,10 +2,14 @@
 
 namespace App\Enums;
 
+use App\Traits\EnumTrait;
+
 enum Role: string
 {
-    case USER = "user";
-    case ADMIN = "admin";
+    use EnumTrait;
+
+    case USER = "USER";
+    case ADMIN = "ADMIN";
 
     public function label(): string
     {

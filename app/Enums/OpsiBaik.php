@@ -2,10 +2,14 @@
 
 namespace App\Enums;
 
+use App\Traits\EnumTrait;
+
 enum OpsiBaik: string
 {
-    case BAIK = "baik";
-    case TIDAK_BAIK = "tidak_baik";
+    use EnumTrait;
+
+    case BAIK = "BAIK";
+    case TIDAK_BAIK = "TIDAK_BAIK";
 
     public function label(): string
     {

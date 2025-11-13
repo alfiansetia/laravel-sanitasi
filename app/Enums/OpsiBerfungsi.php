@@ -2,10 +2,14 @@
 
 namespace App\Enums;
 
+use App\Traits\EnumTrait;
+
 enum OpsiBerfungsi: string
 {
-    case BERFUNGSI = "berfungsi";
-    case TIDAK_BERFUNGSI = "tidak_berfungsi";
+    use EnumTrait;
+
+    case BERFUNGSI = "BERFUNGSI";
+    case TIDAK_BERFUNGSI = "TIDAK_BERFUNGSI";
 
     public function label(): string
     {
