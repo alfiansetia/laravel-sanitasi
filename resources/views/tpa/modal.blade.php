@@ -25,7 +25,7 @@
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
                                          <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
-                                             <option value="{{ $item }}">{{ $item }}</option>
+                                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -91,7 +91,7 @@
                                          class="choices form-select" multiple>
                                          <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
-                                             <option value="{{ $item }}">{{ $item }}</option>
+                                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -172,7 +172,7 @@
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="import_file">Pilih File</label>
+                                     <label for="import_file" class="required">Pilih File</label>
                                      <input type="file" id="import_file" class="form-control" name="file"
                                          placeholder="Pilih File" accept=".xlsx,.xls,.csv" required>
                                  </div>

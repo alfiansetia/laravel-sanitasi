@@ -18,7 +18,7 @@
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
                                          <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
-                                             <option value="{{ $item }}">{{ $item }}</option>
+                                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                          @endforeach
                                      </select>
                                  </div>
@@ -123,7 +123,7 @@
 
  <div class="modal fade text-left" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
-     <form action="{{ route('api.tpas.import') }}" id="form_import" method="POST">
+     <form action="{{ route('api.tps3rs.import') }}" id="form_import" method="POST">
          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
              <div class="modal-content">
                  <div class="modal-header">
@@ -137,7 +137,7 @@
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="import_file">Pilih File</label>
+                                     <label for="import_file" class="required">Pilih File</label>
                                      <input type="file" id="import_file" class="form-control" name="file"
                                          placeholder="Pilih File" accept=".xlsx,.xls,.csv" required>
                                  </div>
@@ -150,7 +150,7 @@
                      <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                          <i class="fas fa-times me-1"></i>Close
                      </button>
-                     <a href="{{ asset('master/master_sanitasis.xlsx') }}" class="btn btn-info" target="_blank">
+                     <a href="{{ asset('master/sample_tps3r.xlsx') }}" class="btn btn-info" target="_blank">
                          <i class="fas fa-download me-1" title="Download Sample"></i>Download Sample
                      </a>
                      <button type="submit" class="btn btn-primary ms-1">

@@ -3,18 +3,17 @@
 namespace App\Imports;
 
 use App\Models\Kecamatan;
-use App\Models\Kelurahan;
-use App\Models\Tpa;
+use App\Models\Tpst;
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
+class TpstImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
 {
     protected $kecamatans;
 
@@ -61,8 +60,8 @@ class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
             throw new Exception("Kelurahan '{$row[2]}' tidak cocok dalam Kecamatan '{$row[3]}' (baris Excel)");
         }
 
-        // buat data TPA
-        $tpa = Tpa::create([
+        // buat data TPST
+        $tpst = Tpst::create([
             'nama'              => trim($row[1]),
             'kecamatan_id'      => $kecamatan->id,
             'kelurahan_id'      => $kelurahan->id,
@@ -79,6 +78,7 @@ class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
             'kondisi'           => $row[15],
         ]);
 
+
         $kecamatanNames = collect(explode(',', ($row[10] ?? '')))
             ->map(fn($n) => trim($n))
             ->filter()
@@ -94,14 +94,14 @@ class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
             }
 
             // simpan relasi many-to-many (tanpa duplikat)
-            $tpa->kecamatan_terlayani()->createMany(
+            $tpst->kecamatan_terlayani()->createMany(
                 $kecamatans
                     ->map(fn($id) => ['kecamatan_id' => $id->id])
                     ->toArray()
             );
         }
 
-        return $tpa;
+        return $tpst;
     }
 
 
@@ -129,7 +129,7 @@ class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
     public function customValidationAttributes()
     {
         return [
-            '1'     => 'Nama TPA',
+            '1'     => 'Nama TPST',
             '2'     => 'Kecamatan',
             '3'     => 'Kelurahan/Desa',
             '4'     => 'Titik Koordinat Latitude',

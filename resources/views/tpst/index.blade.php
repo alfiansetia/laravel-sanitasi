@@ -25,8 +25,7 @@
                             <th>#</th>
                             <th>Nama TPST</th>
                             <th>Kecamatan</th>
-                            <th>Kelurahan</th>
-                            <th>Koordinat</th>
+                            <th>Kelurahan/Desa</th>
                             <th>Sumber Anggaran</th>
                             <th>Tahun Konstruksi</th>
                             <th>Tahun Beroperasi</th>
@@ -36,6 +35,7 @@
                             <th>Luas Sel (ha)</th>
                             <th>Jenis Pengelola</th>
                             <th>Kondisi TPST</th>
+                            <th>Koordinat</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -205,12 +205,6 @@
                     className: 'text-start',
                     sortable: false,
                 }, {
-                    data: "lat",
-                    className: 'text-start',
-                    render: function(data, type, row, meta) {
-                        return `${data||''} ${row.long||''}`
-                    }
-                }, {
                     data: "sumber",
                     className: 'text-center',
                 }, {
@@ -233,6 +227,7 @@
                     sortable: false,
                     searchable: false,
                     className: 'text-center',
+                    visible: false,
                     render: function(data, type, row, meta) {
                         if (!row.kecamatan_terlayani || !row.kecamatan_terlayani.length)
                             return '-';
@@ -271,6 +266,12 @@
                 }, {
                     data: "kondisi",
                     className: 'text-start',
+                }, {
+                    data: "lat",
+                    className: 'text-start',
+                    render: function(data, type, row, meta) {
+                        return `${data||''} ${row.long||''}`
+                    }
                 }, {
                     data: "pengelola_desc",
                     className: 'text-start',

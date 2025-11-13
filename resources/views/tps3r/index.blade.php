@@ -25,7 +25,7 @@
                             <th>#</th>
                             <th>Kecamatan</th>
                             <th>Kelurahan/Desa</th>
-                            <th>Luas</th>
+                            <th>Luas (M2)</th>
                             <th>Tahun Konstruksi</th>
                             <th>Tahun Beroperasi</th>
                             <th>Jumlah Timbulan Sampah (Ton/Hari)</th>
@@ -256,7 +256,6 @@
                 }, {
                     data: "status",
                     className: 'text-center',
-                    visible: false,
                 }, {
                     data: "id",
                     className: 'text-start',

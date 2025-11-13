@@ -66,7 +66,7 @@
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="import_file">Pilih File</label>
+                                     <label for="import_file" class="required">Pilih File</label>
                                      <input type="file" id="import_file" class="form-control" name="file"
                                          placeholder="Pilih File" accept=".xlsx,.xls,.csv" required>
                                  </div>
