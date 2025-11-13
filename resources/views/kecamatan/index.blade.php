@@ -124,6 +124,12 @@
                                 table.ajax.reload()
                             }
                         }, {
+                            text: 'Import Data',
+                            className: 'dt-button btn-sm',
+                            action: function(e, dt, node, config) {
+                                importData()
+                            }
+                        }, {
                             text: 'Delete Selected Data',
                             className: 'dt-button btn-sm',
                             action: function(e, dt, node, config) {
@@ -210,6 +216,33 @@
                 $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data')
                 $('#modal_form').modal('show')
             }
+
+            function importData() {
+                $('#form_import')[0].reset()
+                $('#modal_import').modal('show')
+            }
+
+            $('#form_import').submit(function(e) {
+                e.preventDefault()
+                let form = $(this)[0];
+                let formData = new FormData(form);
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    beforeSend: function() {},
+                    success: function(res) {
+                        table.ajax.reload()
+                        show_message(res.message, 'success')
+                        $('#modal_import').modal('hide');
+                    },
+                    error: function(xhr, status, error) {
+                        show_message(xhr.responseJSON.message || 'Error!')
+                    }
+                });
+            })
 
         })
     </script>

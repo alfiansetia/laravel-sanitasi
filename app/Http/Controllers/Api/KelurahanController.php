@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\KelurahanRequest;
+use App\Imports\KelurahanImport;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 use Yajra\DataTables\Facades\DataTables;
 
 class KelurahanController extends Controller
@@ -66,36 +68,25 @@ class KelurahanController extends Controller
         ]);
         DB::beginTransaction();
         try {
-            $file = $request->file('file');
-            $data = Excel::toCollection([], $file)[0]->skip(1);
-            $results = collect();
-
-            foreach ($data as $index => $item) {
-                if ($item->filter()->isEmpty()) {
-                    continue;
-                }
-                $kode = $item[0] ?? null;
-                $kel  = $item[1] ?? null;
-                $kec  = $item[2] ?? null;
-                if (empty($kode) || empty($kel) || empty($kec)) {
-                    throw new Exception("Data tidak lengkap di baris " . ($index + 2));
-                }
-                $kecamatan = Kecamatan::firstOrCreate([
-                    'nama' => $kec,
-                ]);
-                $kelurahan = Kelurahan::firstOrCreate([
-                    'kode' => $kode,
-                ], [
-                    'kecamatan_id'  => $kecamatan->id,
-                    'nama'          => $kel,
-                ]);
-                $results->add($kelurahan);
-            }
+            Excel::import(new KelurahanImport, $request->file('file'));
             DB::commit();
-            return $this->sendResponse($results, 'Success Import Data!');
+            return $this->sendResponse(null, 'Data berhasil diimport!');
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            $failures = $e->failures();
+            $messages = [];
+            foreach ($failures as $failure) {
+                $messages[] = 'Baris ' . $failure->row() . ': ' . implode(', ', $failure->errors());
+            }
+
+            return response()->json([
+                'message' => 'Gagal import!, ' . implode(', ', $messages),
+                'errors' => $messages,
+            ], 422);
         } catch (\Throwable $th) {
             DB::rollBack();
             return $this->sendError('Gagal import: ' . $th->getMessage(), 500);
         }
+        return $this->sendError('Gagal import: ' . $th->getMessage(), 500);
     }
 }

@@ -67,7 +67,7 @@ class KecamatanController extends Controller
         try {
             Excel::import(new KecamatanImport, $request->file('file'));
             DB::commit();
-            return $this->response('Data berhasil diimport!');
+            return $this->sendResponse(null, 'Data berhasil diimport!');
         } catch (ValidationException $e) {
             DB::rollBack();
             $failures = $e->failures();
@@ -82,7 +82,7 @@ class KecamatanController extends Controller
             ], 422);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return $this->response('Gagal import: ' . $th->getMessage(), [], 500);
+            return $this->sendError('Gagal import: ' . $th->getMessage(), 500);
         }
     }
 }
