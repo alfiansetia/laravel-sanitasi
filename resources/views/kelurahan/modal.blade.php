@@ -79,8 +79,7 @@
                      <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                          <i class="fas fa-times me-1"></i>Close
                      </button>
-                     <a href="{{ asset('master/master_kelurahan_kecamatan.xlsx') }}" class="btn btn-info"
-                         target="_blank">
+                     <a href="{{ asset('master/sample_kelurahan.xlsx') }}" class="btn btn-info" target="_blank">
                          <i class="fas fa-download me-1" title="Download Sample"></i>Download Sample
                      </a>
                      <button type="submit" class="btn btn-primary ms-1">
