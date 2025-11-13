@@ -76,7 +76,7 @@ class KelurahanController extends Controller
             $failures = $e->failures();
             $messages = [];
             foreach ($failures as $failure) {
-                $messages[] = 'Baris ' . $failure->row() . ': ' . implode(', ', $failure->errors());
+                $messages[] = 'Baris ' . ($failure->row() - 2) . ': ' . implode(', ', $failure->errors());
             }
 
             return response()->json([
