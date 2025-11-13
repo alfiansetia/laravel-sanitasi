@@ -33,40 +33,34 @@ class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
 
     public function model(array $row)
     {
-        $kecamatanExcel = strtolower(trim($row[3])); // kolom nama kecamatan
-        $kelurahanExcel = strtolower(trim($row[2])); // kolom nama kelurahan
+        $kecamatanExcel = strtolower(trim($row[2])); // nama kecamatan
+        $kelurahanExcel = strtolower(trim($row[3])); // nama kelurahan
 
-        $kecamatan = collect($this->kecamatans)->where('nama', function ($item) use ($kecamatanExcel, $kelurahanExcel) {
+        // cari kecamatan yang cocok
+        $kecamatan = $this->kecamatans->first(function ($item) use ($kecamatanExcel, $kelurahanExcel) {
+            // cek nama kecamatan
             if (strtolower(trim($item->nama)) !== $kecamatanExcel) {
                 return false;
             }
 
             // cek apakah ada kelurahan yang cocok di kecamatan ini
-            collect($item->kelurahans)->contains(function ($kel) use ($kelurahanExcel) {
+            return $item->kelurahans->contains(function ($kel) use ($kelurahanExcel) {
                 return strtolower(trim($kel->nama)) === $kelurahanExcel;
             });
         });
-
-        // // cari kecamatan yang punya kelurahan sesuai
-        // $kecamatan = $this->kecamatans->first(function ($item) use ($kecamatanExcel, $kelurahanExcel) {
-        //     if (strtolower(trim($item->nama)) !== $kecamatanExcel) {
-        //         return false;
-        //     }
-
-        //     // cek apakah ada kelurahan yang cocok di kecamatan ini
-        //     $item->kelurahans->contains(function ($kel) use ($kelurahanExcel) {
-        //         return strtolower(trim($kel->nama)) === $kelurahanExcel;
-        //     });
-        // });
 
         if (! $kecamatan) {
             throw new Exception("Kelurahan/Desa '{$row[2]}' dengan Kecamatan '{$row[3]}' tidak ditemukan (baris Excel)");
         }
 
         // ambil kelurahan yang cocok (untuk dapetin id-nya)
-        $kelurahan = collect($kecamatan->kelurahans)->first(function ($kel) use ($kelurahanExcel) {
+        $kelurahan = $kecamatan->kelurahans->first(function ($kel) use ($kelurahanExcel) {
             return strtolower(trim($kel->nama)) === $kelurahanExcel;
         });
+
+        if (! $kelurahan) {
+            throw new Exception("Kelurahan '{$row[2]}' tidak cocok dalam Kecamatan '{$row[3]}' (baris Excel)");
+        }
 
 
         // buat data TPA
@@ -74,20 +68,37 @@ class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
             'nama'              => trim($row[1]),
             'kecamatan_id'      => $kecamatan->id,
             'kelurahan_id'      => $kelurahan->id,
-            'sumber'            => trim($row[4]),
-            'lat'               => trim($row[5]),
-            'long'              => trim($row[6]),
+            'lat'               => trim($row[4]),
+            'long'              => trim($row[5]),
+            'sumber'            => trim($row[6]),
             'tahun_konstruksi'  => trim($row[7]),
             'tahun_beroperasi'  => trim($row[8]),
             'rencana'           => $row[9] ?? 0,
             'luas_sarana'       => $row[11] ?? 0,
             'luas_sel'          => $row[12] ?? 0,
-            'pengelola'         => trim($row[13] ?? ''),
+            'pengelola'         => $row[13],
             'pengelola_desc'    => trim($row[14] ?? ''),
-            'kondisi'           => trim($row[15] ?? ''),
+            'kondisi'           => $row[15],
         ]);
 
         // ambil daftar kecamatan terlayani dari kolom 10
+        // $kecamatanNames = collect(explode(',', ($row[10] ?? '')))
+        //     ->map(fn($n) => trim($n))
+        //     ->filter()
+        //     ->values();
+
+        // if ($kecamatanNames->isNotEmpty()) {
+        //     // cari kecamatan yang valid di cache yang sudah diload
+        //     $kecamatans = $this->kecamatans->filter(fn($k) => in_array($k->nama, $kecamatanNames));
+
+        //     if ($kecamatans->count() !== $kecamatanNames->count()) {
+        //         $invalid = $kecamatanNames->diff($kecamatans->pluck('nama'));
+        //         throw new Exception("Kecamatan terlayani tidak valid. Tidak ditemukan: " . $invalid->join(', '));
+        //     }
+
+        //     // simpan relasi many-to-many (tanpa duplikat)
+        //     $tpa->kecamatan_terlayani()->syncWithoutDetaching($kecamatans->pluck('id')->toArray());
+        // }
         $kecamatanNames = collect(explode(',', ($row[10] ?? '')))
             ->map(fn($n) => trim($n))
             ->filter()
@@ -95,7 +106,7 @@ class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
 
         if ($kecamatanNames->isNotEmpty()) {
             // cari kecamatan yang valid di cache yang sudah diload
-            $kecamatans = $this->kecamatans->filter(fn($k) => in_array($k->nama, $kecamatanNames));
+            $kecamatans = $this->kecamatans->whereIn('nama', $kecamatanNames);
 
             if ($kecamatans->count() !== $kecamatanNames->count()) {
                 $invalid = $kecamatanNames->diff($kecamatans->pluck('nama'));
@@ -103,7 +114,12 @@ class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
             }
 
             // simpan relasi many-to-many (tanpa duplikat)
-            $tpa->kecamatan_terlayani()->syncWithoutDetaching($kecamatans->pluck('id')->toArray());
+            // $tpa->kecamatan_terlayani()->syncWithoutDetaching($kecamatans->pluck('id')->toArray());
+            $tpa->kecamatan_terlayani()->createMany(
+                $kecamatans
+                    ->map(fn($id) => ['kecamatan_id' => $id->id])
+                    ->toArray()
+            );
         }
 
         return $tpa;
@@ -116,9 +132,9 @@ class TpaImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRow
             '1'     => 'required|max:200',
             '2'     => 'required',
             '3'     => 'required',
-            '4'     => 'required|numeric|between:-90,90',
-            '5'     => 'required|numeric|between:-180,180',
-            '6'     => ['required', Rule::in(config('enums.sumber_dana'))],
+            '4'     => ['required', Rule::in(config('enums.sumber_dana'))],
+            '5'     => 'required|numeric|between:-90,90',
+            '6'     => 'required|numeric|between:-180,180',
             '7'     => 'required|date_format:Y',
             '8'     => 'required|date_format:Y',
             '9'     => 'nullable|integer|gte:0',
