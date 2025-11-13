@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Enums\SumberDana;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SanitasiRequest;
+use App\Imports\SanitasiImport;
 use App\Models\Sanitasi;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 use Yajra\DataTables\Facades\DataTables;
 
 class SanitasiController extends Controller
@@ -64,47 +66,25 @@ class SanitasiController extends Controller
         ]);
         DB::beginTransaction();
         try {
-            $skip = 2;
-            $r = $skip - 1;
-            $file = $request->file('file');
-            $data = Excel::toCollection([], $file)[0]->skip($skip);
-            $results = collect();
-
-            foreach ($data as $index => $item) {
-                $tahun = $item[1] ?? null;
-                $nama = $item[2] ?? null;
-                $lokasi = $item[3] ?? null;
-                $pagu = $item[4] ?? null;
-                $jumlah = $item[5] ?? 0;
-                $sumber = $item[6] ?? null;
-                $lat = $item[7] ?? null;
-                $long = $item[8] ?? null;
-
-                if (empty($tahun) || empty($nama) || empty($lokasi) || empty($sumber)) {
-                    throw new Exception("Data tidak lengkap di baris " . ($index + $r));
-                }
-
-                $sumber_low = strtolower($sumber);
-                if (! in_array($sumber_low, array_column(SumberDana::cases(), 'value'), true)) {
-                    throw new Exception("Data sumber tidak valid di baris " . ($index - $r) . " (nilai: '{$sumber}')");
-                }
-                $sanitasi = Sanitasi::create([
-                    'tahun'     => $tahun,
-                    'nama'      => $nama,
-                    'lokasi'    => $lokasi,
-                    'pagu'      => $pagu,
-                    'jumlah'    => $jumlah,
-                    'sumber'    => $sumber_low,
-                    'lat'       => $lat,
-                    'long'      => $long,
-                ]);
-                $results->add($sanitasi);
-            }
+            Excel::import(new SanitasiImport, $request->file('file'));
             DB::commit();
-            return $this->sendResponse($results, 'Success Import Data!');
+            return $this->sendResponse(null, 'Data berhasil diimport!');
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            $failures = $e->failures();
+            $messages = [];
+            foreach ($failures as $failure) {
+                $messages[] = 'Baris ' . ($failure->row() - 4) . ': ' . implode(', ', $failure->errors());
+            }
+
+            return response()->json([
+                'message' => 'Gagal import!, ' . implode(', ', $messages),
+                'errors' => $messages,
+            ], 422);
         } catch (\Throwable $th) {
             DB::rollBack();
             return $this->sendError('Gagal import: ' . $th->getMessage(), 500);
         }
+        return $this->sendError('Gagal import: ' . $th->getMessage(), 500);
     }
 }
