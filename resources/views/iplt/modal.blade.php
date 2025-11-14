@@ -32,7 +32,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kelurahan_id" class="required">Desa/Kelurahan</label>
+                                     <label for="kelurahan_id" class="required">Kelurahan/Desa</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
                                          <option value="">Select Kelurahan</option>
                                      </select>
@@ -173,7 +173,7 @@
                      <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                          <i class="fas fa-times me-1"></i>Close
                      </button>
-                     <a href="{{ asset('master/mater_ipl.xlsx') }}" class="btn btn-info" target="_blank">
+                     <a href="{{ asset('master/sample_iplt.xlsx') }}" class="btn btn-info" target="_blank">
                          <i class="fas fa-download me-1" title="Download Sample"></i>Download Sample
                      </a>
                      <button type="submit" class="btn btn-primary ms-1">

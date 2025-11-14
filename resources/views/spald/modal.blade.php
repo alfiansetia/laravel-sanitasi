@@ -14,14 +14,14 @@
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="nama">Nama Instalasi</label>
+                                     <label for="nama" class="required">Nama Instalasi</label>
                                      <input type="text" id="nama" class="form-control" name="nama"
                                          placeholder="Nama Instalasi" maxlength="200" required>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kecamatan_id">Kecamatan</label>
+                                     <label for="kecamatan_id" class="required">Kecamatan</label>
                                      <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
                                          <option value="">--Select Kecamatan--</option>
                                          @foreach ($kecamatans as $item)
@@ -32,7 +32,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kelurahan_id">Desa/Kelurahan</label>
+                                     <label for="kelurahan_id" class="required">Kelurahan/Desa</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
                                          <option value="">--Select Kelurahan--</option>
                                      </select>
@@ -40,13 +40,13 @@
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="alamat">Alamat</label>
+                                     <label for="alamat" class="required">Alamat</label>
                                      <textarea class="form-control" name="alamat" id="alamat" maxlength="200" required></textarea>
                                  </div>
                              </div>
                              <div class="col-12">
                                  <div class="form-group">
-                                     <label for="latitude">Titik Koordinat</label>
+                                     <label for="latitude" class="required">Titik Koordinat</label>
                                      <div class="input-group">
                                          <input type="text" id="latitude" class="form-control" name="latitude"
                                              placeholder="Latitude" required>
@@ -59,7 +59,7 @@
                                  </div>
                              </div>
                              <div class="col-md-6">
-                                 <div class="form-group">
+                                 <div class="form-group" class="required">
                                      <label for="skala">Skala Pelayanan</label>
                                      <select class="form-select" id="skala" name="skala" required>
                                          <option value="">--Select Skala Pelayanan--</option>
@@ -71,14 +71,14 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="tahun_konstruksi">Tahun Konstruksi</label>
+                                     <label for="tahun_konstruksi" class="required">Tahun Konstruksi</label>
                                      <input type="text" id="tahun_konstruksi" class="form-control"
                                          name="tahun_konstruksi" placeholder="Tahun Konstruksi" required>
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="sumber">Sumber Dana</label>
+                                     <label for="sumber" class="required">Sumber Dana</label>
                                      <select class="form-select" id="sumber" name="sumber" required>
                                          <option value="">--Select Sumber Dana--</option>
                                          @foreach (config('enums.sumber_dana') as $item)
@@ -89,9 +89,9 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="status_keberfungsian">Status Keberfungsian</label>
-                                     <select class="form-select" id="status_keberfungsian" name="status_keberfungsian"
-                                         required>
+                                     <label for="status_keberfungsian" class="required">Status Keberfungsian</label>
+                                     <select class="form-select" id="status_keberfungsian"
+                                         name="status_keberfungsian" required>
                                          <option value="">--Select Status Keberfungsian--</option>
                                          @foreach (config('enums.opsi_befungsi') as $item)
                                              <option value="{{ $item }}">{{ $item }}</option>
@@ -101,7 +101,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kondisi">Keterangan Kondisi</label>
+                                     <label for="kondisi" class="required">Keterangan Kondisi</label>
                                      <select class="form-select" id="kondisi" name="kondisi" required>
                                          <option value="">--Select Keterangan Kondisi--</option>
                                          @foreach (config('enums.opsi_baik') as $item)
@@ -112,7 +112,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="status_lahan">Status Lahan</label>
+                                     <label for="status_lahan" class="required">Status Lahan</label>
                                      <select class="form-select" id="status_lahan" name="status_lahan" required>
                                          <option value="">--Select Status Lahan--</option>
                                          @foreach (config('enums.status_lahan') as $item)
@@ -130,7 +130,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="jenis">Jenis Pengelolaan</label>
+                                     <label for="jenis" class="required">Jenis Pengelolaan</label>
                                      <select class="form-select" id="jenis" name="jenis" required>
                                          <option value="">--Select Jenis Pengelolaan--</option>
                                          @foreach (config('enums.jenis_pengelolaan') as $item)
@@ -141,7 +141,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="teknologi">Opsi Teknologi</label>
+                                     <label for="teknologi" class="required">Opsi Teknologi</label>
                                      <select class="form-select" id="teknologi" name="teknologi" required>
                                          <option value="">--Select Opsi Teknologi--</option>
                                          @foreach (config('enums.opsi_teknologi') as $item)
@@ -180,7 +180,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="status_penyedotan">Penyedotan Lumpur Tinja</label>
+                                     <label for="status_penyedotan" class="required">Penyedotan Lumpur Tinja</label>
                                      <select class="form-select" id="status_penyedotan" name="status_penyedotan"
                                          required>
                                          <option value="">--Select Penyedotan Lumpur Tinja--</option>
@@ -217,7 +217,7 @@
 
  <div class="modal fade text-left" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
-     <form action="{{ route('api.tpas.import') }}" id="form_import" method="POST">
+     <form action="{{ route('api.spalds.import') }}" id="form_import" method="POST">
          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
              <div class="modal-content">
                  <div class="modal-header">
@@ -244,7 +244,7 @@
                      <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                          <i class="fas fa-times me-1"></i>Close
                      </button>
-                     <a href="{{ asset('master/master_sanitasis.xlsx') }}" class="btn btn-info" target="_blank">
+                     <a href="{{ asset('master/sample_spald.xlsx') }}" class="btn btn-info" target="_blank">
                          <i class="fas fa-download me-1" title="Download Sample"></i>Download Sample
                      </a>
                      <button type="submit" class="btn btn-primary ms-1">

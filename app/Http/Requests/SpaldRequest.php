@@ -61,7 +61,7 @@ class SpaldRequest extends FormRequest
             'nama'                  => 'Nama Instalasi',
             'alamat'                => 'Alamat',
             'kecamatan_id'          => 'Kecamatan',
-            'kelurahan_id'          => 'Desa/Kelurahan',
+            'kelurahan_id'          => 'Kelurahan/Desa',
             'latitude'              => 'Titik Koordinat Latitude',
             'longitude'             => 'Titik Koordinat Longitude',
             'skala'                 => 'Skala Pelayanan',

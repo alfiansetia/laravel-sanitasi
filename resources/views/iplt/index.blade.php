@@ -23,10 +23,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Kecamatan</th>
-                            <th>Desa/Kelurahan</th>
                             <th>Nama IPLT</th>
-                            <th>Koordinat</th>
+                            <th>Kecamatan</th>
+                            <th>Kelurahan/Desa</th>
                             <th>Tahun Konstruksi</th>
                             <th>Kapasitas Terpasang</th>
                             <th>Kapasitas Terpakai</th>
@@ -37,6 +36,7 @@
                             <th>Jumlah Ritas (Rit/Hari)</th>
                             <th>Jumlah Pemanfaat KK</th>
                             <th>Jumlah Pemanfaat Jiwa</th>
+                            <th>Koordinat</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -193,12 +193,6 @@
                     className: 'text-start',
                     sortable: false,
                 }, {
-                    data: "lat",
-                    className: 'text-start',
-                    render: function(data, type, row, meta) {
-                        return `${data||''} ${row.long||''}`
-                    }
-                }, {
                     data: "tahun_konstruksi",
                     className: 'text-center',
                 }, {
@@ -282,6 +276,12 @@
                             return hrg(data)
                         }
                         return data
+                    }
+                }, {
+                    data: "lat",
+                    className: 'text-start',
+                    render: function(data, type, row, meta) {
+                        return `${data||''} ${row.long||''}`
                     }
                 }, {
                     data: "id",

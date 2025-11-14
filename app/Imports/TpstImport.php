@@ -143,7 +143,7 @@ class TpstImport implements ToModel, WithValidation, SkipsEmptyRows, WithStartRo
             '12'    => 'Luas Sel',
             '13'    => 'Jenis Pengelola (DINAS/UPT)',
             '14'    => 'Deskripsi Pengelola',
-            '15'    => 'Kondisi TPA',
+            '15'    => 'Kondisi TPST',
         ];
     }
 }

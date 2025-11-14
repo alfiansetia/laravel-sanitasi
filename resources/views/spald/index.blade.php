@@ -23,9 +23,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Kecamatan</th>
-                            <th>Desa/Kelurahan</th>
                             <th>Nama Instalasi</th>
+                            <th>Kecamatan</th>
+                            <th>Kelurahan/Desa</th>
                             <th>Alamat</th>
                             <th>Koordinat</th>
                             <th>Skala Pelayanan</th>
@@ -200,6 +200,9 @@
                         return `<input type="checkbox" name="id[]" value="${data}" class="form-check-input child-chk">`
                     }
                 }, {
+                    data: "nama",
+                    className: 'text-start',
+                }, {
                     data: "kecamatan.nama",
                     className: 'text-start',
                     sortable: false,
@@ -207,9 +210,6 @@
                     data: "kelurahan.nama",
                     className: 'text-start',
                     sortable: false,
-                }, {
-                    data: "nama",
-                    className: 'text-start',
                 }, {
                     data: "alamat",
                     className: 'text-start',
