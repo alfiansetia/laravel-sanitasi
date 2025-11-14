@@ -146,7 +146,7 @@
 
  <div class="modal fade text-left" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
-     <form action="{{ route('api.tpas.import') }}" id="form_import" method="POST">
+     <form action="{{ route('api.iplts.import') }}" id="form_import" method="POST">
          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
              <div class="modal-content">
                  <div class="modal-header">
@@ -173,7 +173,7 @@
                      <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                          <i class="fas fa-times me-1"></i>Close
                      </button>
-                     <a href="{{ asset('master/master_sanitasis.xlsx') }}" class="btn btn-info" target="_blank">
+                     <a href="{{ asset('master/mater_ipl.xlsx') }}" class="btn btn-info" target="_blank">
                          <i class="fas fa-download me-1" title="Download Sample"></i>Download Sample
                      </a>
                      <button type="submit" class="btn btn-primary ms-1">
