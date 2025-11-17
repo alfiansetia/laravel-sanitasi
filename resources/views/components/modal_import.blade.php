@@ -1,8 +1,8 @@
  <div class="modal fade text-left" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
-     <form action="" id="form_import" method="POST">
-         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
-             <div class="modal-content">
+     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+         <div class="modal-content">
+             <form action="" id="form_import" method="POST">
                  <div class="modal-header">
                      <h4 class="modal-title"><i class="fas fa-file-excel me-1"></i>Import Data {{ $title }}</h4>
                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -36,7 +36,7 @@
                          <i class="fas fa-save me-1"></i>Save
                      </button>
                  </div>
-             </div>
+             </form>
          </div>
-     </form>
+     </div>
  </div>
