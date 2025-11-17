@@ -59,7 +59,7 @@
                 <li class="sidebar-item  {{ Route::is('sanitasis.index') ? 'active' : '' }}">
                     <a href="{{ route('sanitasis.index') }}" class='sidebar-link'>
                         <i class="bi bi-card-checklist"></i>
-                        <span>Sanitasi</span>
+                        <span>Pembangunan</span>
                     </a>
 
 

@@ -7,6 +7,10 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/colormask.min.css">
     <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.85.1/dist/L.Control.Locate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@4.0.0/Control.FullScreen.min.css">
     <style>
         .choices__list--dropdown,
         .choices__list[aria-expanded] {
@@ -59,12 +63,108 @@
     <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/jquery.inputmask.min.js"></script>
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.85.1/dist/L.Control.Locate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@4.0.0/Control.FullScreen.min.js"></script>
+
     <script>
         const URL_INDEX = "{{ route('iplts.index') }}"
         const URL_INDEX_API = "{{ route('api.iplts.index') }}"
         var id = 0;
 
         $(document).ready(function() {
+            const default_lat = '0.0632612';
+            const default_long = '111.4862054';
+            var map = L.map('map').setView([default_lat, default_long], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            L.control.locate({
+                drawCircle: false,
+                follow: false,
+                position: 'topright',
+                icon: 'fa fa-location-arrow',
+                iconLoading: 'fa fa-spinner fa-spin',
+            }).addTo(map);
+            L.control
+                .fullscreen({
+                    position: 'topleft',
+                    title: 'Show me the fullscreen !',
+                    titleCancel: 'Exit fullscreen mode',
+                    content: null,
+                    forceSeparateButton: true,
+                    forcePseudoFullscreen: true,
+                    fullscreenElement: false
+                })
+                .addTo(map);
+
+            var marker = L.marker([default_lat, default_long], {
+                draggable: 'true'
+            }).addTo(map);
+
+            map.on('locationfound', function(e) {
+                var latitude = e.latlng.lat;
+                var longitude = e.latlng.lng;
+                marker.setLatLng([latitude, longitude]);
+                // map.setView([latitude, longitude], 8);
+                map.fitBounds([
+                    [latitude, longitude]
+                ]);
+                // console.log(`lat : ${latitude}, Log : ${longitude}`);
+                fill_input(latitude, longitude)
+            });
+
+            map.on('click', function(e) {
+                var latitude = e.latlng.lat;
+                var longitude = e.latlng.lng;
+                marker.setLatLng([latitude, longitude]);
+                fill_input(latitude, longitude);
+            });
+
+            marker.on('dragend', function(event) {
+                var marker = event.target;
+                var position = marker.getLatLng();
+                var latitude = position.lat;
+                var longitude = position.lng;
+                fill_input(latitude, longitude)
+                // console.log(`lat : ${latitude}, Log : ${longitude}`);
+            });
+
+            $('#modal_map').on('shown.bs.modal', function() {
+                let lat = $('#latitude').val()
+                let long = $('#longitude').val()
+                if (lat == '' || long == '') {
+                    set_map(default_lat, default_long)
+                } else {
+                    set_map(lat, long)
+                }
+                map.invalidateSize(); // Refresh the map to fill the modal
+            });
+
+            function fill_input(lat, long) {
+                $('#latitude').val(lat)
+                $('#longitude').val(long)
+                show_message(`Location Set to : ${lat} , ${long}!`, 'info')
+            }
+
+            function set_map(lat, long) {
+                try {
+                    marker.setLatLng([lat, long]);
+                    // map.setView([lat, long], 15);
+                    map.fitBounds([
+                        [lat, long]
+                    ]);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            $('#btn_map').click(function() {
+                $('#modal_map').modal('show')
+            })
+
+
             $('#tahun_konstruksi').datepicker({
                 format: "yyyy",
                 viewMode: "years",

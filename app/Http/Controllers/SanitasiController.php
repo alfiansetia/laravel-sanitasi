@@ -10,7 +10,7 @@ class SanitasiController extends Controller
     public function index()
     {
         return view('sanitasi.index', [
-            'title' => 'SANITASI'
+            'title' => 'PEMBANGUNAN'
         ]);
     }
 }

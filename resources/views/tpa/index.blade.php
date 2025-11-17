@@ -159,6 +159,10 @@
                 }
             }
 
+            $('#btn_map').click(function() {
+                $('#modal_map').modal('show')
+            })
+
             $('#tahun_konstruksi').datepicker({
                 format: "yyyy",
                 viewMode: "years",
@@ -595,9 +599,7 @@
                 });
             })
 
-            $('#btn_map').click(function() {
-                $('#modal_map').modal('show')
-            })
+
 
 
         })

@@ -39,23 +39,27 @@ class SanitasiRequest extends FormRequest
             'pagu'      => 'Pagu Anggaran',
             'jumlah'    => 'Jumlah Anggaran',
             'sumber'    => 'Sumber Dana',
-            'lat'       => 'Latitude',
-            'long'      => 'Longitude',
+            'latitude'  => 'Latitude',
+            'longitude' => 'Longitude',
         ];
     }
 
     public function mappedData(): array
     {
-        $data =  $this->only([
-            'tahun',
-            'nama',
-            'lokasi',
-            'pagu',
-            'jumlah',
-            'sumber',
-            'lat',
-            'long',
-        ]);
+        $data = array_merge(
+            $this->only([
+                'tahun',
+                'nama',
+                'lokasi',
+                'pagu',
+                'jumlah',
+                'sumber',
+            ]),
+            [
+                'lat'   => $this->latitude,
+                'long'  => $this->longitude,
+            ]
+        );
 
         foreach (
             [

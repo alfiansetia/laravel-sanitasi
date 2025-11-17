@@ -46,7 +46,7 @@
                                              placeholder="Latitude" required>
                                          <input type="text" id="longitude" class="form-control" name="longitude"
                                              placeholder="Longitude" required>
-                                         <button type="button" class="btn btn-secondary">
+                                         <button type="button" id="btn_map" class="btn btn-secondary">
                                              <i class="fas fa-map-marked-alt me-2"></i>
                                          </button>
                                      </div>
