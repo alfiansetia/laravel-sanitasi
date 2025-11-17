@@ -15,6 +15,11 @@ class Kecamatan extends Model
     {
         return [
             'id'            => 'integer',
+            'tpas_count'    => 'integer',
+            'tpsts_count'   => 'integer',
+            'tps3rs_count'  => 'integer',
+            'iplts_count'   => 'integer',
+            'spalds_count'  => 'integer',
         ];
     }
 
