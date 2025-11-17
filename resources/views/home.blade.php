@@ -67,6 +67,13 @@
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
+                            <div id="chart-sanitasis"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
                             <div id="chart-tpas"></div>
                         </div>
                     </div>
@@ -166,25 +173,30 @@
     <script>
         $(document).ready(function() {
             const cardConfig = {
+                sanitasis_count: {
+                    title: "Pembangunan",
+                    color: "tps3r",
+                    icon: "iconly-boldCategory"
+                },
                 tpas_count: {
                     title: "Total TPA",
                     color: "tpa",
-                    icon: "iconly-boldShow"
+                    icon: "iconly-boldCategory"
                 },
                 tpsts_count: {
                     title: "Total TPST",
                     color: "tpst",
-                    icon: "iconly-boldProfile"
+                    icon: "iconly-boldCategory"
                 },
                 tps3rs_count: {
                     title: "Total TPS3R",
                     color: "tps3r",
-                    icon: "iconly-boldAdd-User"
+                    icon: "iconly-boldCategory"
                 },
                 iplts_count: {
                     title: "Total IPLT",
                     color: "iplt",
-                    icon: "iconly-boldBookmark"
+                    icon: "iconly-boldCategory"
                 },
                 spalds_count: {
                     title: "Total SPALD",
@@ -214,6 +226,9 @@
                 },
             };
 
+            var chartSanitasi = new ApexCharts(document.querySelector("#chart-sanitasis"), JSON.parse(JSON
+                .stringify(
+                    baseOptionChart)));
             var chartTpa = new ApexCharts(document.querySelector("#chart-tpas"), JSON.parse(JSON.stringify(
                 baseOptionChart)));
             var chartTpst = new ApexCharts(document.querySelector("#chart-tpsts"), JSON.parse(JSON.stringify(
@@ -225,6 +240,7 @@
             var chartSpald = new ApexCharts(document.querySelector("#chart-spalds"), JSON.parse(JSON.stringify(
                 baseOptionChart)));
 
+            chartSanitasi.render();
             chartTpa.render();
             chartTpst.render();
             chartTps3r.render();
@@ -254,6 +270,7 @@
                         // x-axis = nama kecamatan
                         let categories = data.map(item => item.nama);
 
+                        let sanitasisSeries = data.map(item => item.sanitasis_count);
                         let tpasSeries = data.map(item => item.tpas_count);
                         let tpstsSeries = data.map(item => item.tpsts_count);
                         let tps3rsSeries = data.map(item => item.tps3rs_count);
@@ -261,6 +278,23 @@
                         let spaldsSeries = data.map(item => item.spalds_count);
 
                         // ===================================================================
+
+                        // CHART TPA
+                        chartSanitasi.updateOptions({
+                            title: {
+                                text: "Pembangunan per Kecamatan",
+                                align: "center"
+                            },
+                            xaxis: {
+                                categories
+                            },
+                            colors: ["#003A70"],
+                            series: [{
+                                name: "Pembangunan",
+                                data: sanitasisSeries
+                            }]
+                        });
+
                         // CHART TPA
                         chartTpa.updateOptions({
                             title: {
@@ -348,8 +382,8 @@
             function createStatCard(color, icon, title, value) {
                 return `
                     <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-4 py-4-5">
+                        <div class="card mb-3">
+                            <div class="card-body px-4 py-2-3">
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                         <div class="stats-icon ${color} mb-2">

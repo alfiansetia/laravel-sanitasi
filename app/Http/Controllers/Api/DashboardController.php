@@ -12,6 +12,7 @@ class DashboardController extends Controller
     {
         $data = Kecamatan::query()
             ->withCount([
+                'sanitasis',
                 'tpas',
                 'tpsts',
                 'tps3rs',

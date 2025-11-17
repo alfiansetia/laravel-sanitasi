@@ -14,12 +14,13 @@ class Kecamatan extends Model
     protected function casts(): array
     {
         return [
-            'id'            => 'integer',
-            'tpas_count'    => 'integer',
-            'tpsts_count'   => 'integer',
-            'tps3rs_count'  => 'integer',
-            'iplts_count'   => 'integer',
-            'spalds_count'  => 'integer',
+            'id'                => 'integer',
+            'tpas_count'        => 'integer',
+            'tpsts_count'       => 'integer',
+            'tps3rs_count'      => 'integer',
+            'iplts_count'       => 'integer',
+            'spalds_count'      => 'integer',
+            'sanitasis_count'   => 'integer',
         ];
     }
 
@@ -28,6 +29,11 @@ class Kecamatan extends Model
         if (isset($filters['nama'])) {
             $query->where('nama', 'like', '%' . $filters['nama'] . '%');
         }
+    }
+
+    public function sanitasis()
+    {
+        return $this->hasMany(Sanitasi::class);
     }
 
     public function kelurahans()
