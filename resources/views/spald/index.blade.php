@@ -472,7 +472,7 @@
                 let kel = kelurahan.getValue(true)
                 if (kel == null || kel == '') {
                     kelurahan.showDropdown(true)
-                    show_message('Select Lokasi Desa!')
+                    show_message('Select Lokasi Kelurahan/Desa!')
                     return
                 }
                 $.ajax({

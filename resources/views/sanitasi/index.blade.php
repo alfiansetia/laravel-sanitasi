@@ -406,6 +406,18 @@
 
             $('#form').submit(function(e) {
                 e.preventDefault()
+                let kec = kecamatan.getValue(true)
+                if (kec == null || kec == '') {
+                    kecamatan.showDropdown(true)
+                    show_message('Select Lokasi Kecamatan!')
+                    return
+                }
+                let kel = kelurahan.getValue(true)
+                if (kel == null || kel == '') {
+                    kelurahan.showDropdown(true)
+                    show_message('Select Lokasi Kelurahan/Desa!')
+                    return
+                }
                 $.ajax({
                     url: $(this).attr('action'),
                     type: $(this).attr('method'),

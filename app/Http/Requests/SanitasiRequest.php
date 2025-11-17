@@ -26,8 +26,8 @@ class SanitasiRequest extends FormRequest
             'pagu'          => 'nullable|integer|gte:0',
             'jumlah'        => 'nullable|integer|gte:0',
             'sumber'        => ['required', Rule::in(config('enums.sumber_dana'))],
-            'lat'           => 'required|numeric|between:-90,90',
-            'long'          => 'required|numeric|between:-180,180',
+            'latitude'      => 'required|numeric|between:-90,90',
+            'longitude'     => 'required|numeric|between:-180,180',
         ];
     }
 
