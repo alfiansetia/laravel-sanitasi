@@ -288,7 +288,7 @@
                             xaxis: {
                                 categories
                             },
-                            colors: ["#003A70"],
+                            colors: ["#C1272D"],
                             series: [{
                                 name: "Pembangunan",
                                 data: sanitasisSeries
