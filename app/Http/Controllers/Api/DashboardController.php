@@ -18,7 +18,7 @@ class DashboardController extends Controller
                 'tps3rs',
                 'iplts',
                 'spalds',
-            ])->get();
+            ])->orderBy('nama', 'ASC')->get();
         return $this->sendResponse($data);
     }
 }
