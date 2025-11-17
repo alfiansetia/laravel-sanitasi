@@ -20,6 +20,7 @@ class Tps3r extends Model
     protected function casts(): array
     {
         return [
+            'id'            => 'integer',
             // 'status'  => OpsiBerfungsi::class,
         ];
     }

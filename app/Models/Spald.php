@@ -47,6 +47,7 @@ class Spald extends Model
     protected function casts(): array
     {
         return [
+            'id'            => 'integer',
             // 'skala'                 => SkalaPelayanan::class,
             // 'sumber'                => SumberDana::class,
             // 'status_keberfungsian'  => OpsiBerfungsi::class,

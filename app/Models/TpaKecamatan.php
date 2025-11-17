@@ -8,6 +8,13 @@ class TpaKecamatan extends Model
 {
     protected $guarded = [];
 
+    protected function casts(): array
+    {
+        return [
+            'id'            => 'integer',
+        ];
+    }
+
     public function tpa()
     {
         return $this->belongsTo(Tpa::class);

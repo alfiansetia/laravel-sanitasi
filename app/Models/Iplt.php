@@ -29,6 +29,7 @@ class Iplt extends Model
     protected function casts(): array
     {
         return [
+            'id'            => 'integer',
             // 'kondisi_truk'  => OpsiBaik::class,
         ];
     }

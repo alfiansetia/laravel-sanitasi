@@ -33,6 +33,7 @@ class Tpa extends Model
     protected function casts(): array
     {
         return [
+            'id'            => 'integer',
             // 'sumber'    => SumberDana::class,
             // 'pengelola' => Pengelola::class,
             // 'kondisi'   => OpsiBaik::class,

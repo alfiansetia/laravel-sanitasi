@@ -22,6 +22,7 @@ class Sanitasi extends Model
     protected function casts(): array
     {
         return [
+            'id'            => 'integer',
             // 'sumber'  => SumberDana::class,
         ];
     }
