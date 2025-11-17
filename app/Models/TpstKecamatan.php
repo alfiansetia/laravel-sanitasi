@@ -12,6 +12,8 @@ class TpstKecamatan extends Model
     {
         return [
             'id'            => 'integer',
+            'tpst_id'       => 'integer',
+            'kecamatan_id'  => 'integer',
         ];
     }
 

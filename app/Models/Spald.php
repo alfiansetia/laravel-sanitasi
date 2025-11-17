@@ -2,14 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\JenisPengelolaan;
-use App\Enums\OpsiAda;
-use App\Enums\OpsiBaik;
-use App\Enums\OpsiBerfungsi;
-use App\Enums\OpsiTeknologi;
-use App\Enums\SkalaPelayanan;
-use App\Enums\StatusLahan;
-use App\Enums\SumberDana;
 use Illuminate\Database\Eloquent\Model;
 
 class Spald extends Model
@@ -17,14 +9,6 @@ class Spald extends Model
     protected $guarded = [];
     protected $appends = [
         'is_valid_map',
-        // 'skala_label',
-        // 'sumber_label',
-        // 'status_keberfungsian_label',
-        // 'kondisi_label',
-        // 'status_lahan_label',
-        // 'jenis_label',
-        // 'teknologi_label',
-        // 'status_penyedotan_label'
     ];
 
     public static $filterProp = [
@@ -48,56 +32,10 @@ class Spald extends Model
     {
         return [
             'id'            => 'integer',
-            // 'skala'                 => SkalaPelayanan::class,
-            // 'sumber'                => SumberDana::class,
-            // 'status_keberfungsian'  => OpsiBerfungsi::class,
-            // 'kondisi'               => OpsiBaik::class,
-            // 'status_lahan'          => StatusLahan::class,
-            // 'jenis'                 => JenisPengelolaan::class,
-            // 'teknologi'             => OpsiTeknologi::class,
-            // 'status_penyedotan'     => OpsiAda::class,
+            'kecamatan_id'  => 'integer',
+            'kelurahan_id'  => 'integer',
         ];
     }
-
-    // public function getSkalaLabelAttribute()
-    // {
-    //     return $this->skala?->label();
-    // }
-
-    // public function getStatusKeberfungsianLabelAttribute()
-    // {
-    //     return $this->status_keberfungsian?->label();
-    // }
-
-    // public function getKondisiLabelAttribute()
-    // {
-    //     return $this->kondisi?->label();
-    // }
-
-    // public function getStatusLahanLabelAttribute()
-    // {
-    //     return $this->status_lahan?->label();
-    // }
-
-    // public function getJenisLabelAttribute()
-    // {
-    //     return $this->jenis?->label();
-    // }
-
-    // public function getTeknologiLabelAttribute()
-    // {
-    //     return $this->teknologi?->label();
-    // }
-
-    // public function getSumberLabelAttribute()
-    // {
-    //     return $this->sumber?->label();
-    // }
-
-    // public function getStatusPenyedotanLabelAttribute()
-    // {
-    //     return $this->status_penyedotan?->label();
-    // }
 
     public function scopeFilter($query, array $filters)
     {

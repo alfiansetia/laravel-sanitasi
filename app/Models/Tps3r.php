@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
-use App\Enums\OpsiBerfungsi;
 use Illuminate\Database\Eloquent\Model;
 
 class Tps3r extends Model
 {
     protected $guarded = [];
-    protected $appends = [
-        // 'status_label'
-    ];
+    protected $appends = [];
     public static $filterProp = [
         'tahun_konstruksi',
         'tahun_beroperasi',
@@ -21,14 +18,10 @@ class Tps3r extends Model
     {
         return [
             'id'            => 'integer',
-            // 'status'  => OpsiBerfungsi::class,
+            'kecamatan_id'  => 'integer',
+            'kelurahan_id'  => 'integer',
         ];
     }
-
-    // public function getStatusLabelAttribute()
-    // {
-    //     return $this->status?->label();
-    // }
 
     public function scopeFilter($query, array $filters)
     {

@@ -6,6 +6,7 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/colormask.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.85.1/dist/L.Control.Locate.min.css">
@@ -20,14 +21,14 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Tahun</th>
                             <th>Nama Kegiatan</th>
-                            <th>Lokasi</th>
+                            <th>Kecamatan</th>
+                            <th>Kelurahan/Desa</th>
+                            <th>Tahun</th>
                             <th>Pagu</th>
                             <th>Jumlah Unit</th>
                             <th>Sumber Dana</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
+                            <th>Koordinat</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,7 +49,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/jquery.inputmask.min.js"></script>
-
+    <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.85.1/dist/L.Control.Locate.min.js"></script>
@@ -170,6 +171,53 @@
                 min: 0,
             });
 
+            const kecamatan = new Choices(document.getElementById('kecamatan_id'), {
+                searchEnabled: true,
+                removeItemButton: true,
+                allowHTML: true,
+            });
+
+            const kelurahan = new Choices(document.getElementById('kelurahan_id'), {
+                searchEnabled: true,
+                removeItemButton: true,
+                allowHTML: true,
+            });
+
+            $('#kecamatan_id').on('change', function() {
+                let kecamatan_id = $(this).val();
+                kelurahan.clearChoices();
+                kelurahan.setChoices([{
+                    value: '',
+                    label: 'Select Kelurahan',
+                    disabled: true,
+                    selected: true,
+                }], 'value', 'label', true);
+                kelurahan.setChoiceByValue('');
+                if (!kecamatan_id) {
+                    return;
+                }
+                $.ajax({
+                    url: `{{ route('api.kelurahans.index') }}?kecamatan_id=${kecamatan_id}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        kelurahan.clearChoices();
+                        kelurahan.setChoices(
+                            response.data.map(item => ({
+                                value: item.id,
+                                label: item.nama,
+                            })),
+                            'value',
+                            'label',
+                            false
+                        );
+                    },
+                    error: function() {
+                        kelurahan.clearChoices();
+                    }
+                });
+            });
+
 
             var table = $('#table').DataTable({
                 rowId: 'id',
@@ -199,7 +247,7 @@
                 pageLength: 10,
                 lengthChange: false,
                 order: [
-                    [9, "desc"]
+                    [10, "desc"]
                 ],
                 columns: [{
                         data: 'id',
@@ -210,16 +258,21 @@
                         render: function(data, type, row, meta) {
                             return `<input type="checkbox" name="id[]" value="${data}" class="form-check-input child-chk">`
                         }
-                    }, {
-                        data: "tahun",
-                        className: 'text-center',
                     },
                     {
                         data: "nama",
                         className: 'text-start',
                     }, {
-                        data: "lokasi",
+                        data: "kecamatan.nama",
+                        sortable: false,
                         className: 'text-start',
+                    }, {
+                        data: "kelurahan.nama",
+                        className: 'text-start',
+                        sortable: false,
+                    }, {
+                        data: "tahun",
+                        className: 'text-center',
                     }, {
                         data: "pagu",
                         className: 'text-end',
@@ -244,9 +297,13 @@
                     }, {
                         data: "lat",
                         className: 'text-start',
+                        render: function(data, type, row, meta) {
+                            return `${data||''} ${row.long||''}`
+                        }
                     }, {
                         data: "long",
                         className: 'text-start',
+                        visible: false,
                     }, {
                         data: "id",
                         className: 'text-start',
@@ -344,7 +401,7 @@
             }
 
             $('#modal_form').on('shown.bs.modal', function() {
-                $('#tahun').focus()
+                $('#nama').focus()
             });
 
             $('#form').submit(function(e) {
@@ -370,7 +427,21 @@
                 id = data.id
                 $('#tahun').datepicker('setDate', new Date(data.tahun, 0, 1));
                 $('#nama').val(data.nama)
-                $('#lokasi').val(data.lokasi)
+                kecamatan.removeActiveItems();
+                if (data.kecamatan_id != null) {
+                    kecamatan.setChoiceByValue(data.kecamatan_id.toString());
+                    $('#kecamatan_id').trigger('change')
+                }
+
+                kelurahan.removeActiveItems();
+                if (data.kelurahan_id != null) {
+                    kelurahan.setChoices([{
+                        value: data.kelurahan_id.toString(),
+                        label: data.kelurahan.nama,
+                        selected: false
+                    }], 'value', 'label', true);
+                    kelurahan.setChoiceByValue(data.kelurahan_id.toString());
+                }
                 $('#pagu').val(data.pagu)
                 $('#jumlah').val(data.jumlah)
                 $('#sumber').val(data.sumber).change()
@@ -390,7 +461,11 @@
                 $('#form').attr('method', 'POST')
                 $('#tahun').val('')
                 $('#nama').val('')
-                $('#lokasi').val('')
+                kecamatan.removeActiveItems();
+                kecamatan.setChoiceByValue('');
+                $('#kecamatan_id').trigger('change')
+                kelurahan.removeActiveItems();
+                kelurahan.setChoiceByValue('');
                 $('#pagu').val(0)
                 $('#jumlah').val(0)
                 $('#sumber').val('').change()

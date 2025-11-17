@@ -15,7 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('tahun');
             $table->text('nama');
-            $table->string('lokasi')->nullable();
+            $table->foreignId('kecamatan_id')
+                ->nullable()
+                ->constrained('kecamatans')
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
+            $table->foreignId('kelurahan_id')
+                ->nullable()
+                ->constrained('kelurahans')
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
             $table->bigInteger('pagu')->default(0);
             $table->bigInteger('jumlah')->default(0);
             $table->string('sumber')->nullable();

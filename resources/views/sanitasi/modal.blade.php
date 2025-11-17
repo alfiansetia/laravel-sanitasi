@@ -14,21 +14,45 @@
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
+                                     <label for="nama">Nama Kegiatan</label>
+                                     <textarea class="form-control" name="nama" id="nama" placeholder="Nama Kegiatan" maxlength="200" required></textarea>
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
+                                 <div class="form-group">
                                      <label for="tahun">Tahun</label>
                                      <input type="text" id="tahun" class="form-control" name="tahun"
                                          placeholder="Tahun" required>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="nama">Nama Kegiatan</label>
-                                     <textarea class="form-control" name="nama" id="nama" placeholder="Nama Kegiatan" maxlength="200" required></textarea>
+                                     <label for="sumber">Sumber Dana</label>
+                                     <select class="form-select" id="sumber" name="sumber" required>
+                                         <option value="">--Select Sumber Dana--</option>
+                                         @foreach (config('enums.sumber_dana') as $item)
+                                             <option value="{{ $item }}">{{ $item }}</option>
+                                         @endforeach
+                                     </select>
                                  </div>
                              </div>
-                             <div class="col-12">
+                             <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="lokasi">Lokasi</label>
-                                     <textarea class="form-control" name="lokasi" id="lokasi" placeholder="Lokasi" maxlength="200" required></textarea>
+                                     <label for="kecamatan_id" class="required">Lokasi (Kecamatan)</label>
+                                     <select id="kecamatan_id" name="kecamatan_id" class="choices form-select">
+                                         <option value="">--Select Kecamatan--</option>
+                                         @foreach ($kecamatans as $item)
+                                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                         @endforeach
+                                     </select>
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
+                                 <div class="form-group">
+                                     <label for="kelurahan_id" class="required">Lokasi (Kelurahan/Desa)</label>
+                                     <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
+                                         <option value="">--Select Kelurahan--</option>
+                                     </select>
                                  </div>
                              </div>
                              <div class="col-md-6">
@@ -43,17 +67,6 @@
                                      <label for="jumlah">Jumlah Anggaran</label>
                                      <input type="text" id="jumlah" class="form-control mask_angka" name="jumlah"
                                          placeholder="Jumlah Anggaran">
-                                 </div>
-                             </div>
-                             <div class="col-12">
-                                 <div class="form-group">
-                                     <label for="sumber">Sumber Dana</label>
-                                     <select class="form-select" id="sumber" name="sumber" required>
-                                         <option value="">--Select Sumber Dana--</option>
-                                         @foreach (config('enums.sumber_dana') as $item)
-                                             <option value="{{ $item }}">{{ $item }}</option>
-                                         @endforeach
-                                     </select>
                                  </div>
                              </div>
                              <div class="col-md-12">

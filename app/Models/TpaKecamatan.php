@@ -12,6 +12,8 @@ class TpaKecamatan extends Model
     {
         return [
             'id'            => 'integer',
+            'kecamatan_id'  => 'integer',
+            'tpa_id'        => 'integer',
         ];
     }
 

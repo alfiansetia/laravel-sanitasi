@@ -50,7 +50,7 @@ class TpstRequest extends FormRequest
         return [
             'nama'                  => 'Nama TPST',
             'kecamatan_id'          => 'Lokasi (Kecamatan)',
-            'kelurahan_id'          => 'Lokasi (Desa)',
+            'kelurahan_id'          => 'Lokasi (Kelurahan/Desa)',
             'latitude'              => 'Titik Koordinat Latitude',
             'longitude'             => 'Titik Koordinat Longitude',
             'sumber'                => 'Sumber Anggaran',

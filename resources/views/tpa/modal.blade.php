@@ -32,7 +32,7 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="kelurahan_id" class="required">Lokasi (Desa)</label>
+                                     <label for="kelurahan_id" class="required">Lokasi (Kelurahan/Desa)</label>
                                      <select id="kelurahan_id" name="kelurahan_id" class="choices form-select">
                                          <option value="">--Select Kelurahan--</option>
                                      </select>

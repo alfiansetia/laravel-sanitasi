@@ -19,28 +19,30 @@ class SanitasiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tahun'     => 'required|date_format:Y',
-            'nama'      => 'required|max:5000',
-            'lokasi'    => 'required|max:200',
-            'pagu'      => 'nullable|integer|gte:0',
-            'jumlah'    => 'nullable|integer|gte:0',
-            'sumber'    => ['required', Rule::in(config('enums.sumber_dana'))],
-            'lat'       => 'required|numeric|between:-90,90',
-            'long'      => 'required|numeric|between:-180,180',
+            'nama'          => 'required|max:5000',
+            'tahun'         => 'required|date_format:Y',
+            'kecamatan_id'  => 'required|exists:kecamatans,id',
+            'kelurahan_id'  => 'required|exists:kelurahans,id',
+            'pagu'          => 'nullable|integer|gte:0',
+            'jumlah'        => 'nullable|integer|gte:0',
+            'sumber'        => ['required', Rule::in(config('enums.sumber_dana'))],
+            'lat'           => 'required|numeric|between:-90,90',
+            'long'          => 'required|numeric|between:-180,180',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'nama'      => 'Nama Kegiatan',
-            'tahun'     => 'Tahun',
-            'lokasi'    => 'Lokasi',
-            'pagu'      => 'Pagu Anggaran',
-            'jumlah'    => 'Jumlah Anggaran',
-            'sumber'    => 'Sumber Dana',
-            'latitude'  => 'Latitude',
-            'longitude' => 'Longitude',
+            'nama'          => 'Nama Kegiatan',
+            'tahun'         => 'Tahun',
+            'kecamatan_id'  => 'Lokasi (Kecamatan)',
+            'kelurahan_id'  => 'Lokasi (Kelurahan/Desa)',
+            'pagu'          => 'Pagu Anggaran',
+            'jumlah'        => 'Jumlah Anggaran',
+            'sumber'        => 'Sumber Dana',
+            'latitude'      => 'Latitude',
+            'longitude'     => 'Longitude',
         ];
     }
 
@@ -48,9 +50,10 @@ class SanitasiRequest extends FormRequest
     {
         $data = array_merge(
             $this->only([
-                'tahun',
                 'nama',
-                'lokasi',
+                'tahun',
+                'kecamatan_id',
+                'kelurahan_id',
                 'pagu',
                 'jumlah',
                 'sumber',

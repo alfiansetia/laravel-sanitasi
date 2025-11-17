@@ -19,13 +19,20 @@ class SanitasiController extends Controller
     public function index(Request $request)
     {
         $query = Sanitasi::query()
+            ->with([
+                'kecamatan',
+                'kelurahan',
+            ])
             ->filter($request->only(Sanitasi::$filterProp));
         return DataTables::eloquent($query)->toJson();
     }
 
     public function show(Sanitasi $sanitasi)
     {
-        return $this->sendResponse($sanitasi);
+        return $this->sendResponse($sanitasi->load([
+            'kecamatan',
+            'kelurahan',
+        ]));
     }
 
     public function store(SanitasiRequest $request)

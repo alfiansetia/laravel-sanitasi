@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\OpsiBaik;
 use Illuminate\Database\Eloquent\Model;
 
 class Iplt extends Model
@@ -10,7 +9,6 @@ class Iplt extends Model
     protected $guarded = [];
     protected $appends = [
         'is_valid_map',
-        // 'kondisi_truk_label'
     ];
 
     public static $filterProp = [
@@ -21,16 +19,12 @@ class Iplt extends Model
         'kondisi_truk',
     ];
 
-    // public function getKondisiTrukLabelAttribute()
-    // {
-    //     return $this->kondisi_truk->label();
-    // }
-
     protected function casts(): array
     {
         return [
             'id'            => 'integer',
-            // 'kondisi_truk'  => OpsiBaik::class,
+            'kecamatan_id'  => 'integer',
+            'kelurahan_id'  => 'integer',
         ];
     }
 

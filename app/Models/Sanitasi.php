@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\SumberDana;
 use Illuminate\Database\Eloquent\Model;
 
 class Sanitasi extends Model
@@ -10,27 +9,23 @@ class Sanitasi extends Model
     protected $guarded = [];
     protected $appends = [
         'is_valid_map',
-        // 'sumber_label'
     ];
     public static $filterProp = [
         'tahun',
         'nama',
-        'lokasi',
-        'sumber'
+        'sumber',
+        'kecamatan_id',
+        'kelurahan_id',
     ];
 
     protected function casts(): array
     {
         return [
             'id'            => 'integer',
-            // 'sumber'  => SumberDana::class,
+            'kecamatan_id'  => 'integer',
+            'kelurahan_id'  => 'integer',
         ];
     }
-
-    // public function getSumberLabelAttribute()
-    // {
-    //     return $this->sumber?->label();
-    // }
 
     public function scopeFilter($query, array $filters)
     {
@@ -40,8 +35,11 @@ class Sanitasi extends Model
         if (isset($filters['nama'])) {
             $query->where('nama', 'like', '%' . $filters['nama'] . '%');
         }
-        if (isset($filters['lokasi'])) {
-            $query->where('lokasi', 'like', '%' . $filters['lokasi'] . '%');
+        if (isset($filters['kecamatan_id'])) {
+            $query->where('kecamatan_id',  $filters['kecamatan_id']);
+        }
+        if (isset($filters['kelurahan_id'])) {
+            $query->where('kelurahan_id',  $filters['kelurahan_id']);
         }
         if (isset($filters['sumber'])) {
             $query->where('sumber',  $filters['sumber']);
@@ -51,5 +49,15 @@ class Sanitasi extends Model
     public function getIsValidMapAttribute(): bool
     {
         return valid_latlong($this->lat, $this->long);
+    }
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class);
+    }
+
+    public function kelurahan()
+    {
+        return $this->belongsTo(Kelurahan::class);
     }
 }
