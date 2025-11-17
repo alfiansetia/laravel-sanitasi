@@ -411,8 +411,8 @@
                 let form = $(this)[0];
                 let formData = new FormData(form);
                 $.ajax({
-                    url: $(this).attr('action'),
-                    type: $(this).attr('method'),
+                    url: "{{ route('api.sanitasis.import') }}",
+                    type: "POST",
                     contentType: false,
                     processData: false,
                     data: formData,

@@ -10,7 +10,8 @@ class KecamatanController extends Controller
     public function index()
     {
         return view('kecamatan.index', [
-            'title' => 'KECAMATAN'
+            'title'         => 'KECAMATAN',
+            'sample_import' =>  asset('master/sample_kecamatan.xlsx'),
         ]);
     }
 }

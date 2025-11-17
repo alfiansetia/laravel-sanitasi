@@ -15,6 +15,7 @@ class TpstController extends Controller
             'kecamatans'    => $kecamatans,
             'title'         => 'TPST',
             'title_desc'    => 'Tempat Pengolahan Sampah Terpadu',
+            'sample_import' =>  asset('master/sample_tpst.xlsx'),
 
         ]);
     }

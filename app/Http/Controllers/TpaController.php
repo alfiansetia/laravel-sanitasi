@@ -15,6 +15,7 @@ class TpaController extends Controller
             'kecamatans'    => $kecamatans,
             'title'         => 'TPA',
             'title_desc'    => 'Tempat Pemrosesan Akhir',
+            'sample_import' =>  asset('master/sample_tpa.xlsx'),
         ]);
     }
 }

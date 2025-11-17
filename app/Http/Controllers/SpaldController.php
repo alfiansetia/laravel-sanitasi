@@ -15,6 +15,7 @@ class SpaldController extends Controller
             'kecamatans'    => $kecamatans,
             'title'         => 'SPALD',
             'title_desc'    => 'Sistem Pengelolaan Air Limbah Domestik',
+            'sample_import' =>  asset('master/sample_spald.xlsx'),
         ]);
     }
 }

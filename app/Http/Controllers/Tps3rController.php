@@ -15,6 +15,7 @@ class Tps3rController extends Controller
             'kecamatans'    => $kecamatans,
             'title'         => 'TPS3R',
             'title_desc'    => 'Tempat Pengolahan Sampah 3R',
+            'sample_import' =>  asset('master/sample_tps3r.xlsx'),
         ]);
     }
 }

@@ -13,7 +13,8 @@ class KelurahanController extends Controller
         $kecamatans = Kecamatan::all();
         return view('kelurahan.index', [
             'kecamatans'    => $kecamatans,
-            'title'         => 'KELURAHAN'
+            'title'         => 'KELURAHAN',
+            'sample_import' =>  asset('master/sample_kelurahan.xlsx'),
         ]);
     }
 }

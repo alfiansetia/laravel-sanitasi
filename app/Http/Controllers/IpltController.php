@@ -15,6 +15,7 @@ class IpltController extends Controller
             'kecamatans'    => $kecamatans,
             'title'         => 'IPLT',
             'title_desc'    => 'Instalasi Pengolahan Limbah Terpadu',
+            'sample_import' => asset('master/sample_iplt.xlsx'),
 
         ]);
     }
