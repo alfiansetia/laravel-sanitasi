@@ -98,14 +98,14 @@
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="luas_sarana">Luas Sarana</label>
+                                     <label for="luas_sarana">Luas Sarana (ha)</label>
                                      <input type="text" id="luas_sarana" class="form-control mask_decimal"
                                          name="luas_sarana" placeholder="Luas Sarana">
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group">
-                                     <label for="luas_sel">Luas Sel</label>
+                                     <label for="luas_sel">Luas Sel (ha)</label>
                                      <input type="text" id="luas_sel" class="form-control mask_decimal"
                                          name="luas_sel" placeholder="Luas Sel">
                                  </div>

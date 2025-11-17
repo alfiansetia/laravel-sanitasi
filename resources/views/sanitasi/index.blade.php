@@ -462,7 +462,7 @@
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
                 $('#form').attr('method', 'PUT')
-                $('#modal_title').html('<i class="fas fa-edit me-1"></i>Edit Data')
+                $('#modal_title').html('<i class="fas fa-edit me-1"></i>Edit Data {{ $title }}')
                 $('#modal_form').modal('show')
 
             });
@@ -484,7 +484,7 @@
                 $('#latitude').val('')
                 $('#longitude').val('')
 
-                $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data')
+                $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data {{ $title }}')
                 $('#modal_form').modal('show')
             }
 
