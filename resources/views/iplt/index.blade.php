@@ -33,7 +33,7 @@
                             <th>Truk Tinja (Unit)</th>
                             <th>Kapasitas Truk (M3)</th>
                             <th>Kondisi Truk</th>
-                            <th>Jumlah Ritas (Rit/Hari)</th>
+                            <th>Jumlah Ritasi (Rit/Hari)</th>
                             <th>Jumlah Pemanfaat KK</th>
                             <th>Jumlah Pemanfaat Jiwa</th>
                             <th>Koordinat</th>
