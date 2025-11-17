@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Kecamatan;
+use Illuminate\Http\Request;
+
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        $data = Kecamatan::query()
+            ->withCount([
+                'tpas',
+                'tpsts',
+                'tps3rs',
+                'iplts',
+                'spalds',
+            ])->get();
+        return $this->sendResponse($data);
+    }
+}

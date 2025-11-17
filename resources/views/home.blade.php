@@ -73,147 +73,21 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4>Profile Visit</h4>
-                        </div>
+                        {{-- <div class="card-header">
+                            <h4>TPA</h4>
+                        </div> --}}
                         <div class="card-body">
-                            <div id="chart-profile-visit"></div>
+                            <div id="chart-tpas"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 col-xl-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Profile Visit</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <svg class="bi text-primary" width="32" height="32" fill="blue"
-                                            style="width:10px">
-                                            <use xlink:href="assets/static/images/bootstrap-icons.svg#circle-fill" />
-                                        </svg>
-                                        <h5 class="mb-0 ms-3">Europe</h5>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <h5 class="mb-0">862</h5>
-                                </div>
-                                <div class="col-12">
-                                    <div id="chart-europe"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <svg class="bi text-success" width="32" height="32" fill="blue"
-                                            style="width:10px">
-                                            <use xlink:href="assets/static/images/bootstrap-icons.svg#circle-fill" />
-                                        </svg>
-                                        <h5 class="mb-0 ms-3">America</h5>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <h5 class="mb-0">375</h5>
-                                </div>
-                                <div class="col-12">
-                                    <div id="chart-america"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-7">
-                                    <div class="d-flex align-items-center">
-                                        <svg class="bi text-success" width="32" height="32" fill="blue"
-                                            style="width:10px">
-                                            <use xlink:href="assets/static/images/bootstrap-icons.svg#circle-fill" />
-                                        </svg>
-                                        <h5 class="mb-0 ms-3">India</h5>
-                                    </div>
-                                </div>
-                                <div class="col-5">
-                                    <h5 class="mb-0 text-end">625</h5>
-                                </div>
-                                <div class="col-12">
-                                    <div id="chart-india"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center">
-                                        <svg class="bi text-danger" width="32" height="32" fill="blue"
-                                            style="width:10px">
-                                            <use xlink:href="assets/static/images/bootstrap-icons.svg#circle-fill" />
-                                        </svg>
-                                        <h5 class="mb-0 ms-3">Indonesia</h5>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <h5 class="mb-0">1025</h5>
-                                </div>
-                                <div class="col-12">
-                                    <div id="chart-indonesia"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-xl-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Latest Comments</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-lg">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Comment</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="col-3">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-md">
-                                                        <img src="./assets/compiled/jpg/5.jpg">
-                                                    </div>
-                                                    <p class="font-bold ms-3 mb-0">Cantik</p>
-                                                </div>
-                                            </td>
-                                            <td class="col-auto">
-                                                <p class=" mb-0">Congratulations on your graduation!
-                                                </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-3">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-md">
-                                                        <img src="./assets/compiled/jpg/2.jpg">
-                                                    </div>
-                                                    <p class="font-bold ms-3 mb-0">Ganteng</p>
-                                                </div>
-                                            </td>
-                                            <td class="col-auto">
-                                                <p class=" mb-0">Wow amazing design! Can you make
-                                                    another tutorial for
-                                                    this design?</p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+
         </div>
         <div class="col-12 col-lg-3">
             <div class="card">
@@ -268,18 +142,109 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
-                    <h4>Visitors Profile</h4>
-                </div>
-                <div class="card-body">
-                    <div id="chart-visitors-profile"></div>
-                </div>
-            </div>
         </div>
     </section>
 @endsection
 @push('js')
     <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script>
+    {{-- <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script> --}}
+
+    <script>
+        $(document).ready(function() {
+            var optionsProfileVisit = {
+                annotations: {
+                    position: "back"
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                chart: {
+                    type: "bar",
+                    height: 300
+                },
+                fill: {
+                    opacity: 1
+                },
+                series: [],
+                colors: ["#435ebe"],
+                xaxis: {
+                    categories: []
+                },
+                title: {
+                    text: "Jumlah Data per Kecamatan",
+                    align: "center", // left, center, right
+                    margin: 10,
+                    offsetY: 0,
+                    style: {
+                        fontSize: "16px",
+                        fontWeight: "bold",
+                    }
+                },
+            }
+
+            var chartProfileVisit = new ApexCharts(
+                document.querySelector("#chart-tpas"),
+                optionsProfileVisit
+            )
+
+            chartProfileVisit.render()
+            getData()
+
+            function getData() {
+                $.ajax({
+                    url: "{{ route('api.dashboards.index') }}",
+                    type: "GET",
+                    success: function(res) {
+
+                        let data = res.data;
+
+                        // ambil nama kecamatan untuk x-axis
+                        let categories = data.map(item => item.nama)
+
+                        // ambil jumlah tpa
+                        let tpasSeries = data.map(item => item.tpas_count);
+                        let tpstsSeries = data.map(item => item.tpsts_count);
+                        let tps3rsSeries = data.map(item => item.tps3rs_count);
+                        let ipltsSeries = data.map(item => item.iplts_count);
+                        let spaldsSeries = data.map(item => item.spalds_count);
+
+                        // update chart
+                        chartProfileVisit.updateOptions({
+                            xaxis: {
+                                categories: categories
+                            },
+                            colors: [
+                                "#003A70", // TPAS
+                                "#F7C904", // TPSTS
+                                "#C1272D", // TPS3R
+                                "#4A90E2", // IPLT
+                                "#F5A623" // SPALD
+                            ],
+                            series: [{
+                                    name: "TPAS",
+                                    data: tpasSeries
+                                },
+                                {
+                                    name: "TPSTS",
+                                    data: tpstsSeries
+                                },
+                                {
+                                    name: "TPS3R",
+                                    data: tps3rsSeries
+                                },
+                                {
+                                    name: "IPLT",
+                                    data: ipltsSeries
+                                },
+                                {
+                                    name: "SPALD",
+                                    data: spaldsSeries
+                                }
+                            ]
+                        })
+                    }
+                });
+            }
+        });
+    </script>
 @endpush

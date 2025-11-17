@@ -51,7 +51,7 @@ class SpaldRequest extends FormRequest
             'unit_tangki'           => 'nullable|integer|gte:0',
             'unit_bilik'            => 'nullable|integer|gte:0',
             'status_penyedotan'     => ['required', Rule::in(config('enums.opsi_ada'))],
-            'tanggal_update'        => 'required|date_format:Y-m-d',
+            'tanggal_update'        => 'nullable|date_format:Y-m-d',
         ];
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\SpaldtController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\IpltController;
@@ -79,4 +80,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         ->name('api.spalds.import');
     Route::apiResource('spalds', SpaldController::class)
         ->names('api.spalds');
+
+    Route::get('dashboards', [DashboardController::class, 'index'])
+        ->name('api.dashboards.index');
 });
