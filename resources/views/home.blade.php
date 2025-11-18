@@ -381,7 +381,7 @@
 
             function createStatCard(color, icon, title, value) {
                 return `
-                    <div class="col-6 col-lg-3 col-md-6">
+                    <div class="col-6 col-lg-3 col-md-4">
                         <div class="card mb-3">
                             <div class="card-body px-4 py-2-3">
                                 <div class="row">
