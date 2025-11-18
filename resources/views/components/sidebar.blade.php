@@ -1,6 +1,6 @@
 <div id="sidebar" class="sidebar-desktop active">
     <div class="sidebar-wrapper active">
-        <div class="sidebar-header position-relative pt-3">
+        <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <a href="{{ route('home') }}">
                     <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 35px">
