@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Enums\OpsiBaik;
 use App\Enums\Pengelola;
 use App\Enums\SumberDana;
+use App\Exports\TpaExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TpaRequest;
 use App\Imports\TpaImport;
@@ -18,6 +19,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
 use ValueError;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Excel as MaatwebsiteExcel;
 
 class TpaController extends Controller
 {
@@ -111,5 +115,19 @@ class TpaController extends Controller
             return $this->sendError('Gagal import: ' . $th->getMessage(), 500);
         }
         return $this->sendError('Gagal import: ' . $th->getMessage(), 500);
+    }
+
+    public function export(Request $request)
+    {
+        $filters = $request->only(['sumber', 'kecamatan_id', 'kondisi']);
+
+        // Nama file dinamis
+        $name = 'export_tpa_' . now()->format('Ymd_His');
+
+        return Excel::download(
+            new TpaExport($filters),
+            $name . '.xlsx',
+            MaatwebsiteExcel::XLSX
+        );
     }
 }

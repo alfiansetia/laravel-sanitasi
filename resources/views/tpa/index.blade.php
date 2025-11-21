@@ -421,6 +421,12 @@
                                 importData()
                             }
                         }, {
+                            text: 'Export Data',
+                            className: 'dt-button btn-sm',
+                            action: function(e, dt, node, config) {
+                                exportData()
+                            }
+                        }, {
                             text: 'Delete Selected Data',
                             className: 'dt-button btn-sm',
                             action: function(e, dt, node, config) {
@@ -577,6 +583,12 @@
                 $('#modal_import').modal('show')
             }
 
+            function exportData() {
+                $('#form_export')[0].reset()
+                $('#form_export').attr('action', "{{ route('api.tpas.export') }}")
+                $('#modal_export').modal('show')
+            }
+
             $('#form_import').submit(function(e) {
                 e.preventDefault()
                 let form = $(this)[0];
@@ -597,6 +609,11 @@
                         show_message(xhr.responseJSON.message || 'Error!')
                     }
                 });
+            })
+
+            $('#form_export').submit(function(e) {
+                $('#modal_export').modal('hide')
+
             })
 
 

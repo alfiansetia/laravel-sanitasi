@@ -158,3 +158,58 @@
  @include('components.modal_import')
 
  @include('components.modal_map')
+
+
+ <div class="modal fade text-left" id="modal_export" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+         <div class="modal-content">
+             <form action="" id="form_export" method="GET">
+                 <div class="modal-header">
+                     <h4 class="modal-title"><i class="fas fa-file-excel me-1"></i>Export Data {{ $title }}
+                     </h4>
+                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                         <i data-feather="x"></i>
+                     </button>
+                 </div>
+                 <div class="modal-body">
+                     <div class="form-body">
+                         <div class="row">
+                             <div class="col-6">
+                                 <div class="form-group">
+                                     <label for="sumber_ex">Sumber Anggaran</label>
+                                     <select class="form-select" id="sumber_ex" name="sumber">
+                                         <option value="">All</option>
+                                         @foreach (config('enums.sumber_dana') as $item)
+                                             <option value="{{ $item }}">{{ $item }}</option>
+                                         @endforeach
+                                     </select>
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
+                                 <div class="form-group">
+                                     <label for="kondisi_ex">Kondisi TPA</label>
+                                     <select id="kondisi_ex" name="kondisi" class="choices form-select">
+                                         <option value="">All</option>
+                                         @foreach (config('enums.opsi_baik') as $item)
+                                             <option value="{{ $item }}">{{ $item }}</option>
+                                         @endforeach
+                                     </select>
+                                 </div>
+                             </div>
+
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                         <i class="fas fa-times me-1"></i>Close
+                     </button>
+                     <button type="submit" class="btn btn-primary ms-1">
+                         <i class="fas fa-save me-1"></i>Export
+                     </button>
+                 </div>
+             </form>
+         </div>
+     </div>
+ </div>
