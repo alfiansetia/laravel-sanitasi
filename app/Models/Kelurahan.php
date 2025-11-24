@@ -42,4 +42,34 @@ class Kelurahan extends Model
     {
         return $this->belongsTo(Kecamatan::class);
     }
+
+    public function sanitasis()
+    {
+        return $this->hasMany(Sanitasi::class);
+    }
+
+    public function tpas()
+    {
+        return $this->hasMany(Tpa::class);
+    }
+
+    public function tpsts()
+    {
+        return $this->hasMany(Tpst::class);
+    }
+
+    public function tps3rs()
+    {
+        return $this->hasMany(Tps3r::class);
+    }
+
+    public function iplts()
+    {
+        return $this->hasMany(Iplt::class);
+    }
+
+    public function spalds()
+    {
+        return $this->hasMany(Spald::class);
+    }
 }

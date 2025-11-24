@@ -116,6 +116,7 @@
                             fillOpacity: 0.3
                         },
                         onEachFeature: function(feature, layer) {
+                            console.log(feature);
 
                             let namaKecamatan = (
                                 feature.properties.nm_kecamatan ||
