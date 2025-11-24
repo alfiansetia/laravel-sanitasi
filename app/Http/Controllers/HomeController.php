@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kecamatan;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,6 +26,15 @@ class HomeController extends Controller
     {
         return view('home', [
             'title' => 'Dashboard'
+        ]);
+    }
+
+    public function map()
+    {
+        $kecamatans = Kecamatan::all();
+        return view('map', [
+            'title'         => 'Maps',
+            'kecamatans'    => $kecamatans,
         ]);
     }
 }

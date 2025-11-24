@@ -52,6 +52,15 @@
 
                 </li>
 
+                <li class="sidebar-item  {{ Route::is('maps') ? 'active' : '' }}">
+                    <a href="{{ route('maps') }}" class='sidebar-link'>
+                        <i class="bi bi-map"></i>
+                        <span>Maps</span>
+                    </a>
+
+
+                </li>
+
                 <li class="sidebar-item  {{ Route::is('sanitasis.index') ? 'active' : '' }}">
                     <a href="{{ route('sanitasis.index') }}" class='sidebar-link'>
                         <i class="bi bi-card-checklist"></i>

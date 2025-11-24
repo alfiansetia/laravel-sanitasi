@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/maps', [HomeController::class, 'map'])->name('maps');
 
 
     Route::get('/users', [UserController::class, 'index'])
