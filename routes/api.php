@@ -18,7 +18,12 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::group(['middleware' => ['auth:sanctum', 'web']], function () {
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('tpa-exports', [TpaController::class, 'export'])
+        ->name('api.tpas.export');
+});
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::delete('users', [UserController::class, 'destroy_batch'])
         ->name('api.users.destroy_batch');
@@ -46,8 +51,6 @@ Route::group(['middleware' => ['auth:sanctum', 'web']], function () {
     Route::apiResource('sanitasis', SanitasiController::class)
         ->names('api.sanitasis');
 
-    Route::get('tpa-exports', [TpaController::class, 'export'])
-        ->name('api.tpas.export');
     Route::delete('tpas', [TpaController::class, 'destroy_batch'])
         ->name('api.tpas.destroy_batch');
     Route::post('tpa-imports', [TpaController::class, 'import'])
