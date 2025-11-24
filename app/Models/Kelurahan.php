@@ -29,8 +29,12 @@ class Kelurahan extends Model
         if (isset($filters['nama'])) {
             $query->where('nama', 'like', '%' . $filters['nama'] . '%');
         }
-        if (isset($filters['kecamatan_id'])) {
-            $query->where('kecamatan_id', $filters['kecamatan_id']);
+        if (!empty($filters['kecamatan_id'])) {
+            if (is_array($filters['kecamatan_id'])) {
+                $query->whereIn('kecamatan_id', $filters['kecamatan_id']);
+            } else {
+                $query->where('kecamatan_id', $filters['kecamatan_id']);
+            }
         }
     }
 

@@ -25,6 +25,16 @@ class Tps3r extends Model
 
     public function scopeFilter($query, array $filters)
     {
+        if (!empty($filters['kecamatan_id'])) {
+            if (is_array($filters['kecamatan_id'])) {
+                $query->whereIn('kecamatan_id', $filters['kecamatan_id']);
+            } else {
+                $query->where('kecamatan_id', $filters['kecamatan_id']);
+            }
+        }
+        if (isset($filters['kelurahan_id'])) {
+            $query->where('kelurahan_id',  $filters['kelurahan_id']);
+        }
         if (isset($filters['tahun_konstruksi'])) {
             $query->where('tahun_konstruksi',  $filters['tahun_konstruksi']);
         }

@@ -175,6 +175,18 @@
                  <div class="modal-body">
                      <div class="form-body">
                          <div class="row">
+                             <div class="col-md-12">
+                                 <div class="form-group">
+                                     <label for="kecamatan_id_ex" class="required">Lokasi (Kecamatan)</label>
+                                     <select id="kecamatan_id_ex" name="kecamatan_id[]" class="choices form-select"
+                                         multiple>
+                                         <option value="">--All--</option>
+                                         @foreach ($kecamatans as $item)
+                                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                         @endforeach
+                                     </select>
+                                 </div>
+                             </div>
                              <div class="col-6">
                                  <div class="form-group">
                                      <label for="sumber_ex">Sumber Anggaran</label>

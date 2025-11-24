@@ -45,8 +45,12 @@ class Spald extends Model
         if (isset($filters['alamat'])) {
             $query->where('alamat', 'like', '%' . $filters['alamat'] . '%');
         }
-        if (isset($filters['kecamatan_id'])) {
-            $query->where('kecamatan_id',  $filters['kecamatan_id']);
+        if (!empty($filters['kecamatan_id'])) {
+            if (is_array($filters['kecamatan_id'])) {
+                $query->whereIn('kecamatan_id', $filters['kecamatan_id']);
+            } else {
+                $query->where('kecamatan_id', $filters['kecamatan_id']);
+            }
         }
         if (isset($filters['kelurahan_id'])) {
             $query->where('kelurahan_id',  $filters['kelurahan_id']);

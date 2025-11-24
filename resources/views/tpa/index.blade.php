@@ -206,6 +206,12 @@
                 allowHTML: true,
             });
 
+            const kecamatan_ex = new Choices(document.getElementById('kecamatan_id_ex'), {
+                searchEnabled: true,
+                removeItemButton: true,
+                allowHTML: true,
+            });
+
             const kelurahan = new Choices(document.getElementById('kelurahan_id'), {
                 searchEnabled: true,
                 removeItemButton: true,
@@ -584,7 +590,11 @@
             }
 
             function exportData() {
-                $('#form_export')[0].reset()
+                $('#sumber_ex').val('').change()
+                $('#kondisi_ex').val('').change()
+                kecamatan_ex.removeActiveItems();
+                kecamatan_ex.setChoiceByValue([])
+                // $('#form_export')[0].reset()
                 $('#form_export').attr('action', "{{ route('api.tpas.export') }}")
                 $('#modal_export').modal('show')
             }
