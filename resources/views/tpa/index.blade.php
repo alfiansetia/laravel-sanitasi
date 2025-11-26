@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.85.1/dist/L.Control.Locate.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@4.0.0/Control.FullScreen.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <style>
         .choices__list--dropdown,
         .choices__list[aria-expanded] {
@@ -65,6 +66,7 @@
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.85.1/dist/L.Control.Locate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@4.0.0/Control.FullScreen.min.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <script>
         const URL_INDEX = "{{ route('tpas.index') }}"
@@ -101,6 +103,19 @@
             var marker = L.marker([default_lat, default_long], {
                 draggable: 'true'
             }).addTo(map);
+
+            L.Control.geocoder({
+                defaultMarkGeocode: false
+            })
+            .on('markgeocode', function(e) {
+                var bbox = e.geocode.bbox;
+                map.fitBounds(bbox);
+
+                var center = e.geocode.center;
+                marker.setLatLng(center);
+                fill_input(center.lat, center.lng);
+            })
+            .addTo(map);
 
             map.on('locationfound', function(e) {
                 var latitude = e.latlng.lat;
