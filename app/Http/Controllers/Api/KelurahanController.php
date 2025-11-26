@@ -26,7 +26,16 @@ class KelurahanController extends Controller
 
     public function show(Kelurahan $kelurahan)
     {
-        return $this->sendResponse($kelurahan->load('kecamatan'));
+        $data = $kelurahan->load([
+            'kecamatan',
+            'sanitasis',
+            'tpas',
+            'iplts',
+            'tpsts',
+            'tps3rs',
+            'spalds',
+        ]);
+        return $this->sendResponse($data);
     }
 
     public function store(KelurahanRequest $request)

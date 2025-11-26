@@ -202,6 +202,94 @@
                 });
             });
 
+            // Layer Group untuk marker
+            var markersLayer = L.layerGroup().addTo(map);
+
+            $('#kelurahan_id').on('change', function() {
+                let kelurahan_id = $(this).val();
+                if (!kelurahan_id) {
+                    markersLayer.clearLayers();
+                    return;
+                }
+                $.ajax({
+                    url: `{{ route('api.kelurahans.index') }}/${kelurahan_id}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        markersLayer.clearLayers();
+                        let data = response.data;
+                        let bounds = [];
+
+                        const types = [{
+                                key: 'spalds',
+                                color: '#ff0000',
+                                label: 'SPALD'
+                            },
+                            {
+                                key: 'sanitasis',
+                                color: '#0000ff',
+                                label: 'Sanitasi'
+                            },
+                            {
+                                key: 'tpas',
+                                color: '#00ff00',
+                                label: 'TPA'
+                            },
+                            {
+                                key: 'tpsts',
+                                color: '#ffa500',
+                                label: 'TPST'
+                            },
+                            {
+                                key: 'iplts',
+                                color: '#800080',
+                                label: 'IPLT'
+                            },
+                        ];
+
+                        types.forEach(type => {
+                            if (data[type.key] && data[type.key].length > 0) {
+                                data[type.key].forEach(item => {
+                                    if(item.is_valid_map){
+                                        let lat = parseFloat(item.lat);
+                                        let lng = parseFloat(item.long);
+                                        
+                                        // Simple validation for lat/long
+                                        if(!isNaN(lat) && !isNaN(lng)) {
+                                            let marker = L.circleMarker([lat, lng], {
+                                                radius: 8,
+                                                fillColor: type.color,
+                                                color: "#000",
+                                                weight: 1,
+                                                opacity: 1,
+                                                fillOpacity: 0.8
+                                            });
+
+                                            marker.bindPopup(`
+                                                <b>${type.label}</b><br>
+                                                Nama: ${item.nama || '-'}<br>
+                                                Alamat: ${item.alamat || '-'}<br>
+                                            `);
+
+                                            markersLayer.addLayer(marker);
+                                            bounds.push([lat, lng]);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+
+                        if (bounds.length > 0) {
+                            map.fitBounds(bounds);
+                        }
+                    },
+                    error: function() {
+                        markersLayer.clearLayers();
+                        console.error('Failed to fetch kelurahan data');
+                    }
+                });
+            });
+
 
 
 
