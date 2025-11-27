@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\KecamatanRequest;
 use App\Imports\KecamatanImport;
 use App\Models\Kecamatan;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;

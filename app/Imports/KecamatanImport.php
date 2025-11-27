@@ -21,19 +21,24 @@ class KecamatanImport implements ToModel, WithValidation, SkipsEmptyRows, WithSt
     public function model(array $row)
     {
         return new Kecamatan([
-            'nama'  => $row[1],
+            'kode'  => $row[1],
+            'nama'  => $row[2],
         ]);
     }
 
     public function rules(): array
     {
         return [
-            '1' => ['required', 'string', 'max:100', Rule::unique('kecamatans', 'nama')],
+            '1' => ['required', 'max_digits:100', Rule::unique('kecamatans', 'kode')],
+            '2' => ['required', 'string', 'max:100', Rule::unique('kecamatans', 'nama')],
         ];
     }
 
     public function customValidationAttributes()
     {
-        return ['1' => 'Nama Kecamatan'];
+        return [
+            '1' => 'Kode Kecamatan',
+            '2' => 'Nama Kecamatan'
+        ];
     }
 }

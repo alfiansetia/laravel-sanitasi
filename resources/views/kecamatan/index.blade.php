@@ -12,6 +12,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Kode</th>
                             <th>Nama</th>
                         </tr>
                     </thead>
@@ -64,7 +65,7 @@
                 pageLength: 10,
                 lengthChange: false,
                 order: [
-                    [2, "desc"]
+                    [3, "desc"]
                 ],
                 columns: [{
                     data: 'id',
@@ -75,6 +76,9 @@
                     render: function(data, type, row, meta) {
                         return `<input type="checkbox" name="id[]" value="${data}" class="form-check-input child-chk">`
                     }
+                }, {
+                    data: "kode",
+                    className: 'text-start',
                 }, {
                     data: "nama",
                     className: 'text-start',
@@ -174,7 +178,7 @@
             }
 
             $('#modal_form').on('shown.bs.modal', function() {
-                $('#nama').focus()
+                $('#kode').focus()
             });
 
             $('#form').submit(function(e) {
@@ -198,6 +202,7 @@
             $('#table tbody').on('click', 'tr td:not(:first-child)', function() {
                 data = table.row(this).data()
                 id = data.id
+                $('#kode').val(data.kode)
                 $('#nama').val(data.nama)
 
                 $('#form').attr('action', `${URL_INDEX_API}/${id}`)
@@ -211,6 +216,7 @@
             function modal_add() {
                 $('#form').attr('action', URL_INDEX_API)
                 $('#form').attr('method', 'POST')
+                $('#kode').val('')
                 $('#nama').val('')
 
                 $('#modal_title').html('<i class="fas fa-plus me-1"></i>Add Data {{ $title }}')

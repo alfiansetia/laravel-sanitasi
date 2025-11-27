@@ -8,6 +8,7 @@ class Kecamatan extends Model
 {
     protected $guarded = [];
     public static $filterProp = [
+        'kode',
         'nama',
     ];
 
@@ -26,6 +27,9 @@ class Kecamatan extends Model
 
     public function scopeFilter($query, array $filters)
     {
+        if (isset($filters['kode'])) {
+            $query->where('kode',  $filters['kode']);
+        }
         if (isset($filters['nama'])) {
             $query->where('nama', 'like', '%' . $filters['nama'] . '%');
         }

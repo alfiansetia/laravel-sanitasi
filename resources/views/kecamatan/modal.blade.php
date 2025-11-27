@@ -14,6 +14,13 @@
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
+                                     <label for="kode">Kode Kecamatan</label>
+                                     <input type="text" id="kode" class="form-control" name="kode"
+                                         placeholder="Kode Kecamatan" maxlength="100" required>
+                                 </div>
+                             </div>
+                             <div class="col-12">
+                                 <div class="form-group">
                                      <label for="nama">Nama Kecamatan</label>
                                      <input type="text" id="nama" class="form-control" name="nama"
                                          placeholder="Nama Kecamatan" maxlength="100" required>
